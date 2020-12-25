@@ -10,7 +10,6 @@ using namespace std;
 Citizen::Citizen (const char* _name, long  _id, unsigned int _yearOfBirth) : yearOfBirth(_yearOfBirth), id(_id),county(nullptr) {
      this->name = new char [strlen(_name) + 1];
     strcpy(this->name, _name);
-	// test
 }
 
 Citizen::Citizen(const Citizen& other)
