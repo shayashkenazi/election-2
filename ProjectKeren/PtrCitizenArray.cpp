@@ -14,9 +14,8 @@ PtrCitizenArray::~PtrCitizenArray() {
 }
 
 bool PtrCitizenArray::addPtrToCitizen  ( Citizen* add) {
-    citizens[logic] = add;
-    logic++;
-    if (logic == physical - 1) {
+   
+    if (logic == physical) {
 	   physical *= 2;
 	   Citizen** tmp = new Citizen * [physical];
 	   for (int i = 0; i < logic; i++)
@@ -24,6 +23,8 @@ bool PtrCitizenArray::addPtrToCitizen  ( Citizen* add) {
 	   delete[] citizens;
 	   citizens = tmp;
     }
+	citizens[logic] = add;
+	logic++;
     return true;
     
 }

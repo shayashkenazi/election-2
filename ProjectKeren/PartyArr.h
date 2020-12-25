@@ -13,16 +13,16 @@ private:
 public:
     PartyArr();
     ~PartyArr();
-    bool AddParty(Party& add);
-    bool setLeadToParty(int& idParty, Citizen& Lead) { return parties[idParty].setLeadCand(Lead); }
-    //void add_party_to_tail(Party& add);
-   Party& getPartyRef(int idx) { return parties[idx]; }
 
+    //setters//
+    bool AddParty(Party& add);//add new party to parties array.
+    bool setLeadToParty(int& idParty, Citizen& Lead) { return parties[idParty].setLeadCand(Lead); }
+  
+    //getters//
+    Party& getPartyRef(int idx) { return parties[idx]; }//return specific party.
     const int size() const { return logic; }
     const int length() const { return physical; }
     void printPartyByOrder();
-   // bool setElectorsToParty(int& partyIdx, int& numOfElectors,int& countyIdx) { return parties[partyIdx].SetElectors(numOfElectors,countyIdx); }
-   // bool InitElectorsArray(int& CountyId);
     const Party& GetWinnerParty()const ;
 };
 
