@@ -9,16 +9,14 @@ class Election
 private:
     int day, month, year;
     int logic, physical;
-   // int pyList;
     CitizenArr** eligibleCitizenList = nullptr;
     PartyArr PartyArr ;
     CountyArr CountyArr ;
 public:
     Election();
     ~Election();
-    //bool AddCitizenList()
     Election(int _day, int _month, int _year);
-    
+    //setters//
     bool AddCounty(County& add);//num1
     bool AddCitizenList(County& add);// add list citizen to eligibleCitizenList help for num1
 

@@ -12,13 +12,13 @@ private:
 public:
     CountyArr();
     ~CountyArr();
+    //setters//
     bool addCounty(County& add);
-
-    const int size() const { return logic; }
-    const int length() const { return physical; }//lo korim leze
-    County* getCounty(int idx) { return counties[idx]; }
-    void printCounties();
     bool updateCountyVoteArray();
+    //getters//
+    const int size() const { return logic; }
+    County* getCounty(int idx) { return counties[idx]; }// return ptr to specific county.
+    void printCounties();// print counties by order.
 
 };
 

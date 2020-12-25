@@ -1,7 +1,7 @@
 
 #include "CitizenArr.h"
 
-CitizenArr::CitizenArr() 
+CitizenArr::CitizenArr() //ctor
 {
     citizens = new Citizen*[2];
     logic = 0;
@@ -16,7 +16,7 @@ CitizenArr::~CitizenArr()
 bool CitizenArr::addCitizen(Citizen& add)
 {
    
-    if (logic == physical ) {
+    if (logic == physical ) { //check if we need to resize the array.
 	   physical *= 2;
 	   Citizen** tmp = new Citizen*[physical];
 	   for (int i = 0; i < logic; i++) {
@@ -27,11 +27,11 @@ bool CitizenArr::addCitizen(Citizen& add)
     }
     
     citizens[logic] = new Citizen(add);
-    logic++;
+    logic++; //update logic size.
     return true;
 }
 
-bool CitizenArr::SearchById(const long& id) const
+bool CitizenArr::SearchById(const long& id) const //check if a citizen is aleardy exist by id.
 {
     for (int i = 0; i < logic; i++)
     {
@@ -41,12 +41,12 @@ bool CitizenArr::SearchById(const long& id) const
     return false;
 }
 
-Citizen* CitizenArr::PtrToCitizen(long& id)
+Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return ptr to hem if exists.
 {
     for (int i = 0; i < logic; i++)
 	   if (citizens[i]->getId() == id)
 		  return citizens[i];
-    return nullptr;
+    return nullptr;//if the citizen wasn't found.
 }
 
 void CitizenArr::printList() const

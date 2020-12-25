@@ -15,23 +15,26 @@ private:
     bool isVoted;
 
 public:
-    Citizen(const char* _name, long _id, unsigned int _yearOfBirth) ;//, unsigned int _countyNum);
-    Citizen(const Citizen& other);
-    ~Citizen();
+    Citizen(const char* _name, long _id, unsigned int _yearOfBirth) ;
+    Citizen(const Citizen& other);//cpy ctor.
+    ~Citizen();//dtor. delete name
+
+    ///setters///
+    bool setVote(); //change isVoted argument.
+    bool setCounty(County* cty) { county = cty; return true; }// set ptr to the citizen's county.
+
+    ///getters/
     const char* getName() const { return name; }
     const long getId() const { return id; }
     const County& getCounty() const  { return *(county); }
           County& getCounty()        { return *(county); }
-
-    unsigned int getyearOfBirth() const { return yearOfBirth; }
-    //const unsigned int getCountyNum()const {return countyNum;}
+    const unsigned int getyearOfBirth() const { return yearOfBirth; }
     bool getIsVoted() const{ return isVoted; }
-    
-    bool setCounty(County* cty) { county = cty; return true; }
-    
-    Citizen& operator=(const Citizen& add);
-    friend std::ostream& operator<<(std::ostream& os, const Citizen& citizen);
+   
+    //operators//
+    Citizen& operator=(const Citizen& add); //operator =
+    friend std::ostream& operator<<(std::ostream& os, const Citizen& citizen);//print op
 
-    bool setVote();
+    
 
 };
