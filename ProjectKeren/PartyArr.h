@@ -24,5 +24,8 @@ public:
     const int length() const { return physical; }
     void printPartyByOrder();
     const Party& GetWinnerParty()const ;
+
+    //operators//
+    const PartyArr& operator=(const PartyArr& other);// op = 
 };
 

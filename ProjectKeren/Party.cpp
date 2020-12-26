@@ -89,39 +89,10 @@ const Party & Party::operator=(const Party & other)
 	LeadCand = other.LeadCand;
 	repArray = other.repArray;
 	numOfCounties = other.numOfCounties;
-	/*if (other.ElectorsByCounty == nullptr)
-	    ElectorsByCounty = nullptr;
-	else
-	{
-	    ElectorsByCounty = new int[numOfCounties];
-	    for (int i = 0; i < numOfCounties; i++)
-	    {
-		   ElectorsByCounty[i] = other.ElectorsByCounty[i];
-	    }
-	}*/
 	return *this;
 
 }
-/*void Party::initElectorsArray(int& _numOfCounties)
-{
-    if (ElectorsByCounty == nullptr)
-    {
-	   ElectorsByCounty = new int[_numOfCounties];
-	   for(int i=0;i<numOfCounties;i++)
-		  ElectorsByCounty[i]=0;
-    }
-     if (_numOfCounties > numOfCounties)
-	   {
-		  int* tmp = new int[_numOfCounties];
-		  for (int i = 0; i < _numOfCounties; i++)
-			 tmp[i] = 0;
-		  for (int i = 0; i < numOfCounties; i++)
-			 tmp[i] = ElectorsByCounty[i];
-		  delete[] ElectorsByCounty;
-		  ElectorsByCounty = tmp;
-		  numOfCounties = _numOfCounties;
-	   }
-}*/
+
 ostream& operator<<(ostream& os, const Party& party)
 {
     os << "Party Name: " << party.getPartyName() << endl << "Lead candidate details : " << party.getLeadCand() << endl;

@@ -244,4 +244,19 @@ bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
     }
     return PartyArr.getPartyRef(PartyId - 1).addRep(ptrToRep, CountyNum);
 }
+const Election& Election::operator=(const Election& other) {
+	day = other.day;
+	month = other.month;
+	year =other.year;
+	logic = other.logic;
+	physical = other.physical;
+	eligibleCitizenList = new CitizenArr * [physical];
+	for (int i = 0; i < logic; i++)
+	{
+		eligibleCitizenList[i] = other.eligibleCitizenList[i];
+	}
+	CountyArr = other.CountyArr;
+	PartyArr = other.PartyArr;
+	return *this;
+}
 

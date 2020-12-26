@@ -48,5 +48,17 @@ bool CountyArr::updateCountyVoteArray()
     }
     return true;
 }
+const CountyArr& CountyArr::operator=(const CountyArr& other)
+{
+	logic = other.logic;
+	physical = other.physical;
+	counties = new County*[physical];
+	for (int i = 0; i < logic; i++)
+	{
+		counties[i] = other.counties[i];
+	}
+	return *this;
+}
+
     
 

@@ -55,15 +55,17 @@ const Party& PartyArr::GetWinnerParty() const
     return parties[pdex];
 }
 
-
-
-/*bool PartyArr::InitElectorsArray(int& CountyId)
+const PartyArr& PartyArr::operator=(const PartyArr& other)
 {
+    logic = other.logic;
+    physical = other.physical;
+    parties = new Party[physical];
     for (int i = 0; i < logic; i++)
     {
-	   parties[i].initElectorsArray(CountyId);
+        parties[i] = other.parties[i];
     }
-    return true;
-}*/
+    return *this;
+}
+
 
 

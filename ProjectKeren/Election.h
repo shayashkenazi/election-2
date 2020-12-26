@@ -36,6 +36,9 @@ public:
     void PrintListRep(County* county);
     void PrintResultByParty();
     void PrintElection();
+
+    //operators//
+    const Election& operator=(const Election& other);
    // todo: election = operator.
 };
 

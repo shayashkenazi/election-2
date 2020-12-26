@@ -20,5 +20,7 @@ public:
     County* getCounty(int idx) { return counties[idx]; }// return ptr to specific county.
     void printCounties();// print counties by order.
 
+    //operators//
+    const CountyArr& operator=(const CountyArr& other);// operator "="
 };
 
