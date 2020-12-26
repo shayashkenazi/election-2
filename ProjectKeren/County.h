@@ -18,23 +18,23 @@ private:
     int* HelpIntArray = nullptr;
     float* restArrayVoters = nullptr;
     int MaxPartyVotesIndex;
-     //float percentvoter;
-    //bool addOneRep = false;
+   
 public:
     County(char* _CountyName, int _NumOfRep);
     County();
     County(const County& other);
     ~County();
+
     //setters//
 
-    bool AddCitizen(Citizen& add) { return eligibleCitizen.addCitizen(add); }
+    bool AddCitizen(Citizen& add) { return eligibleCitizen.addCitizen(add); }// add new citizen to the county.
     bool setMaxPartyVotesIndex(int& PartyIdx) { MaxPartyVotesIndex = PartyIdx; return true; }
     bool setVoteById(int& idx) { VoteCountyArray[idx] = -1; return true; }//when we count the number of votes , insert -1
     bool ResizeVoteArray();// update the size of array
     bool UpdateVoteArray(int& partyIdx) { VoteCountyArray[partyIdx - 1]++; numOfVotes++; return true; }//update after vote
-    bool UpdateVoteArrayToRep();
+    bool UpdateVoteArrayToRep();// calcualte how many reps each party gets [electors]
     bool UpdateRestArrayVoters();
-    void MostVotedParty();
+    void MostVotedParty();// calculate num of votes for each party by the county's citizens.
 
     //getters//
     const char* getName() const { return CountyName; }
@@ -46,8 +46,8 @@ public:
     int getMaxPartyVotesIndex() { return MaxPartyVotesIndex; }
     int getSizeOfEligiblE()const { return eligibleCitizen.size(); }
     int FindMaxValueIdx();
-    CitizenArr* getCitizenList() { return &eligibleCitizen; }
-    bool InitVoteArray(const int& CurNumOfParties);
+    CitizenArr* getCitizenList() { return &eligibleCitizen; }//return eligible citizen list to election's voters list.
+    bool InitVoteArray(const int& CurNumOfParties);// update new county by the num of parties.
 
     //operators//
     friend std::ostream& operator<<(std::ostream& os, const County& county); //cout op
