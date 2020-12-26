@@ -25,19 +25,32 @@ public:
     County();
     County(const County& other);
     ~County();
+    //setters//
 
+    bool AddCitizen(Citizen& add) { return eligibleCitizen.addCitizen(add); }
+    bool setMaxPartyVotesIndex(int& PartyIdx) { MaxPartyVotesIndex = PartyIdx; return true; }
+    bool setVoteById(int& idx) { VoteCountyArray[idx] = -1; return true; }//when we count the number of votes , insert -1
+    bool ResizeVoteArray();// update the size of array
+    bool UpdateVoteArray(int& partyIdx) { VoteCountyArray[partyIdx - 1]++; numOfVotes++; return true; }//update after vote
+    bool UpdateVoteArrayToRep();
+    bool UpdateRestArrayVoters();
+    void MostVotedParty();
+
+    //getters//
     const char* getName() const { return CountyName; }
     const int getNumOfRep() const { return NumOfRep; }
-    
     int getCountyId() const { return countyId; }
     int getNumOfVotes() const { return numOfVotes; }
-  //  bool getAddOneRep()const { return addOneRep; }
     int getHelperByIdx(int& idx)const { return HelpIntArray[idx]; }
     int getVoteByIdx(int& idx)const { return VoteCountyArray[idx]; }
     int getMaxPartyVotesIndex() { return MaxPartyVotesIndex; }
     int getSizeOfEligiblE()const { return eligibleCitizen.size(); }
     int FindMaxValueIdx();
+    // float getPercentVoter()const { return percentvoter; }
+    //int getSumOfVoteArray();
     bool AddCitizen(Citizen& add) { return eligibleCitizen.addCitizen(add); }
+    //bool setPercentVoter() { percentvoter = numOfVotes / (eligibleCitizen.size()); return true; }
+   // bool setAddOneRep(bool res) { addOneRep = res; return true; }
     bool setMaxPartyVotesIndex(int& PartyIdx) { MaxPartyVotesIndex = PartyIdx; return true; }
     bool setVoteById(int& idx) { VoteCountyArray[idx] = -1; return true; }//when we count the number of votes , insert -1
     const County& operator=(const County& other);
@@ -47,8 +60,7 @@ public:
     bool UpdateVoteArray(int& partyIdx) { VoteCountyArray[partyIdx - 1]++; numOfVotes++; return true; }//update after vote
     bool UpdateVoteArrayToRep();
     bool UpdateRestArrayVoters();
-    bool InitVoteArray(const int& CurNumOfParties);
     void MostVotedParty();
-    
+
 };
 
