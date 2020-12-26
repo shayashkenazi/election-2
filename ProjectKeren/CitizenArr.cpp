@@ -72,7 +72,7 @@ const Citizen* CitizenArr::getCitizen(long id) const
 {
     for (int i = 0; i < logic; i++) {
 	   if (citizens[i]->getId() == id)
-		  return citizens[i];//check if its ref
+		  return citizens[i];//return ptr to the citizen if found.
     }
 	return nullptr;
 }
