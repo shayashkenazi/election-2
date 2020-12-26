@@ -13,7 +13,7 @@ private:
     CitizenArr eligibleCitizen;//eligible citiizen for spefific county
     static int countySerialNumber;
     int countyId;
-    int voteArrayLogic, voteArrayPhy, numOfVotes = 0;
+    int voteArrayLogic=0, voteArrayPhy=2, numOfVotes = 0;
     int* VoteCountyArray = nullptr; //how much votes per party
     int* HelpIntArray = nullptr;
     float* restArrayVoters = nullptr;

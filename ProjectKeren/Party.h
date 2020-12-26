@@ -33,7 +33,7 @@ class Party
         Citizen& getLeadCand()const { return *(LeadCand); }
         int getSumOfElectors()const { return SumOfElectors; }
         void printRep() const;
-        void pritnRepByIdx(int CountOfRep,int indexOfCounty);//print num of rep at specific party
+        void pritnRepByIdx(int CountOfRep,int CountyId);//print num of rep at specific party
 	  
         //operators//
         friend std::ostream& operator<<(std::ostream& os, const Party& party);//cout op.

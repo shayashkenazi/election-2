@@ -20,7 +20,12 @@ County::County(char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxParty
 }
 County::County()
 {
-
+    voteArrayLogic = 0;
+    voteArrayPhy = 2;
+    VoteCountyArray = new int[voteArrayPhy];
+    VoteCountyArray[0] = VoteCountyArray[1] = 0;
+    HelpIntArray = new int[voteArrayPhy];
+    restArrayVoters = new float[voteArrayPhy];
 }
 County::County(const County& other)
 {
@@ -33,15 +38,14 @@ County::County(const County& other)
     voteArrayPhy = other.voteArrayPhy;
     numOfVotes = other.numOfVotes;
     MaxPartyVotesIndex = other.MaxPartyVotesIndex;
-    VoteCountyArray = new int[voteArrayPhy];
-    restArrayVoters = new float[voteArrayPhy];
-    HelpIntArray = new int[voteArrayPhy];
-    for (int i = 0; i < voteArrayLogic; i++)
-    {
-	   VoteCountyArray[i] = other.VoteCountyArray[i];
-	   restArrayVoters[i] = other.restArrayVoters[i];
-	   HelpIntArray[i] = other.HelpIntArray[i];
-    }
+    
+	   VoteCountyArray = new int[voteArrayPhy];
+	
+	   for (int i = 0; i < voteArrayPhy; i++)
+	   {
+		  VoteCountyArray[i] = other.VoteCountyArray[i];  
+	   }
+    
 }
 County::~County()
 {
@@ -79,19 +83,19 @@ const County& County::operator=(const County& other) {
 	numOfVotes = other.numOfVotes;
 	MaxPartyVotesIndex = other.MaxPartyVotesIndex;
 	//percentvoter = other.percentvoter;
-	VoteCountyArray = new int[voteArrayPhy];
-	restArrayVoters = new float[voteArrayPhy];
-	HelpIntArray = new int[voteArrayPhy];
-	for (int i = 0; i < voteArrayLogic; i++)
-	{
-	    VoteCountyArray[i] = other.VoteCountyArray[i];
-	    restArrayVoters[i] = other.restArrayVoters[i];
-	    HelpIntArray[i] = other.HelpIntArray[i];
-	}	    
+	
+	    VoteCountyArray = new int[voteArrayPhy];
+	
+	    for (int i = 0; i < voteArrayLogic; i++)
+	    {
+		   VoteCountyArray[i] = other.VoteCountyArray[i];	
+	    }
+	
 	return *this;
 }
 bool County::ResizeVoteArray()
 {
+    
     voteArrayLogic++;
     if (voteArrayLogic == voteArrayPhy )
     {
@@ -111,6 +115,7 @@ bool County::UpdateVoteArrayToRep()
 {
     float RepValue = (float)numOfVotes / NumOfRep;
     int sumRep=0,index;
+    HelpIntArray = new int[voteArrayLogic];
     UpdateRestArrayVoters();
     for (int i = 0; i < voteArrayLogic; i++)
     {
@@ -128,12 +133,13 @@ bool County::UpdateVoteArrayToRep()
 bool County::UpdateRestArrayVoters()
 {
     float res;
+    restArrayVoters = new float[voteArrayLogic];
     for (int i = 0; i < voteArrayLogic; i++)
     {
 	   if (numOfVotes == 0)
 		  restArrayVoters[i] = 0;
 	   else
-		  restArrayVoters[i] = (float)(VoteCountyArray[i] / numOfVotes) * NumOfRep;
+		  restArrayVoters[i] = ((float)VoteCountyArray[i] / numOfVotes) * NumOfRep;
     }
     return true;
 }
