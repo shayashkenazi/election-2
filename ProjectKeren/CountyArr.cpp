@@ -13,7 +13,7 @@ CountyArr::~CountyArr()
     delete[] counties;
 }
 
-bool CountyArr::addCounty( County& add)// add new county to counties array of election.
+bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new county to counties array of election.
 {
   
     if (logic == physical) {
@@ -25,9 +25,10 @@ bool CountyArr::addCounty( County& add)// add new county to counties array of el
 	   counties = tmp;
     }
 	counties[logic] = new County(add);
+	counties[logic]->InitVoteArray(curNumOfParties);
 	logic++;
+	
     return true;
-
 }
 
 void CountyArr::printCounties()

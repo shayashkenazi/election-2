@@ -94,8 +94,7 @@ const County& County::operator=(const County& other) {
 	return *this;
 }
 bool County::ResizeVoteArray()
-{
-    
+{    
     voteArrayLogic++;
     if (voteArrayLogic == voteArrayPhy )
     {
@@ -107,8 +106,7 @@ bool County::ResizeVoteArray()
 		  tmp[i] = VoteCountyArray[i];
 	   delete[] VoteCountyArray;
 	   VoteCountyArray = tmp;
-    }
-    
+    }    
     return true;
 }
 bool County::UpdateVoteArrayToRep()
@@ -142,6 +140,23 @@ bool County::UpdateRestArrayVoters()
 		  restArrayVoters[i] = ((float)VoteCountyArray[i] / numOfVotes) * NumOfRep;
     }
     return true;
+}
+bool County::InitVoteArray(const int& CurNumOfParties)
+{
+     if (CurNumOfParties > voteArrayLogic)
+    {	 
+	   voteArrayLogic = CurNumOfParties;
+	   voteArrayPhy = CurNumOfParties * 2;
+	   int* tmp = new int[voteArrayPhy];
+	   for (int i = 0; i < voteArrayPhy; i++)//init the tmp array
+		  tmp[i] = 0;
+	   for (int i = 0; i < voteArrayLogic; i++)
+		  tmp[i] = VoteCountyArray[i];
+	   delete[] VoteCountyArray;
+	   VoteCountyArray = tmp;	   
+    }
+	return true;
+	
 }
 void County::MostVotedParty()
 {

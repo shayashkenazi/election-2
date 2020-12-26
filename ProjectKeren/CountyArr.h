@@ -13,7 +13,7 @@ public:
     CountyArr();
     ~CountyArr();
     //setters//
-    bool addCounty(County& add);
+    bool addCounty(County& add, const int& curNumOfParties);
     bool updateCountyVoteArray();
     //getters//
     const int size() const { return logic; }

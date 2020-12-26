@@ -15,7 +15,7 @@ Election::~Election()
 
 bool Election::AddCounty(County& add)
 {
-    if (CountyArr.addCounty(add) == false)
+    if (CountyArr.addCounty(add,PartyArr.size()) == false)
 	   return false;
     
     return AddCitizenList(add);    
@@ -58,7 +58,6 @@ bool Election::AddCitizenList(County& add)
 
 bool Election::addParty(Party& add)
 {
-   
     CountyArr.updateCountyVoteArray();//update the array party vote
     return PartyArr.AddParty(add);
 }
@@ -141,21 +140,21 @@ bool Election::addVote(long& id, int PartyId)
 void Election::PrintResultByCounty()
 {
     int indexMaxParty,numOfRepByCounty;
-    County res;
+    //Citizen res;
     //int partyIdxW;//Party id of the most votes at spesicif county
     for (int i = 0; i < CountyArr.size(); i++)
     {
 	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
-	   cout << "  County number :" << i+1 << endl
-		  << " have  number of Representatives  : " << numOfRepByCounty << endl;
+	   cout << "County number :" << i+1 << endl
+		  << "have  number of Representatives  : " << numOfRepByCounty << endl;
 	 
 	   CountyArr.getCounty(i)->MostVotedParty();//update the max index party voted
 	  
 	   indexMaxParty = CountyArr.getCounty(i)->getMaxPartyVotesIndex();
 	   PartyArr.getPartyRef(indexMaxParty).SetElectors(numOfRepByCounty);
-	   res =*CountyArr.getCounty(i);
-	   cout << " the lead candidate of party at specific county is " << res << endl
-		  << " the percent of voters at the county is  " << CountyArr.getCounty(i)->getNumOfVotes() / CountyArr.getCounty(i)->getSizeOfEligiblE() * 100<< "%" << endl;
+	    
+	   cout << " the lead candidate of party at specific county is " << endl << PartyArr.getPartyRef(indexMaxParty).getLeadCand() << endl
+		  << " the percent of voters at the county is  " << CountyArr.getCounty(i)->getNumOfVotes() /(float) CountyArr.getCounty(i)->getSizeOfEligiblE() * 100<< "%" << endl;
 	   
 	   PrintListRep(CountyArr.getCounty(i));
 	   
@@ -173,7 +172,7 @@ void Election::PrintListRep(County* county)
     {
 	   cout << " Party number : " << i+1;
 	   countLoopRep = county->getHelperByIdx(i);	   	
-	   cout << " get " << countLoopRep << " Representatives , that mean as " << (county->getVoteByIdx(i) /(float) county->getNumOfVotes()) * 100 <<"%"<< endl;
+	   cout << " get " << countLoopRep << " Representatives , that mean as " << ((float)county->getVoteByIdx(i) /(float) county->getNumOfVotes()) * 100 <<"%"<< endl;
 	   PartyArr.getPartyRef(i).pritnRepByIdx(countLoopRep,county->getCountyId());
 	}
 	   
@@ -201,7 +200,6 @@ void Election::PrintResultByParty()
 		{
 		    sumVotes += CountyArr.getCounty(k)->getVoteByIdx(max_idx);
 		    PartyArr.getPartyRef(max_idx).SetInitToZero();//insert 0 after count the votes
-		    //CountyArr.getCounty(k).setVoteById(i);//insert -1 after we count the votes
 		}
 			cout << " total votes: " << sumVotes << endl;
 			sumVotes = 0;
