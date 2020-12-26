@@ -52,7 +52,7 @@ Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return pt
 void CitizenArr::printList() const
 {
     for (int i = 0; i < logic; i++)
-	   cout << citizens[i] << endl;
+	   cout << *citizens[i] << endl;
 	   
 }
 
