@@ -52,6 +52,8 @@ const CountyArr& CountyArr::operator=(const CountyArr& other)
 {
 	logic = other.logic;
 	physical = other.physical;
+	if (counties != nullptr)
+		delete[] counties;
 	counties = new County*[physical];
 	for (int i = 0; i < logic; i++)
 	{

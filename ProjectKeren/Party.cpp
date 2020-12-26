@@ -22,6 +22,21 @@ Party::~Party()
 	   delete[] ElectorsByCounty;*/
 }
 
+Party::Party(const Party& other)
+{
+    PartyName = new char[strlen(other.PartyName) + 1];
+    strcpy(PartyName, other.PartyName);
+    PartyId = other.PartyId;//mispar sidori shel amiflaga
+
+    SumOfElectors = other.SumOfElectors;
+
+    RepArrayPhysical = other.RepArrayPhysical;
+
+    LeadCand = other.LeadCand;
+    repArray = other.repArray;
+    numOfCounties = other.numOfCounties;
+}
+
 bool Party::setPartyName(const char* _PartyName)
 {
     PartyName = new char[strlen(_PartyName) + 1];

@@ -6,6 +6,19 @@
 
 const int EXIT = 10;
 const int MAXSIZE_NAME = 20;
+enum menu {
+	AddCounty = 1,
+	AddCitizen = 2,
+	AddParty = 3,
+	SetRepresentative = 4,
+	DisplayCounties = 5,
+	DisplayCitizens = 6,
+	DisplayParties = 7,
+	SetVote = 8,
+	DisplayElectionResult = 9,
+	Exit = 10
+
+};
 
 void electionMenu(Election elec) {
 
@@ -26,7 +39,7 @@ void electionMenu(Election elec) {
 	   cout << "please choose an action (10 to exit): " << endl;
 	   cin >> input;
 
-	   if (input == 1) // add province
+	   if (input == AddCounty) // add province
 	   {
 		  char CountyName[MAXSIZE_NAME];
 		  int numOfRep;
@@ -40,7 +53,7 @@ void electionMenu(Election elec) {
 		  
 	   }
 
-	   if (input == 2) // add citizen 
+	   if (input == AddCitizen) // add citizen 
 	   {
 		  char CitizenName[MAXSIZE_NAME];
 		  int  birthyear, countySerial;
@@ -59,7 +72,7 @@ void electionMenu(Election elec) {
 			 cout << "a wrong citizen input " << endl;
 	   }
 
-	   if (input == 3) // add party
+	   if (input == AddParty) // add party
 	   {
 		  char partyName[MAXSIZE_NAME];
 		  long LeadCandId;
@@ -78,7 +91,7 @@ void electionMenu(Election elec) {
 		  }
 	   
 	   }
-	   if (input == 4) // add candidate
+	   if (input == SetRepresentative) // add candidate
 	   {		  
 		  int  partySerial, CountySerial;
 		  long id;
@@ -93,15 +106,15 @@ void electionMenu(Election elec) {
 			 cout << "you entered invalid details" << endl;
 	   }
 
-	   if (input == 5) // show all Counties	 - 
+	   if (input == DisplayCounties) // show all Counties	 - 
 		  elec.printCounties();
 
-	   if (input == 6) // show citizen
+	   if (input == DisplayCitizens) // show citizen
 		  elec.printCitizens();
 
-	   if (input == 7) // show parties  // error candidates list
+	   if (input == DisplayParties) // show parties  // error candidates list
 		  elec.printParties();
-	   if (input == 8)
+	   if (input == SetVote)
 	   {
 		  int  partySerial;
 		  long id;
@@ -111,9 +124,9 @@ void electionMenu(Election elec) {
 		  cin >> partySerial;
 		  elec.addVote(id, partySerial);
 	   }
-	   if (input == 9)
+	   if (input == DisplayElectionResult)
 		  elec.PrintElection();
-	   if (input == 10)
+	   if (input == Exit)
 		  exit(0);
     }
 }
@@ -148,3 +161,5 @@ int main() {
 
     cout << " ----- the Elections are OVER  :) ----- "  << endl;
 }
+
+

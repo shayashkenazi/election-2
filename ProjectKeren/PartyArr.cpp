@@ -59,6 +59,8 @@ const PartyArr& PartyArr::operator=(const PartyArr& other)
 {
     logic = other.logic;
     physical = other.physical;
+   if (parties != nullptr)
+        delete[] parties;
     parties = new Party[physical];
     for (int i = 0; i < logic; i++)
     {
