@@ -1,6 +1,7 @@
 #include "Election.h"
 #include <iostream>
 using namespace std;
+
 Election::Election() : day(-1),month(-1),year(-1)
 {
     logic = 0;
@@ -140,24 +141,13 @@ bool Election::addVote(long& id, int PartyId)
 void Election::PrintResultByCounty()
 {
     int indexMaxParty,numOfRepByCounty;
-    //Citizen res;
-    //int partyIdxW;//Party id of the most votes at spesicif county
     for (int i = 0; i < CountyArr.size(); i++)
     {
 	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
 	   cout << "County number :" << i+1 << endl
 		  << "have  number of Representatives  : " << numOfRepByCounty << endl;
-	 
-	   CountyArr.getCounty(i)->MostVotedParty();//update the max index party voted
-	  
-	   indexMaxParty = CountyArr.getCounty(i)->getMaxPartyVotesIndex();
-	   PartyArr.getPartyRef(indexMaxParty).SetElectors(numOfRepByCounty);
-	    
-	   cout << " the lead candidate of party at specific county is " << endl << PartyArr.getPartyRef(indexMaxParty).getLeadCand() << endl
-		  << " the percent of voters at the county is  " << CountyArr.getCounty(i)->getNumOfVotes() /(float) CountyArr.getCounty(i)->getSizeOfEligiblE() * 100<< "%" << endl;
-	   
-	   PrintListRep(CountyArr.getCounty(i));
-	   
+	   CountyArr.getCounty(i)->SetElectorsToParty(PartyArr);
+	   CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
     }
 }
 
@@ -170,14 +160,12 @@ void Election::PrintListRep(County* county)
     }    
     for (int i = 0; i < PartyArr.size(); i++)
     {
-	   cout << " Party number : " << i+1;
-	   countLoopRep = county->getHelperByIdx(i);	   	
-	   cout << " get " << countLoopRep << " Representatives , that mean as " << ((float)county->getVoteByIdx(i) /(float) county->getNumOfVotes()) * 100 <<"%"<< endl;
+	   cout << "Party number : " << i+1;
+	   countLoopRep = county->getNumOfElectors(i);	   	
+	   cout << " get " << countLoopRep << "Representatives , that mean as " << ((float)county->getVoteByIdx(i) /(float) county->getNumOfVotes()) * 100 <<"%"<< endl;
 	   PartyArr.getPartyRef(i).pritnRepByIdx(countLoopRep,county->getCountyId());
 	}
-	   
-		  
-	
+	   	
 }
 void Election::PrintResultByParty()
 {
@@ -194,8 +182,8 @@ void Election::PrintResultByParty()
 		  }
 	   }
 	   cout << "Party: " << PartyArr.getPartyRef(max_idx).getPartyName();
-	   cout << " Lead Cand id: " << PartyArr.getPartyRef(max_idx).getLeadCand().getId();
-		cout << " representatives: " << PartyArr.getPartyRef(max_idx).getSumOfElectors();
+	   cout << "Lead Cand id: " << PartyArr.getPartyRef(max_idx).getLeadCand().getId();
+		cout << "representatives: " << PartyArr.getPartyRef(max_idx).getSumOfElectors();
 		for (int k = 0; k < CountyArr.size(); k++)
 		{
 		    sumVotes += CountyArr.getCounty(k)->getVoteByIdx(max_idx);
@@ -213,11 +201,7 @@ void Election::PrintElection()
    
     PrintResultByCounty();
     PrintResultByParty();
-   /* cout << " County number : " 
-	   name is :" <<  "num of electors is " 
-	   << " and the lead candidate is :" <<
-	   cout << "The rep list "<< endl;
-	   */
+
 }
 
 
@@ -239,7 +223,7 @@ bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
    
     if (ptrToRep == nullptr)
     {
-	   cout << " citizen NOT found " << endl;
+	   cout << "citizen NOT found " << endl;
 	   return false;
     }
     return PartyArr.getPartyRef(PartyId - 1).addRep(ptrToRep, CountyNum);

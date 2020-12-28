@@ -1,6 +1,8 @@
 #pragma once
 
 #include"County.h"
+class DividedConty;
+class UnifiedCounty;
 #define _CRT_SECURE_NO_WARNING
 
 class CountyArr

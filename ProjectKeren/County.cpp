@@ -1,11 +1,12 @@
 #include "County.h"
+#include"PartyArr.h"
 #include <iostream>
 #pragma warning(disable : 4996)
 
 
 using namespace std;
 int County :: countySerialNumber = 0;
-County::County(char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxPartyVotesIndex(0)
+County::County(const char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxPartyVotesIndex(0)
 {
     countySerialNumber++;
     countyId = countySerialNumber;
@@ -15,7 +16,7 @@ County::County(char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxParty
     voteArrayPhy = 2;
     VoteCountyArray = new int[voteArrayPhy];
     VoteCountyArray[0] = VoteCountyArray[1] = 0;
-    HelpIntArray = new int[voteArrayPhy];
+    ElectorsByIdx = new int[voteArrayPhy];
     restArrayVoters = new float[voteArrayPhy];
 }
 County::County()
@@ -24,7 +25,7 @@ County::County()
     voteArrayPhy = 2;
     VoteCountyArray = new int[voteArrayPhy];
     VoteCountyArray[0] = VoteCountyArray[1] = 0;
-    HelpIntArray = new int[voteArrayPhy];
+    ElectorsByIdx = new int[voteArrayPhy];
     restArrayVoters = new float[voteArrayPhy];
 }
 County::County(const County& other)
@@ -51,17 +52,19 @@ County::~County()
 {
     delete[] CountyName;
     delete[]VoteCountyArray;
-    delete[] HelpIntArray;
+    if(ElectorsByIdx!=nullptr)
+
+    delete[] ElectorsByIdx;
     delete[]restArrayVoters;
 }
 
 int County::FindMaxValueIdx()
 {
-    float temp,max= restArrayVoters[0]-(float)HelpIntArray[0];
+    float temp,max= restArrayVoters[0]-(float)ElectorsByIdx[0];
     int idx=0;
     for (int i = 1; i < voteArrayLogic; i++)
     {
-	   temp = restArrayVoters[i]- (float)HelpIntArray[i];
+	   temp = restArrayVoters[i]- (float)ElectorsByIdx[i];
 	   if (temp > max) {
 		  max = temp;
 		  idx = i;
@@ -113,17 +116,17 @@ bool County::UpdateVoteArrayToRep()
 {
     float RepValue = (float)numOfVotes / NumOfRep;
     int sumRep=0,index;
-    HelpIntArray = new int[voteArrayLogic];
+    ElectorsByIdx = new int[voteArrayLogic];
     UpdateRestArrayVoters();
     for (int i = 0; i < voteArrayLogic; i++)
     {
-	   HelpIntArray[i] = (int)restArrayVoters[i];
-	   sumRep += HelpIntArray[i];
+	   ElectorsByIdx[i] = (int)restArrayVoters[i];
+	   sumRep += ElectorsByIdx[i];
     }
   while(sumRep < NumOfRep)
     {
 	   index = FindMaxValueIdx();
-	   HelpIntArray[index]++;
+	   ElectorsByIdx[index]++;
 	   sumRep++;
     }
   return true;
@@ -178,6 +181,7 @@ void County::MostVotedParty()
 ostream& operator<<(ostream& os, const County& county) {
 
     os <<
+	   "County Type: " <<  typeid(county).name() + 6 << endl <<
 	   "County Name: " << county.getName() << endl <<
 	   "CountyID: " << county.getCountyId() << endl <<
 	   "number of reps : " << county.getNumOfRep() << endl;

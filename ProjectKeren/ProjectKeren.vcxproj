@@ -143,21 +143,29 @@
     <ClCompile Include="CitizenArr.cpp" />
     <ClCompile Include="County.cpp" />
     <ClCompile Include="CountyArr.cpp" />
+    <ClCompile Include="DividedCounty.cpp" />
     <ClCompile Include="Election.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Party.cpp" />
     <ClCompile Include="PartyArr.cpp" />
     <ClCompile Include="PtrCitizenArray.cpp" />
+    <ClCompile Include="RegularElection.cpp" />
+    <ClCompile Include="SimpleElection.cpp" />
+    <ClCompile Include="UnifiedCounty.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="citizen.h" />
     <ClInclude Include="CitizenArr.h" />
     <ClInclude Include="County.h" />
     <ClInclude Include="CountyArr.h" />
+    <ClInclude Include="DividedCounty.h" />
     <ClInclude Include="Election.h" />
     <ClInclude Include="Party.h" />
     <ClInclude Include="PartyArr.h" />
     <ClInclude Include="PtrCitizenArray.h" />
+    <ClInclude Include="RegularElection.h" />
+    <ClInclude Include="SimpleElection.h" />
+    <ClInclude Include="UnifiedCounty.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

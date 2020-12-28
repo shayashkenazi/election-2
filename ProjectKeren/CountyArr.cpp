@@ -1,5 +1,6 @@
 #include "CountyArr.h"
-
+#include"DividedCounty.h"
+#include"UnifiedCounty.h"
 CountyArr::CountyArr()
 {
 	   counties = new County*[2];
@@ -24,7 +25,17 @@ bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new cou
 	   delete []counties;
 	   counties = tmp;
     }
-	counties[logic] = new County(add);
+    if (typeid(add) == typeid(DividedCounty))
+    {
+	   counties[logic] = new DividedCounty(add);
+
+    }
+    else
+    {
+	   //create simple
+    }
+
+	counties[logic] = new DividedCounty(add);
 	counties[logic]->InitVoteArray(curNumOfParties);
 	logic++;
 	
@@ -33,6 +44,7 @@ bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new cou
 
 void CountyArr::printCounties()
 {
+	   
 	   cout << "The County List is : " << endl;
 	   for (int i = 0; i < logic ; i++)
 	   {

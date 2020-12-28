@@ -4,10 +4,12 @@
 #include <iostream>
 #define _CRT_SECURE_NO_WARNING
 
+class PartyArr;
+
 using namespace std;
 class County
 {
-private:
+protected:
     char* CountyName=nullptr;
     int NumOfRep;//represenative
     CitizenArr eligibleCitizen;//eligible citiizen for spefific county
@@ -15,12 +17,12 @@ private:
     int countyId;
     int voteArrayLogic=0, voteArrayPhy=2, numOfVotes = 0;
     int* VoteCountyArray = nullptr; //how much votes per party
-    int* HelpIntArray = nullptr;
+    int* ElectorsByIdx = nullptr;
     float* restArrayVoters = nullptr;
     int MaxPartyVotesIndex;
    
 public:
-    County(char* _CountyName, int _NumOfRep);
+    County(const char* _CountyName, int _NumOfRep);
     County();
     County(const County& other);
     ~County();
@@ -30,6 +32,8 @@ public:
     bool AddCitizen(Citizen& add) { return eligibleCitizen.addCitizen(add); }// add new citizen to the county.
     bool setMaxPartyVotesIndex(int& PartyIdx) { MaxPartyVotesIndex = PartyIdx; return true; }
     bool setVoteById(int& idx) { VoteCountyArray[idx] = -1; return true; }//when we count the number of votes , insert -1
+    virtual bool SetElectorsToParty(PartyArr& PartyArray) = 0 ;
+    virtual void PrintRepByCounty(PartyArr& PartyArray) = 0 ;
     bool ResizeVoteArray();// update the size of array
     bool UpdateVoteArray(int& partyIdx) { VoteCountyArray[partyIdx - 1]++; numOfVotes++; return true; }//update after vote
     bool UpdateVoteArrayToRep();// calcualte how many reps each party gets [electors]
@@ -41,7 +45,7 @@ public:
     const int getNumOfRep() const { return NumOfRep; }
     int getCountyId() const { return countyId; }
     int getNumOfVotes() const { return numOfVotes; }
-    int getHelperByIdx(int& idx)const { return HelpIntArray[idx]; }
+    int getNumOfElectors(int& idx)const { return ElectorsByIdx[idx]; }
     int getVoteByIdx(int& idx)const { return VoteCountyArray[idx]; }
     int getMaxPartyVotesIndex() { return MaxPartyVotesIndex; }
     int getSizeOfEligiblE()const { return eligibleCitizen.size(); }

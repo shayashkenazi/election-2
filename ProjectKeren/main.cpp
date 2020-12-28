@@ -1,24 +1,31 @@
 
-
-
 #include"Election.h"
 #pragma warning(disable : 4996)
 
 const int EXIT = 10;
 const int MAXSIZE_NAME = 20;
 enum menu {
-	AddCounty = 1,
-	AddCitizen = 2,
-	AddParty = 3,
-	SetRepresentative = 4,
-	DisplayCounties = 5,
-	DisplayCitizens = 6,
-	DisplayParties = 7,
-	SetVote = 8,
-	DisplayElectionResult = 9,
-	Exit = 10
+    AddCounty = 1,
+    AddCitizen = 2,
+    AddParty = 3,
+    SetRepresentative = 4,
+    DisplayCounties = 5,
+    DisplayCitizens = 6,
+    DisplayParties = 7,
+    SetVote = 8,
+    DisplayElectionResult = 9,
+    Exit = 10
+
+    //regularElection = 1,
+    //simpleElection = 2,
+    //unifiedCounty = 1,
+    //dividedCounty = 2
+   // CreateNewElection = 1,
+    //LoadFromFile = 2
 
 };
+
+
 
 void electionMenu(Election elec) {
 
@@ -157,6 +164,11 @@ int main() {
     getdate(d, m, y);
     Election elec (d, m, y);
     cout << "----------------------------------------------" << endl;
+//    int InitElection;
+ //   cout << "Choose from the following:" << endl;
+   // cout << "1. create new election round" << endl;
+    //cout << "2. load an existing file" << endl;
+    //cout << "3. exit" << endl;
     electionMenu(elec);
 
     cout << " ----- the Elections are OVER  :) ----- "  << endl;

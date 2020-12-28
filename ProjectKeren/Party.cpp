@@ -74,7 +74,6 @@ void Party::printRep() const
 }
 void Party::pritnRepByIdx(int CountOfRep,int CountyId) 
 {
-    //int min;
     if (CountOfRep == 0 )
     {
 	   cout << " the party doesnt have rep for this county" << endl;
@@ -83,8 +82,6 @@ void Party::pritnRepByIdx(int CountOfRep,int CountyId)
     if (CountOfRep > repArray[CountyId-1].size())
 	   CountOfRep = repArray[CountyId-1].size();
     cout << "the Reps are :" << endl;
-  //  min = repArray[indexOfParty].size();
-    //min < CountOfRep ? min = min : min = CountOfRep; // if we have less rep than what we got
 
     for (int i = 0; i < CountOfRep; i++)
     {
