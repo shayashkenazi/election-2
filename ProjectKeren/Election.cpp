@@ -1,5 +1,6 @@
 #include "Election.h"
 #include <iostream>
+
 using namespace std;
 
 Election::Election() : day(-1),month(-1),year(-1)
@@ -100,6 +101,7 @@ void Election::printCounties()
 void Election::printCitizens()
 {
     cout << "Citizen List : " << endl;
+    
     for (int i = 0; i < logic; i++)
     {
 	   cout << "Citizens of county number : " << i+1 << endl;

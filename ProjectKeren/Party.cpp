@@ -105,6 +105,22 @@ const Party & Party::operator=(const Party & other)
 
 }
 
+void Party::save(ofstream& outFile) const
+{
+    int lenOfName = strlen(PartyName);
+    outFile.write((const char*)&lenOfName, sizeof(int));
+    outFile.write((const char*)&PartyName, sizeof(char) * lenOfName);
+    outFile.write((const char*)&numOfCounties, sizeof(int));
+    long LeadCandid = LeadCand->getId();
+    outFile.write((const char*)&LeadCandid, sizeof(long));
+    for (int i = 0; i < numOfCounties; i++) 
+    {
+	   repArray[i].save(outFile);
+    }
+
+
+}
+
 ostream& operator<<(ostream& os, const Party& party)
 {
     os << "Party Name: " << party.getPartyName() << endl << "Lead candidate details : " << party.getLeadCand() << endl;

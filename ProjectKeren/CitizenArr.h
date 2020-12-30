@@ -23,6 +23,7 @@ public:
     Citizen* PtrToCitizen(long& id);
     void printList() const;
 	const CitizenArr & operator=(const CitizenArr& other);
+	 void save(ofstream& outfile) const;
 };
 
 

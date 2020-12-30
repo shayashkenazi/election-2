@@ -41,6 +41,18 @@ const PtrCitizenArray & PtrCitizenArray::operator=(const PtrCitizenArray & other
 	return *this;
 }
 
+void PtrCitizenArray::save(ofstream& outFile) const
+{
+    outFile.write((const char*)&logic, sizeof(int));
+    for (int i = 0; i < logic; i++)
+    {
+	   long id = citizens[i]->getId();
+	   outFile.write((const char*)&id, sizeof(long));
+    }
+    
+
+}
+
 std::ostream& operator<<(std::ostream& os, const PtrCitizenArray& listrep)
 {
     for (int i = 0; i < listrep.size() ; i++)

@@ -2,6 +2,9 @@
 //#include "County.h"
 #define _CRT_SECURE_NO_WARNING
 #include <iostream>
+#include <fstream>
+#include"enum.h"
+
 using namespace std;
 
 class County ;
@@ -34,6 +37,7 @@ public:
     //operators//
     Citizen& operator=(const Citizen& add); //operator =
     friend std::ostream& operator<<(std::ostream& os, const Citizen& citizen);//print op
+    void save(ofstream& outfile) const;
 
     
 

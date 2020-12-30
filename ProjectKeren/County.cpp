@@ -87,8 +87,7 @@ const County& County::operator=(const County& other) {
 	MaxPartyVotesIndex = other.MaxPartyVotesIndex;
 	//percentvoter = other.percentvoter;
 	
-	    VoteCountyArray = new int[voteArrayPhy];
-	
+	    VoteCountyArray = new int[voteArrayPhy];	
 	    for (int i = 0; i < voteArrayLogic; i++)
 	    {
 		   VoteCountyArray[i] = other.VoteCountyArray[i];	

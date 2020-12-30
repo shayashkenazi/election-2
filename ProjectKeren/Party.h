@@ -39,7 +39,7 @@ class Party
         friend std::ostream& operator<<(std::ostream& os, const Party& party);//cout op.
         const Party& operator=(const Party& other);// operator = 
        
-     
+        void save(ofstream& outFile) const;
             
 };
 

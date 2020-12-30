@@ -34,6 +34,15 @@ Citizen& Citizen::operator=(const Citizen& add) {
 	isVoted = add.isVoted; 
     return *this;
 }
+void Citizen::save(ofstream& outFile) const
+{
+    int lenOfName = strlen(name);
+    outFile.write((const char*)&lenOfName, sizeof(int));
+    outFile.write((const char*)&name, sizeof(char)*lenOfName);
+    outFile.write((const char*)&id, sizeof(long));
+    outFile.write((const char*)&yearOfBirth, sizeof(unsigned int));
+    outFile.write((const char*)&isVoted, sizeof(bool));
+}
 bool Citizen::setVote()
 {
     if (isVoted == false)

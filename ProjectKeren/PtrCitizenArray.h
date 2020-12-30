@@ -23,6 +23,8 @@ public:
     //operators//
     friend std::ostream& operator<<(std::ostream& os, const PtrCitizenArray& listrep);//cout op
 	const PtrCitizenArray& operator=(const PtrCitizenArray& other);
+	void save(ofstream& outFile) const;
+
 };
 
 

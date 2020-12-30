@@ -32,10 +32,10 @@ bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new cou
     }
     else
     {
-	   //create simple
+	   counties[logic] = new UnifiedCounty(add);
     }
 
-	counties[logic] = new DividedCounty(add);
+	
 	counties[logic]->InitVoteArray(curNumOfParties);
 	logic++;
 	
@@ -74,5 +74,14 @@ const CountyArr& CountyArr::operator=(const CountyArr& other)
 	return *this;
 }
 
+void CountyArr::save(ofstream& outFile) const
+{
     
+    outFile.write((const char*)&logic, sizeof(int)); // write number of counties
+    for (int i = 0; i < logic; i++)
+    {
+	   counties[i]->save(outFile); //write all the counties.
+    }
 
+
+}

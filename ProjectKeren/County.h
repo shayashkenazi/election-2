@@ -3,6 +3,8 @@
 
 #include <iostream>
 #define _CRT_SECURE_NO_WARNING
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
 
 class PartyArr;
 
@@ -56,5 +58,6 @@ public:
     //operators//
     friend std::ostream& operator<<(std::ostream& os, const County& county); //cout op
     const County& operator=(const County& other);// oprator "="
+    virtual  void save(ofstream& outfile) const = 0;
 };
 

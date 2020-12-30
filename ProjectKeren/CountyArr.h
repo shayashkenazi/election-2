@@ -1,8 +1,8 @@
 #pragma once
 
 #include"County.h"
-class DividedConty;
 class UnifiedCounty;
+class DividedCounty;
 #define _CRT_SECURE_NO_WARNING
 
 class CountyArr
@@ -24,5 +24,8 @@ public:
 
     //operators//
     const CountyArr& operator=(const CountyArr& other);// operator "="
+
+    void save(ofstream& outfile) const;
+
 };
 

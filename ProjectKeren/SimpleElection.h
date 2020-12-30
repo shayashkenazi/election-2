@@ -12,7 +12,9 @@ class SimpleElection :    public Election
         }
 
         virtual bool AddCitizen(Citizen& add, int& CountyNum) override ;//add new citizen to specific county.
-        virtual void printCitizens();
-        virtual void PrintResulyByCounty() ;
+        virtual void printCitizens() override;
+        virtual void PrintResultByCounty()override ;
+        virtual void save(const char* fileName) const override;
+
 };
 

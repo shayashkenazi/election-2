@@ -21,7 +21,12 @@ void SimpleElection::printCitizens()
 	   eligibleCitizenList[0]->printList();
 }
 
-void SimpleElection::PrintResulyByCounty()
+void SimpleElection::PrintResultByCounty()
 {
 	   cout << "Were in simple election hence no counties ." << endl; 
+}
+
+void SimpleElection::save(const char* fileName) const
+{
+
 }

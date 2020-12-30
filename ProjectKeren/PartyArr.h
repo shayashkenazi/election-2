@@ -27,5 +27,7 @@ public:
 
     //operators//
     const PartyArr& operator=(const PartyArr& other);// op = 
+    void save(ofstream& outFile) const;
+
 };
 

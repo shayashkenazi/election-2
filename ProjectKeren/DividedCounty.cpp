@@ -1,5 +1,6 @@
 #include "DividedCounty.h"
 #include"PartyArr.h"
+
 bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
 {
     for (int i = 0; i < PartyArray.size(); i++)
@@ -7,6 +8,18 @@ bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
         PartyArray.getPartyRef(i).SetElectors(ElectorsByIdx[i]); 
     }
     return true;
+}
+  void DividedCounty::save(ofstream& outFile) const {
+	 int lenOfName = strlen(CountyName);
+	 int type = dividedCounty;
+	 outFile.write((const char*)&type, sizeof(int));
+	 outFile.write((const char*)&lenOfName, sizeof(int));
+	 outFile.write((const char*)&CountyName, sizeof(char)* lenOfName);
+	 outFile.write((const char*)&voteArrayLogic, sizeof(int));
+	 outFile.write((const char*)&VoteCountyArray, sizeof(int)* voteArrayLogic);
+	 int NumOfCitizens = eligibleCitizen.size();
+	 outFile.write((const char*)&NumOfCitizens, sizeof(int));
+	 eligibleCitizen.save(outFile);
 }
 
 void DividedCounty::PrintRepByCounty(PartyArr& PartyArray)

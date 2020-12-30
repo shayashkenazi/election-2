@@ -1,6 +1,9 @@
 #pragma once
 #include"PartyArr.h"
 #include"CountyArr.h"
+#define rcastcc reinterpret_cast<const char*>
+#define rcastc reinterpret_cast<char*>
+
 #define _CRT_SECURE_NO_WARNING
 
 
@@ -13,6 +16,7 @@ protected:
     //save them by the county's index.
     PartyArr PartyArr ; 
     CountyArr CountyArr ;
+    
 public:
     Election();//default ctor.
     ~Election();
@@ -21,7 +25,7 @@ public:
     bool AddCounty(County& add);//add new county to CountyArr.
     bool AddCitizenList(County& add);//if we added new County we link his citizen's list to the main citizen list.
     bool addVote(long& id, int PartyId);//get id of citizen and party serial num. set citizen to vote for this party.
-    virtual bool AddCitizen(Citizen& add, int& CountyNum);//add new citizen to specific county.
+    virtual bool AddCitizen(Citizen& add, int& CountyNum)=0;//add new citizen to specific county.
     bool addParty(Party& add);//add new party to Party Arr.
     bool UpdateRepArray(long& id, int& CountyNum, int& PartyId);//set specific citizen as rep of an existing party.
     bool SearchId(const long& id);
@@ -30,15 +34,17 @@ public:
     Citizen*  PtrCitizenById( long& id);
     void printCounties();
     
-    virtual void printCitizens();
+    virtual void printCitizens()=0;
     void printParties();
-    virtual void PrintResultByCounty();
+    virtual void PrintResultByCounty()=0;
     void PrintListRep(County* county);
     void PrintResultByParty();
     void PrintElection();
 
     //operators//
     const Election& operator=(const Election& other);
+    virtual void save(const char* fileName) const = 0;
+
    // todo: election = operator.
 };
 

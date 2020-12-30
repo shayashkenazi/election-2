@@ -69,5 +69,16 @@ const PartyArr& PartyArr::operator=(const PartyArr& other)
     return *this;
 }
 
+void PartyArr::save(ofstream& outFile) const
+{
+   
+    outFile.write((const char*)&logic, sizeof(int));
+    for (int i = 0; i < logic ; i++)
+    {
+	   parties[i].save(outFile);
+    }
+    
+}
+
 
 

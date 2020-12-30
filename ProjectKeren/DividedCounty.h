@@ -10,10 +10,10 @@ class DividedCounty :    public County
         virtual bool SetElectorsToParty(PartyArr& PartyArray) override ;
         virtual void PrintRepByCounty(PartyArr& PartyArray) override;
 
-        DividedCounty(const char* _name, int& _numofreps) : County(_name, _numofreps) {};
-        DividedCounty(County& county) : County(county) {};
+        DividedCounty(const char* _name, int& _numofreps) : County(_name, _numofreps) {}
+        DividedCounty(County& add) : County(add) {}
        
-        
+        virtual  void save(ofstream& outfile) const ;
     
 };
 

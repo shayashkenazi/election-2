@@ -51,6 +51,10 @@ Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return pt
 
 void CitizenArr::printList() const
 {
+    if (logic == 0) {
+	   cout << "This county don't have citizens " << endl;
+	   return;
+    }
     for (int i = 0; i < logic; i++)
 	   cout << *citizens[i] << endl;
 	   
@@ -66,6 +70,14 @@ const CitizenArr & CitizenArr::operator=(const CitizenArr & other)
 		citizens[i] = other.citizens[i];
 	}
 	return *this;
+}
+
+void CitizenArr::save(ofstream& outfile) const
+{
+    for (int i = 0; i < logic; i++)
+    {
+	   citizens[i]->save(outfile);
+    }
 }
 
 const Citizen* CitizenArr::getCitizen(long id) const
