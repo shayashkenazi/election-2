@@ -1,4 +1,6 @@
 #include "Election.h"
+#include "UnifiedCounty.h"
+#include"DividedCounty.h"
 #include <iostream>
 
 using namespace std;
@@ -60,7 +62,9 @@ bool Election::AddCitizenList(County& add)
 
 bool Election::addParty(Party& add)
 {
-    CountyArr.updateCountyVoteArray();//update the array party vote
+   
+    if(CountyArr.getCounty(0)->getVoteArrayLogic() < add.getPartyId() )
+	   CountyArr.updateCountyVoteArray();//update the array party vote
     return PartyArr.AddParty(add);
 }
 
@@ -206,6 +210,62 @@ void Election::PrintElection()
 
 }
 
+void Election::SetEligibleListFromFile(ifstream& inFile,int CountyIdx)
+{
+    int NumOfCitizens, nameLen;
+    unsigned int yearOfBirth;
+    long id;
+    char *name = nullptr;
+    bool isVote;
+
+    inFile.read((char*)&NumOfCitizens, sizeof(int));//num of citizens in the county
+    for (int i = 0; i < NumOfCitizens; i++)
+    {
+	   inFile.read((char*)&nameLen, sizeof(int));
+	   name = new char[nameLen + 1];
+	   inFile.read((char*)name, sizeof(char) * nameLen);
+	   name[nameLen] = '\0';
+	   inFile.read((char*)&id, sizeof(long));
+	   inFile.read((char*)&yearOfBirth, sizeof(unsigned int));
+	   Citizen newCitizen(name, id, yearOfBirth);
+	   inFile.read((char*)&isVote, sizeof(bool));
+	   if (isVote)
+		  newCitizen.setVote(); //set vote if voted
+	   AddCitizen(newCitizen, CountyIdx);// add the citizen to the eligible citizen's list.
+	   delete[]name;
+    }
+}
+
+void Election::LoadPartiesFromFile(ifstream& inFile)
+{
+    int numOfParties, lenOfName, numOfCounties, RepLogic;
+    long LeadCandid,RepId;
+    char* PartyName=nullptr;
+    inFile.read((char*)&numOfParties, sizeof(int));
+    for (int i = 0; i < numOfParties; i++)
+    {
+	   inFile.read((char*)&lenOfName, sizeof(int));
+	   PartyName = new char[lenOfName + 1];
+	   inFile.read((char*)PartyName, sizeof(char) * lenOfName);
+	   PartyName[lenOfName] = '\0';
+	   inFile.read((char*)&numOfCounties, sizeof(int));
+	   inFile.read((char*)&LeadCandid, sizeof(long));
+	   Citizen* ptrToLeadCand = PtrCitizenById(LeadCandid);
+	   Party newParty(PartyName, *ptrToLeadCand);
+	   addParty(newParty);
+	   for (int j = 0; j < numOfCounties; j++)
+	   {
+		  inFile.read((char*)&RepLogic, sizeof(int));
+		  for (int k = 0; k < RepLogic; k++)
+		  {
+			 inFile.read((char*)&RepId, sizeof(long));
+			 UpdateRepArray(RepId, j, i);
+		  }
+	   }
+    }
+}
+
+
 
 bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
 {
@@ -246,3 +306,36 @@ const Election& Election::operator=(const Election& other) {
 	return *this;
 }
 
+void Election::LoadElecFromFile(ifstream& inFile)
+{
+    int NumOfCounties, type, lenOfName, numOfRep, * voteArray;
+    char* name = nullptr;
+    inFile.read((char*)&NumOfCounties, sizeof(int));//number of counties
+
+    for (int i = 0; i < NumOfCounties; i++)
+    {
+	   inFile.read((char*)&type, sizeof(int));//read the type of county
+	   inFile.read((char*)&lenOfName, sizeof(int));//read the len of county name
+	   name = new char[lenOfName + 1];
+	   inFile.read((char*)&name, sizeof(char) * lenOfName);//
+	   name[lenOfName] = '\0';
+	   inFile.read((char*)&numOfRep, sizeof(int));
+
+	   if (type == unifiedCounty)
+	   {
+		  UnifiedCounty county(name, numOfRep);
+		  county.CreateVoteArrayFromFile(inFile);
+		  AddCounty(county);
+	   }
+	   else
+	   {
+		  DividedCounty county(name, numOfRep);
+		  county.CreateVoteArrayFromFile(inFile);
+		  AddCounty(county);
+	   }
+	   
+	   SetEligibleListFromFile(inFile, i + 1);
+	   delete[]name;
+    }
+    LoadPartiesFromFile(inFile);
+}

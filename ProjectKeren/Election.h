@@ -40,11 +40,15 @@ public:
     void PrintListRep(County* county);
     void PrintResultByParty();
     void PrintElection();
+    void SetEligibleListFromFile(ifstream& inFile, int CountyIdx);
+    void LoadPartiesFromFile(ifstream& inFile);
 
     //operators//
     const Election& operator=(const Election& other);
+    
     virtual void save(const char* fileName) const = 0;
-    virtual void LoadElecFromFile(ifstream& inFile) const = 0;
+    virtual void LoadElecFromFile(ifstream& inFile) ;
+    
    // todo: election = operator.
 };
 

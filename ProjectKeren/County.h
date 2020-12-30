@@ -41,13 +41,15 @@ public:
     bool UpdateVoteArrayToRep();// calcualte how many reps each party gets [electors]
     bool UpdateRestArrayVoters();
     void MostVotedParty();// calculate num of votes for each party by the county's citizens.
-
+    void CreateVoteArrayFromFile(ifstream& inFile);
     //getters//
     const char* getName() const { return CountyName; }
     const int getNumOfRep() const { return NumOfRep; }
     int getCountyId() const { return countyId; }
     int getNumOfVotes() const { return numOfVotes; }
     int getNumOfElectors(int& idx)const { return ElectorsByIdx[idx]; }
+    const int getVoteArrayLogic() const { return voteArrayLogic; }
+
     int getVoteByIdx(int& idx)const { return VoteCountyArray[idx]; }
     int getMaxPartyVotesIndex() { return MaxPartyVotesIndex; }
     int getSizeOfEligiblE()const { return eligibleCitizen.size(); }

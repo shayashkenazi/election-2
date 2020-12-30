@@ -177,6 +177,19 @@ void County::MostVotedParty()
     setMaxPartyVotesIndex(indexP);//set index in county MaxPartyVotesIndex    
     UpdateVoteArrayToRep();        
 }
+void County::CreateVoteArrayFromFile(ifstream& inFile)
+{
+	   inFile.read((char*)&voteArrayLogic, sizeof(int));
+	   voteArrayPhy = voteArrayLogic * 2;
+	   VoteCountyArray = new int[voteArrayPhy];
+	   for (int i = 0; i < voteArrayPhy; i++)
+	   {
+		  VoteCountyArray[i] = 0;
+	   }
+	  
+	   inFile.read((char*)VoteCountyArray, sizeof(int) * voteArrayLogic);
+	   
+}
 ostream& operator<<(ostream& os, const County& county) {
 
     os <<

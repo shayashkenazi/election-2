@@ -50,7 +50,3 @@ void SimpleElection::save(const char* fileName) const
     outFile.close();//close file at the end.
 }
 
-void SimpleElection::LoadElecFromFile(ifstream& inFile) const
-{
-
-}

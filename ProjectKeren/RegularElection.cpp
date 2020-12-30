@@ -1,6 +1,5 @@
 #include "RegularElection.h"
 
-
 bool RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 {
     //check if the citizen exist
@@ -46,7 +45,7 @@ void RegularElection::save(const char* fileName) const
     outFile.write((const char*)&day, sizeof(int));//write date of election.
     outFile.write((const char*)&month, sizeof(int));
     outFile.write((const char*)&year, sizeof(int));
-    outFile.write((const char*)&logic, sizeof(int));//number of counties
+    outFile.write((const char*)&logic, sizeof(int));/// write number of counties
     /*outFile.write((const char*)&physical, sizeof(int));*/
     
     CountyArr.save(outFile);//write counties
@@ -55,7 +54,3 @@ void RegularElection::save(const char* fileName) const
     outFile.close();
 }
 
-void RegularElection::LoadElecFromFile(ifstream& inFile) const
-{
-    inFile.read((char*)&logic, sizeof(int));//number of counties
-}

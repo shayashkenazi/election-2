@@ -18,6 +18,6 @@ class SimpleElection :    public Election
         virtual void printCitizens() override;
         virtual void PrintResultByCounty()override ;
         virtual void save(const char* fileName) const override;
-        virtual void LoadElecFromFile(ifstream& inFile) const override ;
+       
 };
 
