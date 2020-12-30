@@ -28,5 +28,29 @@ void SimpleElection::PrintResultByCounty()
 
 void SimpleElection::save(const char* fileName) const
 {
+    ofstream outFile(fileName, ios::binary | ios::trunc);
+
+    if (!outFile) {
+	   cout << "error outfile" << endl;
+	   return;
+    }
+
+    int type = simpleElection;
+    outFile.write((const char*)&type, sizeof(int));//type of election	  
+    outFile.write((const char*)&day, sizeof(int));//date
+    outFile.write((const char*)&month, sizeof(int));
+    outFile.write((const char*)&year, sizeof(int));
+    outFile.write((const char*)&NumOfRep, sizeof(int));
+    outFile.write((const char*)&logic, sizeof(int));//num of counties
+   /* outFile.write((const char*)&physical, sizeof(int));*///physical size of countyArr
+
+    CountyArr.save(outFile);//write counties to file
+    PartyArr.save(outFile);//write parties to file
+
+    outFile.close();//close file at the end.
+}
+
+void SimpleElection::LoadElecFromFile(ifstream& inFile) const
+{
 
 }

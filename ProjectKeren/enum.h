@@ -11,6 +11,8 @@ enum menu {
     SetVote = 8,
     DisplayElectionResult = 9,
     Exit = 10,
+    SaveElection = 11,
+    LoadElection = 12,
 
     regularElection = 1,
     simpleElection = 2,

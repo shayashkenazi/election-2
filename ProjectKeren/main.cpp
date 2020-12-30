@@ -147,8 +147,47 @@ void electionMenu1(Election *elec,int InitElec) {
 		  delete elec;
 		  exit(0);
 	   }
+	   if(input == SaveElection)
+	   {
+		  cout << "choose a name for the new file: " << endl;
+		  char fileName[MAXSIZE_NAME];
+		  elec->save(fileName);
+		  cout << fileName << " has created successfuly" << endl;
+	   }
+	   if (input == LoadElection)
+	   {
+		  cout << "choose a name for the new file: " << endl;
+		  char fileName[MAXSIZE_NAME];
+		  
+		  ifstream inFile(fileName, ios::binary);
+		  int type;
+		  inFile.read((char*)&type, sizeof(int));
+		  int day, month, year, NumOfReps;
+		  inFile.read((char*)&day, sizeof(int));
+		  inFile.read((char*)&month, sizeof(int));
+		  inFile.read((char*)&year, sizeof(int));
+		 
+		  if (type == regularElection)
+		  {
+			 if (elec != nullptr)
+				delete elec;			
+				elec = new RegularElection(day, month, year);		  
+
+		  }
+		  else
+		  {
+			 if (elec != nullptr)
+				delete elec;
+			 inFile.read((char*)&NumOfReps, sizeof(int));
+			 elec = new SimpleElection(day, month, year, NumOfReps);
+
+
+		  }
+
+	   }
     }
 }
+
 void getdate(int& d, int& m, int& y)
 {
     int stop=0;

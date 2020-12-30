@@ -13,6 +13,8 @@ public:
     virtual bool AddCitizen(Citizen& add, int& CountyNum) override;//add new citizen to specific county.
 
     virtual void save(const char* fileName) const;
+    virtual void LoadElecFromFile(ifstream& inFile) const override;
+
 
 };
 

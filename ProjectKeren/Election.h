@@ -44,7 +44,7 @@ public:
     //operators//
     const Election& operator=(const Election& other);
     virtual void save(const char* fileName) const = 0;
-
+    virtual void LoadElecFromFile(ifstream& inFile) const = 0;
    // todo: election = operator.
 };
 

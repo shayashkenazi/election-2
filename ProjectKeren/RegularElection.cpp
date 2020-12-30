@@ -37,16 +37,25 @@ void RegularElection::save(const char* fileName) const
 {
     ofstream outFile(fileName, ios::binary | ios::trunc);
 
+    if (!outFile) {
+	   cout << "error outfile" << endl;
+	   return;
+    }
     int type = regularElection;
-    outFile.write((const char*)&type, sizeof(int) );
-    outFile.write((const char*)&day, sizeof(int));
+    outFile.write((const char*)&type, sizeof(int) );//type of current election
+    outFile.write((const char*)&day, sizeof(int));//write date of election.
     outFile.write((const char*)&month, sizeof(int));
     outFile.write((const char*)&year, sizeof(int));
-    outFile.write((const char*)&logic, sizeof(int));
-    outFile.write((const char*)&physical, sizeof(int));
+    outFile.write((const char*)&logic, sizeof(int));//number of counties
+    /*outFile.write((const char*)&physical, sizeof(int));*/
     
-    CountyArr.save(outFile);
-    PartyArr.save(outFile);
+    CountyArr.save(outFile);//write counties
+    PartyArr.save(outFile);//write parties to file.
 
     outFile.close();
+}
+
+void RegularElection::LoadElecFromFile(ifstream& inFile) const
+{
+    inFile.read((char*)&logic, sizeof(int));//number of counties
 }
