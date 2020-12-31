@@ -152,7 +152,7 @@ void electionMenu1(Election *elec,int InitElec) {
 			cout << "choose a name for the new file: " << endl;
 			char fileName[MAXSIZE_NAME];// get Input File name.
 			elec->save(fileName);
-			cout << fileName << " has created successfuly" << endl;
+			cout << fileName << "has created successfuly" << endl;
 		}
 		if (input == LoadElection)
 		{
@@ -175,6 +175,7 @@ void electionMenu1(Election *elec,int InitElec) {
 					if (elec != nullptr)//delete existing election.
 						delete elec;
 					elec = new RegularElection(day, month, year);
+					elec->LoadElecFromFile(inFile);
 				}
 				else
 				{
@@ -182,9 +183,13 @@ void electionMenu1(Election *elec,int InitElec) {
 						delete elec;
 					inFile.read((char*)&NumOfReps, sizeof(int));
 					elec = new SimpleElection(day, month, year, NumOfReps);
+					elec->LoadElecFromFile(inFile);
+
 				}
 
 			}
+			cout << fileName << "has load successfuly" << endl;
+
 		}
 	}
 }
