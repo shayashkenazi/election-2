@@ -37,11 +37,11 @@ Citizen& Citizen::operator=(const Citizen& add) {
 void Citizen::save(ofstream& outFile) const
 {
     int lenOfName = strlen(name);
-    outFile.write((const char*)&lenOfName, sizeof(int));
-    outFile.write((const char*)&name, sizeof(char)*lenOfName);
-    outFile.write((const char*)&id, sizeof(long));
-    outFile.write((const char*)&yearOfBirth, sizeof(unsigned int));
-    outFile.write((const char*)&isVoted, sizeof(bool));
+    outFile.write(rcastcc(&lenOfName), sizeof(int));
+    outFile.write(rcastcc(&name), sizeof(char)*lenOfName);
+    outFile.write(rcastcc(&id), sizeof(long));
+    outFile.write(rcastcc(&yearOfBirth), sizeof(unsigned int));
+    outFile.write(rcastcc(&isVoted), sizeof(bool));
 }
 bool Citizen::setVote()
 {

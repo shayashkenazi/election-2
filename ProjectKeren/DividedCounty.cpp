@@ -12,14 +12,14 @@ bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
   void DividedCounty::save(ofstream& outFile) const {
 	 int lenOfName = strlen(CountyName);
 	 int type = dividedCounty;
-	 outFile.write((const char*)&type, sizeof(int));
-	 outFile.write((const char*)&lenOfName, sizeof(int));
-	 outFile.write((const char*)&CountyName, sizeof(char)* lenOfName);
-	 outFile.write((const char*)&NumOfRep, sizeof(int) );
-	 outFile.write((const char*)&voteArrayLogic, sizeof(int));
-	 outFile.write((const char*)&VoteCountyArray, sizeof(int)* voteArrayLogic);
+	 outFile.write(rcastcc(&type), sizeof(int));
+	 outFile.write(rcastcc(&lenOfName), sizeof(int));
+	 outFile.write(rcastcc(&CountyName), sizeof(char)* lenOfName);
+	 outFile.write(rcastcc(&NumOfRep), sizeof(int) );
+	 outFile.write(rcastcc(&voteArrayLogic), sizeof(int));
+	 outFile.write(rcastcc(&VoteCountyArray), sizeof(int)* voteArrayLogic);
 	 int NumOfCitizens = eligibleCitizen.size(); 
-	 outFile.write((const char*)&NumOfCitizens, sizeof(int)); // num of citizens in the county.
+	 outFile.write(rcastcc(&NumOfCitizens), sizeof(int)); // num of citizens in the county.
 	 eligibleCitizen.save(outFile); // the citizen's of the specific county.
 }
 
@@ -49,7 +49,6 @@ void DividedCounty::PrintRepByCounty(PartyArr& PartyArray)
 			 " is: " << PartyArray.getPartyRef(maxInx).getLeadCand().getName() << endl;
 
 		  cout << "the party got " << maxReps << "Representatives" << endl;
-		 
 	   }    
 	   ElectorsByIdx[maxInx] = -1;
     }
