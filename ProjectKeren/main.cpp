@@ -150,6 +150,7 @@ void electionMenu1(Election *elec,int InitElec) {
 		{
 			cout << "choose a name for the new file: " << endl;
 			char fileName[MAXSIZE_NAME];// get Input File name.
+			cin >> fileName;
 			elec->save(fileName);
 			cout << fileName << "has created successfuly" << endl;
 		}
@@ -157,6 +158,7 @@ void electionMenu1(Election *elec,int InitElec) {
 		{
 			cout << "choose a name for the new file: " << endl;
 			char fileName[MAXSIZE_NAME];
+			cin >> fileName;
 			ifstream inFile(fileName, ios::binary);
 			if (!inFile) {
 				cout << "error opening file" << endl;
@@ -182,12 +184,10 @@ void electionMenu1(Election *elec,int InitElec) {
 					inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
 					elec = new SimpleElection(day, month, year, NumOfReps);
 					elec->LoadElecFromFile(inFile);
-
 				}
 
 			}
 			cout << fileName << "has load successfuly" << endl;
-
 		}
 	}
 }
@@ -255,10 +255,9 @@ void InitElectionMenu()
     case CreateNewElection:
 	   getdate(day, month, year);
 	   SelectElection(day, month, year);
-
 	   break;
     case LoadFromFile:
-	   // initialMenu2();
+
 	   break;
     default:
 	   //  run = false;

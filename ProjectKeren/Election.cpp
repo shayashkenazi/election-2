@@ -336,4 +336,5 @@ void Election::LoadElecFromFile(ifstream& inFile)
 	   delete[]name;// free allocated temp name
     }
     LoadPartiesFromFile(inFile);//load parties after loading counties and citizen's.
+    inFile.close();
 }
