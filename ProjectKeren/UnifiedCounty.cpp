@@ -38,6 +38,6 @@ void UnifiedCounty::save(ofstream& outFile) const {
     outFile.write(rcastcc(&voteArrayLogic), sizeof(int));
     outFile.write(rcastcc(&VoteCountyArray), sizeof(int) * voteArrayLogic);
     int NumOfCitizens = eligibleCitizen.size();
-    outFile.write((const char*)&NumOfCitizens, sizeof(int));
+    outFile.write(rcastcc(&NumOfCitizens), sizeof(int));
     eligibleCitizen.save(outFile);
 }
