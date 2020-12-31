@@ -172,10 +172,9 @@ void electionMenu1(Election *elec,int InitElec) {
 
 				if (type == regularElection)
 				{
-					if (elec != nullptr)
+					if (elec != nullptr)//delete existing election.
 						delete elec;
 					elec = new RegularElection(day, month, year);
-
 				}
 				else
 				{
@@ -183,8 +182,6 @@ void electionMenu1(Election *elec,int InitElec) {
 						delete elec;
 					inFile.read((char*)&NumOfReps, sizeof(int));
 					elec = new SimpleElection(day, month, year, NumOfReps);
-
-
 				}
 
 			}

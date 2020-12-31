@@ -311,7 +311,6 @@ void Election::LoadElecFromFile(ifstream& inFile)
     int NumOfCounties, type, lenOfName, numOfRep, * voteArray;
     char* name = nullptr;
     inFile.read((char*)&NumOfCounties, sizeof(int));//number of counties
-
     for (int i = 0; i < NumOfCounties; i++)
     {
 	   inFile.read((char*)&type, sizeof(int));//read the type of county
@@ -321,21 +320,20 @@ void Election::LoadElecFromFile(ifstream& inFile)
 	   name[lenOfName] = '\0';
 	   inFile.read((char*)&numOfRep, sizeof(int));
 
-	   if (type == unifiedCounty)
+	   if (type == unifiedCounty)//check type of County
 	   {
 		  UnifiedCounty county(name, numOfRep);
 		  county.CreateVoteArrayFromFile(inFile);
 		  AddCounty(county);
 	   }
-	   else
+	   else// its divided County
 	   {
 		  DividedCounty county(name, numOfRep);
 		  county.CreateVoteArrayFromFile(inFile);
 		  AddCounty(county);
 	   }
-	   
-	   SetEligibleListFromFile(inFile, i + 1);
-	   delete[]name;
+	   SetEligibleListFromFile(inFile, i + 1);//load citizen's list for specific county.
+	   delete[]name;// free allocated temp name
     }
-    LoadPartiesFromFile(inFile);
+    LoadPartiesFromFile(inFile);//load parties after loading counties and citizen's.
 }
