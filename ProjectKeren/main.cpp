@@ -8,10 +8,30 @@
 
 const int EXIT = 10;
 const int MAXSIZE_NAME = 20;
+void initElectionFromFile(ifstream& inFile, Election * elec) {
+	int type;
+	inFile.read(rcastc(&type), sizeof(int));
+	int day, month, year, NumOfReps;
+	inFile.read(rcastc(&day), sizeof(int));
+	inFile.read(rcastc(&month), sizeof(int));
+	inFile.read(rcastc(&year), sizeof(int));
+	if (type == regularElection)
+	{
+		if (elec != nullptr)//delete existing election.
+			delete elec;
+		elec = new RegularElection(day, month, year);
+	}
+	else
+	{
+		if (elec != nullptr)
+			delete elec;
+		inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
+		elec = new SimpleElection(day, month, year, NumOfReps);
+	}
+	elec->LoadElecFromFile(inFile);
+}
 
-
-
-void electionMenu1(Election *elec,int InitElec) {
+void electionMenu1(Election * elec,int InitElec) {
 
     int input = 0;
     system("cls");
@@ -162,26 +182,7 @@ void electionMenu1(Election *elec,int InitElec) {
 				cout << "error opening file" << endl;
 			}
 			else {
-				int type;
-				inFile.read(rcastc(&type), sizeof(int));
-				int day, month, year, NumOfReps;
-				inFile.read(rcastc(&day), sizeof(int));
-				inFile.read(rcastc(&month), sizeof(int));
-				inFile.read(rcastc(&year), sizeof(int));
-				if (type == regularElection)
-				{
-					if (elec != nullptr)//delete existing election.
-						delete elec;
-					elec = new RegularElection(day, month, year);
-				}
-				else
-				{
-					if (elec != nullptr)
-						delete elec;
-					inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
-					elec = new SimpleElection(day, month, year, NumOfReps);
-				}
-
+				 initElectionFromFile(inFile,elec);
 			}
 		}
 	}

@@ -36,12 +36,12 @@ void SimpleElection::save(const char* fileName) const
     }
 
     int type = simpleElection;
-    outFile.write((const char*)&type, sizeof(int));//type of election	  
-    outFile.write((const char*)&day, sizeof(int));//date
-    outFile.write((const char*)&month, sizeof(int));
-    outFile.write((const char*)&year, sizeof(int));
-    outFile.write((const char*)&NumOfRep, sizeof(int));
-    outFile.write((const char*)&logic, sizeof(int));//num of counties
+    outFile.write(rcastcc(&type), sizeof(int));//type of election	  
+    outFile.write(rcastcc(&day), sizeof(int));//date
+    outFile.write(rcastcc(&month), sizeof(int));
+    outFile.write(rcastcc(&year), sizeof(int));
+    outFile.write(rcastcc(&NumOfRep), sizeof(int));
+    outFile.write(rcastcc(&logic), sizeof(int));//num of counties
    /* outFile.write((const char*)&physical, sizeof(int));*///physical size of countyArr
 
     CountyArr.save(outFile);//write counties to file
