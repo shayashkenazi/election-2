@@ -113,7 +113,6 @@ void electionMenu1(Election *elec,int InitElec) {
 			}
 			else //simple election only one county.
 				CountySerial = 1;
-
 			if (!elec->UpdateRepArray(id, CountySerial, partySerial))
 				cout << "you entered invalid details" << endl;
 		}
@@ -164,12 +163,11 @@ void electionMenu1(Election *elec,int InitElec) {
 			}
 			else {
 				int type;
-				inFile.read((char*)&type, sizeof(int));
+				inFile.read(rcastc(&type), sizeof(int));
 				int day, month, year, NumOfReps;
-				inFile.read((char*)&day, sizeof(int));
-				inFile.read((char*)&month, sizeof(int));
-				inFile.read((char*)&year, sizeof(int));
-
+				inFile.read(rcastc(&day), sizeof(int));
+				inFile.read(rcastc(&month), sizeof(int));
+				inFile.read(rcastc(&year), sizeof(int));
 				if (type == regularElection)
 				{
 					if (elec != nullptr)//delete existing election.
@@ -181,7 +179,7 @@ void electionMenu1(Election *elec,int InitElec) {
 				{
 					if (elec != nullptr)
 						delete elec;
-					inFile.read((char*)&NumOfReps, sizeof(int));
+					inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
 					elec = new SimpleElection(day, month, year, NumOfReps);
 					elec->LoadElecFromFile(inFile);
 

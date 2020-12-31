@@ -218,17 +218,17 @@ void Election::SetEligibleListFromFile(ifstream& inFile,int CountyIdx)
     char *name = nullptr;
     bool isVote;
 
-    inFile.read((char*)&NumOfCitizens, sizeof(int));//num of citizens in the county
+    inFile.read(rcastc(&NumOfCitizens), sizeof(int));//num of citizens in the county
     for (int i = 0; i < NumOfCitizens; i++)
     {
-	   inFile.read((char*)&nameLen, sizeof(int));
+	   inFile.read(rcastc(&nameLen), sizeof(int));
 	   name = new char[nameLen + 1];
 	   inFile.read((char*)name, sizeof(char) * nameLen);
 	   name[nameLen] = '\0';
-	   inFile.read((char*)&id, sizeof(long));
-	   inFile.read((char*)&yearOfBirth, sizeof(unsigned int));
+	   inFile.read(rcastc(&id), sizeof(long));
+	   inFile.read(rcastc(&yearOfBirth), sizeof(unsigned int));
 	   Citizen newCitizen(name, id, yearOfBirth);
-	   inFile.read((char*)&isVote, sizeof(bool));
+	   inFile.read(rcastc(&isVote), sizeof(bool));
 	   if (isVote)
 		  newCitizen.setVote(); //set vote if voted
 	   AddCitizen(newCitizen, CountyIdx);// add the citizen to the eligible citizen's list.
@@ -241,24 +241,24 @@ void Election::LoadPartiesFromFile(ifstream& inFile)
     int numOfParties, lenOfName, numOfCounties, RepLogic;
     long LeadCandid,RepId;
     char* PartyName=nullptr;
-    inFile.read((char*)&numOfParties, sizeof(int));
+    inFile.read(rcastc(&numOfParties), sizeof(int));
     for (int i = 0; i < numOfParties; i++)
     {
-	   inFile.read((char*)&lenOfName, sizeof(int));
+	   inFile.read(rcastc(&lenOfName), sizeof(int));
 	   PartyName = new char[lenOfName + 1];
-	   inFile.read((char*)PartyName, sizeof(char) * lenOfName);
+	   inFile.read(rcastc(PartyName), sizeof(char) * lenOfName);
 	   PartyName[lenOfName] = '\0';
-	   inFile.read((char*)&numOfCounties, sizeof(int));
-	   inFile.read((char*)&LeadCandid, sizeof(long));
+	   inFile.read(rcastc(&numOfCounties), sizeof(int));
+	   inFile.read(rcastc(&LeadCandid), sizeof(long));
 	   Citizen* ptrToLeadCand = PtrCitizenById(LeadCandid);
 	   Party newParty(PartyName, *ptrToLeadCand);
 	   addParty(newParty);
 	   for (int j = 0; j < numOfCounties; j++)
 	   {
-		  inFile.read((char*)&RepLogic, sizeof(int));
+		  inFile.read(rcastc(&RepLogic), sizeof(int));
 		  for (int k = 0; k < RepLogic; k++)
 		  {
-			 inFile.read((char*)&RepId, sizeof(long));
+			 inFile.read(rcastc(&RepId), sizeof(long));
 			 UpdateRepArray(RepId, j, i);
 		  }
 	   }
@@ -310,15 +310,15 @@ void Election::LoadElecFromFile(ifstream& inFile)
 {
     int NumOfCounties, type, lenOfName, numOfRep, * voteArray;
     char* name = nullptr;
-    inFile.read((char*)&NumOfCounties, sizeof(int));//number of counties
+    inFile.read(rcastc(&NumOfCounties), sizeof(int));//number of counties
     for (int i = 0; i < NumOfCounties; i++)
     {
-	   inFile.read((char*)&type, sizeof(int));//read the type of county
-	   inFile.read((char*)&lenOfName, sizeof(int));//read the len of county name
+	   inFile.read(rcastc(&type), sizeof(int));//read the type of county
+	   inFile.read(rcastc(&lenOfName), sizeof(int));//read the len of county name
 	   name = new char[lenOfName + 1];
-	   inFile.read((char*)&name, sizeof(char) * lenOfName);//
+	   inFile.read(rcastc(&name), sizeof(char) * lenOfName);//
 	   name[lenOfName] = '\0';
-	   inFile.read((char*)&numOfRep, sizeof(int));
+	   inFile.read(rcastc(&numOfRep), sizeof(int));
 
 	   if (type == unifiedCounty)//check type of County
 	   {

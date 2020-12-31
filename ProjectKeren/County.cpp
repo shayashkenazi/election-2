@@ -179,7 +179,7 @@ void County::MostVotedParty()
 }
 void County::CreateVoteArrayFromFile(ifstream& inFile)
 {
-	   inFile.read((char*)&voteArrayLogic, sizeof(int));
+	   inFile.read(rcastc(&voteArrayLogic), sizeof(int));
 	   voteArrayPhy = voteArrayLogic * 2;
 	   VoteCountyArray = new int[voteArrayPhy];
 	   for (int i = 0; i < voteArrayPhy; i++)
@@ -187,7 +187,7 @@ void County::CreateVoteArrayFromFile(ifstream& inFile)
 		  VoteCountyArray[i] = 0;
 	   }
 	  
-	   inFile.read((char*)VoteCountyArray, sizeof(int) * voteArrayLogic);
+	   inFile.read(rcastc(VoteCountyArray), sizeof(int) * voteArrayLogic);
 	   
 }
 ostream& operator<<(ostream& os, const County& county) {

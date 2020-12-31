@@ -43,11 +43,11 @@ const PtrCitizenArray & PtrCitizenArray::operator=(const PtrCitizenArray & other
 
 void PtrCitizenArray::save(ofstream& outFile) const
 {
-    outFile.write((const char*)&logic, sizeof(int));
+    outFile.write(rcastcc(&logic), sizeof(int));
     for (int i = 0; i < logic; i++)
     {
 	   long id = citizens[i]->getId();
-	   outFile.write((const char*)&id, sizeof(long));
+	   outFile.write(rcastcc(&id), sizeof(long));
     }
     
 

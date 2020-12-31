@@ -31,13 +31,13 @@ void UnifiedCounty::PrintRepByCounty(PartyArr& PartyArray)
 void UnifiedCounty::save(ofstream& outFile) const {
     int lenOfName = strlen(CountyName);
     int type = unifiedCounty;
-    outFile.write((const char*)&type, sizeof(int));
-    outFile.write((const char*)&lenOfName, sizeof(int));
-    outFile.write((const char*)&CountyName, sizeof(char) * lenOfName);
-    outFile.write((const char*)&NumOfRep, sizeof(int));
-    outFile.write((const char*)&voteArrayLogic, sizeof(int));
-    outFile.write((const char*)&VoteCountyArray, sizeof(int) * voteArrayLogic);
+    outFile.write(rcastcc(&type), sizeof(int));
+    outFile.write(rcastcc(&lenOfName), sizeof(int));
+    outFile.write(rcastcc(&CountyName), sizeof(char) * lenOfName);
+    outFile.write(rcastcc(&NumOfRep), sizeof(int));
+    outFile.write(rcastcc(&voteArrayLogic), sizeof(int));
+    outFile.write(rcastcc(&VoteCountyArray), sizeof(int) * voteArrayLogic);
     int NumOfCitizens = eligibleCitizen.size();
-    outFile.write((const char*)&NumOfCitizens, sizeof(int));
+    outFile.write(rcastcc(&NumOfCitizens), sizeof(int));
     eligibleCitizen.save(outFile);
 }
