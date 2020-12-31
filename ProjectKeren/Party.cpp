@@ -109,7 +109,7 @@ void Party::save(ofstream& outFile) const
 {
     int lenOfName = strlen(PartyName);// length of party name
     outFile.write((const char*)&lenOfName, sizeof(int));
-    outFile.write((const char*)&PartyName, sizeof(char) * lenOfName);
+    outFile.write((const char*)PartyName, sizeof(char) * lenOfName);
     outFile.write((const char*)&numOfCounties, sizeof(int));// for rep array
     long LeadCandid = LeadCand->getId();// lead candidate id
     outFile.write((const char*)&LeadCandid, sizeof(long));

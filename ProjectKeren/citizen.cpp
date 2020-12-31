@@ -38,7 +38,7 @@ void Citizen::save(ofstream& outFile) const
 {
     int lenOfName = strlen(name);
     outFile.write(rcastcc(&lenOfName), sizeof(int));
-    outFile.write(rcastcc(&name), sizeof(char)*lenOfName);
+    outFile.write(rcastcc(name), sizeof(char)*lenOfName);
     outFile.write(rcastcc(&id), sizeof(long));
     outFile.write(rcastcc(&yearOfBirth), sizeof(unsigned int));
     outFile.write(rcastcc(&isVoted), sizeof(bool));

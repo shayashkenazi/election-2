@@ -223,7 +223,7 @@ void Election::SetEligibleListFromFile(ifstream& inFile,int CountyIdx)
     {
 	   inFile.read(rcastc(&nameLen), sizeof(int));
 	   name = new char[nameLen + 1];
-	   inFile.read((char*)name, sizeof(char) * nameLen);
+	   inFile.read(rcastc(name), sizeof(char) * nameLen);
 	   name[nameLen] = '\0';
 	   inFile.read(rcastc(&id), sizeof(long));
 	   inFile.read(rcastc(&yearOfBirth), sizeof(unsigned int));
@@ -308,6 +308,7 @@ const Election& Election::operator=(const Election& other) {
 
 void Election::LoadElecFromFile(ifstream& inFile)
 {
+    
     int NumOfCounties, type, lenOfName, numOfRep, * voteArray;
     char* name = nullptr;
     inFile.read(rcastc(&NumOfCounties), sizeof(int));//number of counties
@@ -316,7 +317,7 @@ void Election::LoadElecFromFile(ifstream& inFile)
 	   inFile.read(rcastc(&type), sizeof(int));//read the type of county
 	   inFile.read(rcastc(&lenOfName), sizeof(int));//read the len of county name
 	   name = new char[lenOfName + 1];
-	   inFile.read(rcastc(&name), sizeof(char) * lenOfName);//
+	   inFile.read(rcastc(name), sizeof(char) * lenOfName);//
 	   name[lenOfName] = '\0';
 	   inFile.read(rcastc(&numOfRep), sizeof(int));
 

@@ -14,7 +14,7 @@ bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
 	 int type = dividedCounty;
 	 outFile.write(rcastcc(&type), sizeof(int));
 	 outFile.write(rcastcc(&lenOfName), sizeof(int));
-	 outFile.write(rcastcc(&CountyName), sizeof(char)* lenOfName);
+	 outFile.write(rcastcc(CountyName), sizeof(char)* lenOfName);
 	 outFile.write(rcastcc(&NumOfRep), sizeof(int) );
 	 outFile.write(rcastcc(&voteArrayLogic), sizeof(int));
 	 outFile.write(rcastcc(&VoteCountyArray), sizeof(int)* voteArrayLogic);
