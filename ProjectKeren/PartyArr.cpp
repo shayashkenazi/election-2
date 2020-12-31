@@ -71,13 +71,11 @@ const PartyArr& PartyArr::operator=(const PartyArr& other)
 
 void PartyArr::save(ofstream& outFile) const
 {
-   
-    outFile.write((const char*)&logic, sizeof(int));
+    outFile.write((const char*)&logic, sizeof(int));// num of parties
     for (int i = 0; i < logic ; i++)
     {
 	   parties[i].save(outFile);
     }
-    
 }
 
 

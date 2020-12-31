@@ -107,13 +107,13 @@ const Party & Party::operator=(const Party & other)
 
 void Party::save(ofstream& outFile) const
 {
-    int lenOfName = strlen(PartyName);
+    int lenOfName = strlen(PartyName);// length of party name
     outFile.write((const char*)&lenOfName, sizeof(int));
     outFile.write((const char*)&PartyName, sizeof(char) * lenOfName);
-    outFile.write((const char*)&numOfCounties, sizeof(int));
-    long LeadCandid = LeadCand->getId();
+    outFile.write((const char*)&numOfCounties, sizeof(int));// for rep array
+    long LeadCandid = LeadCand->getId();// lead candidate id
     outFile.write((const char*)&LeadCandid, sizeof(long));
-    for (int i = 0; i < numOfCounties; i++) 
+    for (int i = 0; i < numOfCounties; i++) // write rep array
     {
 	   repArray[i].save(outFile);
     }

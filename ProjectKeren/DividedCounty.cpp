@@ -18,9 +18,9 @@ bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
 	 outFile.write((const char*)&NumOfRep, sizeof(int) );
 	 outFile.write((const char*)&voteArrayLogic, sizeof(int));
 	 outFile.write((const char*)&VoteCountyArray, sizeof(int)* voteArrayLogic);
-	 int NumOfCitizens = eligibleCitizen.size();
-	 outFile.write((const char*)&NumOfCitizens, sizeof(int));
-	 eligibleCitizen.save(outFile);
+	 int NumOfCitizens = eligibleCitizen.size(); 
+	 outFile.write((const char*)&NumOfCitizens, sizeof(int)); // num of citizens in the county.
+	 eligibleCitizen.save(outFile); // the citizen's of the specific county.
 }
 
 void DividedCounty::PrintRepByCounty(PartyArr& PartyArray)
