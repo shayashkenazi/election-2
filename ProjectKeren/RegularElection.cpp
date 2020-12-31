@@ -41,11 +41,11 @@ void RegularElection::save(const char* fileName) const
 	   return;
     }
     int type = regularElection;
-    outFile.write((const char*)&type, sizeof(int) );//type of current election
-    outFile.write((const char*)&day, sizeof(int));//write date of election.
-    outFile.write((const char*)&month, sizeof(int));
-    outFile.write((const char*)&year, sizeof(int));
-    outFile.write((const char*)&logic, sizeof(int));/// write number of counties
+    outFile.write(rcastcc(&type), sizeof(int) );//type of current election
+    outFile.write(rcastcc(&day), sizeof(int));//write date of election.
+    outFile.write(rcastcc(&month), sizeof(int));
+    outFile.write(rcastcc(&year), sizeof(int));
+    outFile.write(rcastcc(&logic), sizeof(int));/// write number of counties
     /*outFile.write((const char*)&physical, sizeof(int));*/
     
     CountyArr.save(outFile);//write counties
