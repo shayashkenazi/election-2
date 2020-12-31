@@ -39,7 +39,7 @@ public:
     virtual void PrintResultByCounty()=0;
     void PrintListRep(County* county);
     void PrintResultByParty();
-    void PrintElection();
+   virtual void PrintElection() =0 ;
     void SetEligibleListFromFile(ifstream& inFile, int CountyIdx);
     void LoadPartiesFromFile(ifstream& inFile);
 

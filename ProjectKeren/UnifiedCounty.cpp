@@ -12,8 +12,8 @@ bool UnifiedCounty::SetElectorsToParty(PartyArr& PartyArray)
 
 void UnifiedCounty::PrintRepByCounty(PartyArr& PartyArray)
 {
-    cout << "the lead candidate of party is" << endl << PartyArray.getPartyRef(MaxPartyVotesIndex).getLeadCand() << endl
-	   << "the percent of voters is " << getNumOfVotes() /(float)eligibleCitizen.size() * 100 << "%" << endl;
+    cout << "the lead candidate of party is: " << endl << PartyArray.getPartyRef(MaxPartyVotesIndex).getLeadCand() << endl
+	   << "the party got  " << getNumOfVotes() /(float)eligibleCitizen.size() * 100 << "%" << " of the votes " <<endl;
     int countLoopRep;
     if (getNumOfVotes() == 0) {
 	   cout << "no one has voted in this county " << endl;
@@ -21,9 +21,9 @@ void UnifiedCounty::PrintRepByCounty(PartyArr& PartyArray)
     }
     for (int i = 0; i < PartyArray.size(); i++)
     {
-	   cout << "The " << PartyArray.getPartyRef(i).getPartyName() << "party "  ;
+	   cout << "The " << PartyArray.getPartyRef(i).getPartyName() << " party "  ;
 	   countLoopRep = getNumOfElectors(i);
-	   cout << " get " << countLoopRep << "Representatives , that mean as " << ((float)getVoteByIdx(i) / (float)getNumOfVotes()) * 100 << "%" << endl;
+	   cout << " got " << countLoopRep << "Representatives , that mean as " << ((float)getVoteByIdx(i) / (float)getNumOfVotes()) * 100 << "%" << endl;
 	   PartyArray.getPartyRef(i).pritnRepByIdx(countLoopRep,getCountyId());
     }
 

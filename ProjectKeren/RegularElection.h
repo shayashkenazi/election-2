@@ -9,6 +9,8 @@ public:
     
 
     virtual void PrintResultByCounty() override;
+    virtual void PrintElection()  override;
+
     virtual void printCitizens() override;
     virtual bool AddCitizen(Citizen& add, int& CountyNum) override;//add new citizen to specific county.
 

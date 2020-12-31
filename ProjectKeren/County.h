@@ -42,6 +42,9 @@ public:
     bool UpdateRestArrayVoters();
     void MostVotedParty();// calculate num of votes for each party by the county's citizens.
     void CreateVoteArrayFromFile(ifstream& inFile);
+    static void resetCounter() { countySerialNumber = 0; }
+    
+
     //getters//
     const char* getName() const { return CountyName; }
     const int getNumOfRep() const { return NumOfRep; }

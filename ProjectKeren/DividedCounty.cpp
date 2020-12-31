@@ -3,6 +3,8 @@
 
 bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
 {
+    MostVotedParty(); // update the index of most voted party at the county
+
     for (int i = 0; i < PartyArray.size(); i++)
     {
         PartyArray.getPartyRef(i).SetElectors(ElectorsByIdx[i]); 

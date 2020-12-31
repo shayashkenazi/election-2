@@ -32,6 +32,11 @@ void RegularElection::PrintResultByCounty()
 	   CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
     }
 }
+void RegularElection::PrintElection()
+{
+    PrintResultByCounty();
+    PrintResultByParty();
+}
 void RegularElection::save(const char* fileName) const
 {
     ofstream outFile(fileName, ios::binary | ios::trunc);

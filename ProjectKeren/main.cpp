@@ -28,6 +28,8 @@ void initElectionFromFile(ifstream& inFile, Election* elec) {
 	   inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
 	   elec = new SimpleElection(day, month, year, NumOfReps);
     }
+    County::resetCounter();
+    Party::resetCounter();
     elec->LoadElecFromFile(inFile);
 }
 
@@ -160,7 +162,10 @@ void electionMenu1(Election* elec) {
 		  elec->addVote(id, partySerial);
 	   }
 	   if (input == DisplayElectionResult)
+	   {
+		  system("cls");
 		  elec->PrintElection();
+	   }
 	   if (input == Exit)
 	   {
 		  delete elec;
