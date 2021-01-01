@@ -101,6 +101,13 @@ void Election::printCounties()
     CountyArr.printCounties();
   
 }
+
+void Election::printDate()
+{
+    cout << "***** WELCOME TO ELECTION *****" << endl;
+    cout << "***** DATE : " << day << "/" << month << "/" << year << " *****" << endl;
+
+}
    
 void Election::printCitizens()
 {
@@ -146,7 +153,7 @@ bool Election::addVote(long& id, int PartyId)
 
 void Election::PrintResultByCounty()
 {
-    int indexMaxParty,numOfRepByCounty;
+    int numOfRepByCounty;
     for (int i = 0; i < CountyArr.size(); i++)
     {
 	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
@@ -204,7 +211,7 @@ void Election::PrintResultByParty()
 }
 void Election::PrintElection()
 {
-   
+    printDate();
     PrintResultByCounty();
     PrintResultByParty();
 

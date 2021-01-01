@@ -64,6 +64,10 @@ void electionMenu1(Election* elec) {
 			 cin >> CountyName;
 			 cout << "Enter number of reps: " << endl;
 			 cin >> numOfRep;
+			 if (numOfRep < 0) {
+				cout << "wrong input" << endl;
+				continue;
+			 }
 			 cout << "Enter 1 for unified County or 2 for Divided County: " << endl;
 			 cin >> CountyType;
 			 if (CountyType == 1) {
@@ -164,6 +168,7 @@ void electionMenu1(Election* elec) {
 	   if (input == DisplayElectionResult)
 	   {
 		  system("cls");
+
 		  elec->PrintElection();
 	   }
 	   if (input == Exit)
@@ -271,6 +276,10 @@ void InitElectionMenu()
 		  electionMenu1(elec);
 	   }
 	   break;
+
+	   if (InitElection == ExitProcess)
+		  exit(0);
+  
    
     }
 }

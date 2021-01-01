@@ -22,7 +22,7 @@ void RegularElection::printCitizens()
 }
 void RegularElection::PrintResultByCounty()
 {
-    int indexMaxParty, numOfRepByCounty;
+    int  numOfRepByCounty;
     for (int i = 0; i < CountyArr.size(); i++)
     {
 	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
@@ -34,6 +34,7 @@ void RegularElection::PrintResultByCounty()
 }
 void RegularElection::PrintElection()
 {
+    printDate();
     PrintResultByCounty();
     PrintResultByParty();
 }

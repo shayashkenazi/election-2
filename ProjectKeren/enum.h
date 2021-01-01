@@ -19,5 +19,6 @@ enum menu {
     unifiedCounty = 1,
     dividedCounty = 2,
     CreateNewElection = 1,
-    LoadFromFile = 2
+    LoadFromFile = 2,
+    ExitProcess =3
 };

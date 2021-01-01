@@ -2,10 +2,12 @@
 #include <iostream>
 using namespace std;
 int Party ::partySerialNumber = 0;
-Party::Party()
-{
+Party::Party() 
+{   
+    PartyId = partySerialNumber;
+
 }
-Party::Party(char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
+Party::Party(const char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
 {
     RepArrayPhysical = 0;
     partySerialNumber++;

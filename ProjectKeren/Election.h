@@ -33,7 +33,8 @@ public:
     //getters//
     Citizen*  PtrCitizenById( long& id);
     void printCounties();
-    
+    void printDate();
+
     virtual void printCitizens()=0;
     void printParties();
     virtual void PrintResultByCounty()=0;
