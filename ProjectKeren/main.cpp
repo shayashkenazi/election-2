@@ -28,6 +28,7 @@ void initElectionFromFile(ifstream& inFile, Election* elec) {
 	   inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
 	   elec = new SimpleElection(day, month, year, NumOfReps);
     }
+	
     elec->LoadElecFromFile(inFile);
 }
 

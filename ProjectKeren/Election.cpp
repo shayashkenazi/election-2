@@ -308,7 +308,7 @@ const Election& Election::operator=(const Election& other) {
 
 void Election::LoadElecFromFile(ifstream& inFile)
 {
-    
+    County::
     int NumOfCounties, type, lenOfName, numOfRep, * voteArray;
     char* name = nullptr;
     inFile.read(rcastc(&NumOfCounties), sizeof(int));//number of counties
