@@ -28,7 +28,7 @@ public:
     County();
     County(const County& other);
     County(ifstream& inFile);
-    ~County();
+    virtual  ~County();
 
     //setters//
 
