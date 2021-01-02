@@ -39,6 +39,35 @@ Party::Party(const Party& other)
     numOfCounties = other.numOfCounties;
 }
 
+Party::Party(istream& inFile)
+{
+  /*  int  lenOfName, numOfParties;
+    long LeadCandid;
+    
+    inFile.read(rcastc(&numOfParties), sizeof(int));
+    for (int i = 0; i < numOfParties; i++)
+    {
+	   inFile.read(rcastc(&lenOfName), sizeof(int));
+	   PartyName = new char[lenOfName + 1];
+	   inFile.read(rcastc(PartyName), sizeof(char) * lenOfName);
+	   PartyName[lenOfName] = '\0';
+	   inFile.read(rcastc(&numOfCounties), sizeof(int));
+	   inFile.read(rcastc(&LeadCandid), sizeof(long));
+	   Citizen* ptrToLeadCand = PtrCitizenById(LeadCandid);
+	   Party newParty(PartyName, *ptrToLeadCand);
+	   addParty(newParty);
+	   for (int j = 0; j < numOfCounties; j++)
+	   {
+		  inFile.read(rcastc(&RepLogic), sizeof(int));
+		  for (int k = 0; k < RepLogic; k++)
+		  {
+			 inFile.read(rcastc(&RepId), sizeof(long));
+			 UpdateRepArray(RepId, j, i);
+		  }
+	   }
+    }*/
+}
+
 bool Party::setPartyName(const char* _PartyName)
 {
     PartyName = new char[strlen(_PartyName) + 1];

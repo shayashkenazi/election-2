@@ -3,6 +3,18 @@
 #include"PartyArr.h"
 
 
+UnifiedCounty::UnifiedCounty(istream& inFile)
+{
+    int lenOfName;
+    inFile.read(rcastc(&lenOfName), sizeof(int));//read the len of county name
+    CountyName = new char[lenOfName + 1];
+    inFile.read(rcastc(CountyName), sizeof(char) * lenOfName);//
+    CountyName[lenOfName] = '\0';
+    inFile.read(rcastc(&NumOfRep), sizeof(int));
+
+
+}
+
 bool UnifiedCounty::SetElectorsToParty(PartyArr& PartyArray)
 {
     MostVotedParty(); // update the index of most voted party at the county
