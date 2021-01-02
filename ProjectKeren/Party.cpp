@@ -110,7 +110,6 @@ const Party & Party::operator=(const Party & other)
 	
 	LeadCand = other.LeadCand;
 	repArray = other.repArray;
-	numOfCounties = other.numOfCounties;
 	return *this;
 
 }
