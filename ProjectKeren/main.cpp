@@ -35,7 +35,7 @@ void initElectionFromFile(ifstream& inFile, Election** elec) {
 void printMenu()
 {
     
-    cout << "please choose one of the actions: (party and county indexes start from 1" << endl;
+    cout << "please choose one of the actions: (party and county indexes start from 1)" << endl;
     cout << "1-to add a county" << endl;
     cout << "2- to add a citizen" << endl;
     cout << "3- to add a party" << endl;
@@ -65,7 +65,7 @@ void electionMenu1(Election* elec) {
 		  if (typeid(*elec) == typeid(RegularElection)) {
 			 char CountyName[MAXSIZE_NAME];
 			 int numOfRep, CountyType;
-			 cout << " Enter the name of the county :" << endl;
+			 cout << "Enter the name of the county :" << endl;
 			 cin >> CountyName;
 			 cout << "Enter number of reps: " << endl;
 			 cin >> numOfRep;
@@ -115,7 +115,6 @@ void electionMenu1(Election* elec) {
 	   {
 		  char partyName[MAXSIZE_NAME];
 		  long LeadCandId;
-
 		  cout << "Party name: " << endl;
 		  cin >> partyName;
 		  cout << "President candidate ID: " << endl;
@@ -168,6 +167,7 @@ void electionMenu1(Election* elec) {
 	   }
 	   if (input == SetVote)
 	   {
+		   system("cls");
 		  int  partySerial;
 		  long id;
 		  cout << "Voter ID : " << endl;
@@ -183,7 +183,8 @@ void electionMenu1(Election* elec) {
 	   }
 	   if (input == Exit)
 	   {
-		  delete elec;
+		   if (elec!=nullptr)
+			 delete elec;
 		  exit(0);
 	   }
 	   if (input == SaveElection)
