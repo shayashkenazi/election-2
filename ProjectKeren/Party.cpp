@@ -120,10 +120,10 @@ void Party::save(ofstream& outFile) const
 {
     long LeadCandid = LeadCand->getId();// lead candidate id
     int lenOfName = strlen(PartyName);// length of party name
-    outFile.write((const char*)&LeadCandid, sizeof(long));//write lead cand id.
-    outFile.write((const char*)&lenOfName, sizeof(int));//length of party name
-    outFile.write((const char*)PartyName, sizeof(char) * lenOfName);
-    outFile.write((const char*)&numOfCounties, sizeof(int));// for rep array
+    outFile.write(rcastcc(&LeadCandid), sizeof(long));//write lead cand id.
+    outFile.write(rcastcc(&lenOfName), sizeof(int));//length of party name
+    outFile.write(rcastcc(PartyName), sizeof(char) * lenOfName);
+    outFile.write(rcastcc(&numOfCounties), sizeof(int));// for rep array
 
     for (int i = 0; i < numOfCounties; i++) // write rep array
     {

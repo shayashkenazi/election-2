@@ -194,8 +194,8 @@ void Election::PrintResultByParty()
 		  }
 	   }
 	   cout << "Party: " << PartyArr.getPartyRef(max_idx).getPartyName();
-	   cout << "Lead Cand id: " << PartyArr.getPartyRef(max_idx).getLeadCand().getId();
-		cout << "representatives: " << PartyArr.getPartyRef(max_idx).getSumOfElectors();
+	   cout << " Lead Cand id: " << PartyArr.getPartyRef(max_idx).getLeadCand().getId();
+		cout << " representatives: " << PartyArr.getPartyRef(max_idx).getSumOfElectors();
 		for (int k = 0; k < CountyArr.size(); k++)
 		{
 		    sumVotes += CountyArr.getCounty(k)->getVoteByIdx(max_idx);

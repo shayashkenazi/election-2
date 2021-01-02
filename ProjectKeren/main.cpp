@@ -206,6 +206,7 @@ void electionMenu1(Election* elec) {
 		  else {
 			 initElectionFromFile(inFile, &elec);
 		  }
+		  inFile.close();
 	   }
     }
 }
