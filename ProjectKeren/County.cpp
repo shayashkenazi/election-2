@@ -18,13 +18,11 @@ County::County(const char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), Ma
  
 }
 County::County()
-{
+{ 
     voteArrayLogic = 0;
     voteArrayPhy = 2;
     VoteCountyArray = new int[voteArrayPhy];
     VoteCountyArray[0] = VoteCountyArray[1] = 0;
-    ElectorsByIdx = new int[voteArrayPhy];
-    restArrayVoters = new float[voteArrayPhy];
 }
 County::County(const County& other)
 {
@@ -36,10 +34,8 @@ County::County(const County& other)
     voteArrayLogic = other.voteArrayLogic;
     voteArrayPhy = other.voteArrayPhy;
     numOfVotes = other.numOfVotes;
-    MaxPartyVotesIndex = other.MaxPartyVotesIndex;
-    
-	VoteCountyArray = new int[voteArrayPhy];
-	
+    MaxPartyVotesIndex = other.MaxPartyVotesIndex;    
+    VoteCountyArray = new int[voteArrayPhy];	
 	 for (int i = 0; i < voteArrayPhy; i++)//init voteArray
 	   {
 		  VoteCountyArray[i] = other.VoteCountyArray[i];  
@@ -58,8 +54,6 @@ County::County(ifstream& inFile)//file ctor.
 	voteArrayPhy = 2;
 	VoteCountyArray = new int[voteArrayPhy];
 	VoteCountyArray[0] = VoteCountyArray[1] = 0;
-	ElectorsByIdx = new int[voteArrayPhy];
-	restArrayVoters = new float[voteArrayPhy];
 	countySerialNumber++;
 	countyId = countySerialNumber;//keep serial Number updated
 

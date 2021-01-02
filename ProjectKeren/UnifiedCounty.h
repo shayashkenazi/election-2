@@ -11,7 +11,7 @@ private:
         UnifiedCounty(ifstream& inFile) : County(inFile) {}
 
         //dtor//
-        ~UnifiedCounty();
+        ~UnifiedCounty(){}
         virtual bool SetElectorsToParty(PartyArr& PartyArray) override;    
         virtual void PrintRepByCounty(PartyArr& PartyArray) override;
         virtual void save(ofstream& outFile) const override;

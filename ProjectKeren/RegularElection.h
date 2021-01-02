@@ -8,7 +8,7 @@ public:
     RegularElection(int& day, int& month, int& year) : Election(day, month, year) {}// use Eletion's base ctor.
     RegularElection(int& day, int& month, int& year, ifstream& inFile) : Election(day, month, year) 
     { LoadElecFromFile(inFile); }// file ctor
-    ~RegularElection();
+    ~RegularElection(){}
 
     virtual void PrintResultByCounty() override;
     virtual void PrintElection()  override;

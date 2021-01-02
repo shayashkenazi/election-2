@@ -11,6 +11,7 @@ class DividedCounty :    public County
         DividedCounty(const char* _name, int& _numofreps) : County(_name, _numofreps) {}
         DividedCounty(County& add) : County(add) {}
         DividedCounty(ifstream & inFile) : County(inFile){}
+        ~DividedCounty(){}
 
         //virtual over Ride//
         virtual bool SetElectorsToParty(PartyArr& PartyArray) override;

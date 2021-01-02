@@ -19,7 +19,7 @@ protected:
     
 public:
     Election();//default ctor.
-     virtual  ~Election();
+    virtual  ~Election();
     Election(int _day, int _month, int _year);
     //setters//
     bool AddCounty(County& add);//add new county to CountyArr.
