@@ -232,7 +232,6 @@ void Election::LoadPartiesFromFile(ifstream& inFile)
 {
     int numOfParties,  numOfCounties, RepLogic;
     long LeadCandid,RepId;
-    char* PartyName=nullptr;
     inFile.read(rcastc(&numOfParties), sizeof(int));
     for (int i = 0; i < numOfParties; i++)
     {
