@@ -14,7 +14,7 @@ class SimpleElection :    public Election
             AddCounty(*newcounty);
         }
         ~SimpleElection();
-        SimpleElection(int& day, int& month, int& year, int& numOfreps, ifstream& inFile) : Election(day, month, year)
+        SimpleElection(int& day, int& month, int& year, int& numOfreps, ifstream& inFile) : Election(day, month, year), NumOfRep(numOfreps)
         { LoadElecFromFile(inFile); }//file ctor
         virtual bool AddCitizen(Citizen& add, int& CountyNum) override ;//add new citizen to specific county.
         virtual void printCitizens() override;
