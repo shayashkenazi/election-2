@@ -16,6 +16,18 @@ Party::Party(const char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
     strcpy(this->PartyName, _PartyName);
 }
 
+Party::Party(ifstream& inFile, Citizen& _LeadCand)// file ctor
+{
+    RepArrayPhysical = 0;
+    partySerialNumber++;
+    PartyId = partySerialNumber;
+    int lenOfName;
+    inFile.read(rcastc(&lenOfName), sizeof(int));
+    PartyName = new char[lenOfName + 1];
+    inFile.read(rcastc(PartyName), sizeof(char) * lenOfName);
+    PartyName[lenOfName] = '\0';
+}
+
 Party::~Party()
 {
     delete PartyName;
@@ -110,18 +122,17 @@ const Party & Party::operator=(const Party & other)
 
 void Party::save(ofstream& outFile) const
 {
+    long LeadCandid = LeadCand->getId();// lead candidate id
     int lenOfName = strlen(PartyName);// length of party name
-    outFile.write((const char*)&lenOfName, sizeof(int));
+    outFile.write((const char*)&LeadCandid, sizeof(long));//write lead cand id.
+    outFile.write((const char*)&lenOfName, sizeof(int));//length of party name
     outFile.write((const char*)PartyName, sizeof(char) * lenOfName);
     outFile.write((const char*)&numOfCounties, sizeof(int));// for rep array
-    long LeadCandid = LeadCand->getId();// lead candidate id
-    outFile.write((const char*)&LeadCandid, sizeof(long));
+
     for (int i = 0; i < numOfCounties; i++) // write rep array
     {
 	   repArray[i].save(outFile);
     }
-
-
 }
 
 ostream& operator<<(ostream& os, const Party& party)

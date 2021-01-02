@@ -230,22 +230,18 @@ void Election::SetEligibleListFromFile(ifstream& inFile,int CountyIdx)
 
 void Election::LoadPartiesFromFile(ifstream& inFile)
 {
-    int numOfParties, lenOfName, numOfCounties, RepLogic;
+    int numOfParties,  numOfCounties, RepLogic;
     long LeadCandid,RepId;
     char* PartyName=nullptr;
     inFile.read(rcastc(&numOfParties), sizeof(int));
     for (int i = 0; i < numOfParties; i++)
     {
-	   inFile.read(rcastc(&lenOfName), sizeof(int));
-	   PartyName = new char[lenOfName + 1];
-	   inFile.read(rcastc(PartyName), sizeof(char) * lenOfName);
-	   PartyName[lenOfName] = '\0';
-	   inFile.read(rcastc(&numOfCounties), sizeof(int));
-	   inFile.read(rcastc(&LeadCandid), sizeof(long));
+		inFile.read(rcastc(&LeadCandid), sizeof(long));
 	   Citizen* ptrToLeadCand = PtrCitizenById(LeadCandid);
-	   Party newParty(PartyName, *ptrToLeadCand);
+	   Party newParty(inFile, *ptrToLeadCand); // use file ctor of Party.
 	   addParty(newParty);
-	   for (int j = 0; j < numOfCounties; j++)
+	   inFile.read(rcastc(&numOfCounties), sizeof(int));
+	   for (int j = 0; j < numOfCounties; j++)// init rep array of specific party.
 	   {
 		  inFile.read(rcastc(&RepLogic), sizeof(int));
 		  for (int k = 0; k < RepLogic; k++)
@@ -256,8 +252,6 @@ void Election::LoadPartiesFromFile(ifstream& inFile)
 	   }
     }
 }
-
-
 
 bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
 {
@@ -274,7 +268,6 @@ bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
     }
     
     Citizen* ptrToRep = PtrCitizenById(id);
-   
     if (ptrToRep == nullptr)
     {
 	   cout << "citizen NOT found " << endl;

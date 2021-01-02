@@ -16,6 +16,7 @@ class Party
     public:
         Party();
 	    Party(const char* _PartyName, Citizen& _LeadCand);
+        Party(ifstream& inFile, Citizen& _LeadCand);//file ctor
         ~Party();
         Party(const Party& other);//copy ctor.
         //setters//
@@ -37,8 +38,7 @@ class Party
 	  
         //operators//
         friend std::ostream& operator<<(std::ostream& os, const Party& party);//cout op.
-        const Party& operator=(const Party& other);// operator = 
-       
+        const Party& operator=(const Party& other);// operator =
         void save(ofstream& outFile) const;
             
 };

@@ -45,7 +45,6 @@ void DividedCounty::PrintRepByCounty(PartyArr& PartyArray)
 			 maxInx = i;
 		  }
 	   }
-
 	   if (maxReps > 0) {
 		  cout << "the lead candidate of party - "<< PartyArray.getPartyRef(maxInx).getPartyName() <<
 			 " is: " << PartyArray.getPartyRef(maxInx).getLeadCand().getName() << endl;
