@@ -236,7 +236,7 @@ void Election::LoadPartiesFromFile(ifstream& inFile)
     inFile.read(rcastc(&numOfParties), sizeof(int));
     for (int i = 0; i < numOfParties; i++)
     {
-		inFile.read(rcastc(&LeadCandid), sizeof(long));
+	   inFile.read(rcastc(&LeadCandid), sizeof(long));
 	   Citizen* ptrToLeadCand = PtrCitizenById(LeadCandid);
 	   Party newParty(inFile, *ptrToLeadCand); // use file ctor of Party.
 	   addParty(newParty);
