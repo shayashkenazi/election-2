@@ -44,7 +44,6 @@ Party::Party(const Party& other)
     RepArrayPhysical = other.RepArrayPhysical;
     LeadCand = other.LeadCand;
     repArray = other.repArray;
-    numOfCounties = other.numOfCounties;
 }
 
 bool Party::setPartyName(const char* _PartyName)
@@ -123,9 +122,9 @@ void Party::save(ofstream& outFile) const
     outFile.write(rcastcc(&LeadCandid), sizeof(long));//write lead cand id.
     outFile.write(rcastcc(&lenOfName), sizeof(int));//length of party name
     outFile.write(rcastcc(PartyName), sizeof(char) * lenOfName);
-    outFile.write(rcastcc(&numOfCounties), sizeof(int));// for rep array
+    outFile.write(rcastcc(&RepArrayPhysical), sizeof(int));// for rep array
 
-    for (int i = 0; i < numOfCounties; i++) // write rep array
+    for (int i = 0; i < RepArrayPhysical; i++) // write rep array
     {
 	   repArray[i].save(outFile);
     }

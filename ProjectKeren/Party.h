@@ -10,7 +10,6 @@ class Party
         int PartyId;
         int RepArrayPhysical = 0;
         int SumOfElectors=0;//update only if party won all the electors 
-        int numOfCounties = 0;
         Citizen* LeadCand=nullptr;//candidate id of the lead candidate        
         PtrCitizenArray* repArray=nullptr;// array of represenatives. every cell represent County.  
     public:
