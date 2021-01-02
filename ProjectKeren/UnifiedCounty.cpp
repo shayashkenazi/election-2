@@ -23,7 +23,7 @@ void UnifiedCounty::PrintRepByCounty(PartyArr& PartyArray)
     {
 	   cout << "The " << PartyArray.getPartyRef(i).getPartyName() << " party "  ;
 	   countLoopRep = getNumOfElectors(i);
-	   cout << " got " << countLoopRep << " Representatives , and " << ((float)getVoteByIdx(i) / (float)getNumOfVotes()) * 100 << "%" << "of the votes" << endl;
+	   cout << " got " << countLoopRep << " Representatives ,with " << ((float)getVoteByIdx(i) / (float)getNumOfVotes()) * 100 << "% of the votes" << endl;
 	   PartyArray.getPartyRef(i).pritnRepByIdx(countLoopRep,getCountyId());
     }
 
