@@ -2,10 +2,12 @@
 #include <iostream>
 using namespace std;
 int Party ::partySerialNumber = 0;
-Party::Party()
-{
+Party::Party() 
+{   
+    PartyId = partySerialNumber;
+
 }
-Party::Party(char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
+Party::Party(const char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
 {
     RepArrayPhysical = 0;
     partySerialNumber++;
@@ -74,11 +76,12 @@ void Party::printRep() const
 }
 void Party::pritnRepByIdx(int CountOfRep,int CountyId) 
 {
-    if (CountOfRep == 0 )
+    if (CountOfRep == 0 || repArray ==nullptr || repArray[CountyId - 1].size() == 0 )
     {
 	   cout << " the party doesnt have rep for this county" << endl;
 	   return;
     }
+    
     if (CountOfRep > repArray[CountyId-1].size())
 	   CountOfRep = repArray[CountyId-1].size();
     cout << "the Reps are :" << endl;

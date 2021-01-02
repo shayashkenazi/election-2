@@ -22,8 +22,22 @@ void SimpleElection::printCitizens()
 }
 
 void SimpleElection::PrintResultByCounty()
+{	  
+    int  numOfRepByCounty;
+    for (int i = 0; i < CountyArr.size(); i++)
+    {
+	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
+	   cout << "the state  have "<< numOfRepByCounty <<" Representatives"<< endl;
+	   CountyArr.getCounty(i)->SetElectorsToParty(PartyArr);
+	   CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
+    }
+	
+}
+
+void SimpleElection::PrintElection()
 {
-	   cout << "Were in simple election hence no counties ." << endl; 
+    printDate();
+    PrintResultByCounty();
 }
 
 void SimpleElection::save(const char* fileName) const

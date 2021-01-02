@@ -15,7 +15,7 @@ class Party
         PtrCitizenArray* repArray=nullptr;// array of represenatives. every cell represent County.  
     public:
         Party();
-	    Party(char* _PartyName, Citizen& _LeadCand);
+	    Party(const char* _PartyName, Citizen& _LeadCand);
         ~Party();
         Party(const Party& other);//copy ctor.
         //setters//
@@ -26,7 +26,7 @@ class Party
         bool addRep(Citizen* citizen, int& countyId);// set citizen as a rep of the party to specific county.
         bool SetElectors(int& electors) { SumOfElectors += electors; return true; }//update electors given by counties.
         bool SetInitToZero() { SumOfElectors = -1; return true; }
-
+        static void resetCounter() { partySerialNumber = 0; }
         //getters//
         const char* getPartyName()const { return PartyName; }
         int getPartyId()const { return PartyId; }

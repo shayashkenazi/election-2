@@ -33,13 +33,14 @@ public:
     //getters//
     Citizen*  PtrCitizenById( long& id);
     void printCounties();
-    
+    void printDate();
+
     virtual void printCitizens()=0;
     void printParties();
     virtual void PrintResultByCounty()=0;
     void PrintListRep(County* county);
     void PrintResultByParty();
-    void PrintElection();
+   virtual void PrintElection() =0 ;
     void SetEligibleListFromFile(ifstream& inFile, int CountyIdx);
     void LoadPartiesFromFile(ifstream& inFile);
 

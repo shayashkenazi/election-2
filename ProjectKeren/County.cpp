@@ -53,7 +53,6 @@ County::~County()
     delete[] CountyName;
     delete[]VoteCountyArray;
     if(ElectorsByIdx!=nullptr)
-
     delete[] ElectorsByIdx;
     delete[]restArrayVoters;
 }
@@ -132,7 +131,7 @@ bool County::UpdateVoteArrayToRep()
 }
 bool County::UpdateRestArrayVoters()
 {
-    float res;
+    
     restArrayVoters = new float[voteArrayLogic];
     for (int i = 0; i < voteArrayLogic; i++)
     {

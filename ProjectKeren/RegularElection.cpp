@@ -22,7 +22,7 @@ void RegularElection::printCitizens()
 }
 void RegularElection::PrintResultByCounty()
 {
-    int indexMaxParty, numOfRepByCounty;
+    int  numOfRepByCounty;
     for (int i = 0; i < CountyArr.size(); i++)
     {
 	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
@@ -31,6 +31,12 @@ void RegularElection::PrintResultByCounty()
 	   CountyArr.getCounty(i)->SetElectorsToParty(PartyArr);
 	   CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
     }
+}
+void RegularElection::PrintElection()
+{
+    printDate();
+    PrintResultByCounty();
+    PrintResultByParty();
 }
 void RegularElection::save(const char* fileName) const
 {
