@@ -5,7 +5,6 @@ int Party ::partySerialNumber = 0;
 Party::Party() 
 {   
     PartyId = partySerialNumber;
-
 }
 Party::Party(const char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
 {

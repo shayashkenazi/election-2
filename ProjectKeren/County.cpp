@@ -62,6 +62,7 @@ County::County(ifstream& inFile)//file ctor.
 	restArrayVoters = new float[voteArrayPhy];
 	countySerialNumber++;
 	countyId = countySerialNumber;//keep serial Number updated
+
 }
 County::~County()
 {

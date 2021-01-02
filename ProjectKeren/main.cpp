@@ -32,10 +32,9 @@ void initElectionFromFile(ifstream& inFile, Election** elec) {
     }
 
 }
-
-void electionMenu1(Election* elec) {
-    int input = 0;
-    system("cls");
+void printMenu()
+{
+    
     cout << "please choose one of the actions: (party and county indexes start from 1" << endl;
     cout << "1-to add a county" << endl;
     cout << "2- to add a citizen" << endl;
@@ -50,7 +49,14 @@ void electionMenu1(Election* elec) {
     cout << "11- save election" << endl;
     cout << "12- load election" << endl;
 
+}
+
+void electionMenu1(Election* elec) {
+    int input = 0;
+    system("cls");
+    
     while (input != EXIT) {
+	   printMenu();
 	   cout << "please choose an action (10 to exit): " << endl;
 	   cin >> input;
 
@@ -142,7 +148,8 @@ void electionMenu1(Election* elec) {
 			 cout << "you entered invalid details" << endl;
 	   }
 
-	   if (input == DisplayCounties) { // show all Counties	 - 
+	   if (input == DisplayCounties) {// show all Counties	 
+		  system("cls");
 		  if (typeid(*elec) == typeid(RegularElection))
 			 elec->printCounties();
 		  else
@@ -150,10 +157,15 @@ void electionMenu1(Election* elec) {
 	   }
 
 	   if (input == DisplayCitizens) // show citizen
+	   {
+		  system("cls");
 		  elec->printCitizens();
-
+	   }
 	   if (input == DisplayParties) // show parties  // error candidates list
+	   {
+		  system("cls");
 		  elec->printParties();
+	   }
 	   if (input == SetVote)
 	   {
 		  int  partySerial;
@@ -167,7 +179,6 @@ void electionMenu1(Election* elec) {
 	   if (input == DisplayElectionResult)
 	   {
 		  system("cls");
-
 		  elec->PrintElection();
 	   }
 	   if (input == Exit)
