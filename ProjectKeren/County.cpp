@@ -207,6 +207,5 @@ ostream& operator<<(ostream& os, const County& county) {
 	   "County Name: " << county.getName() << endl <<
 	   "CountyID: " << county.getCountyId() << endl <<
 	   "number of reps : " << county.getNumOfRep() << endl;
-	 
     return os;
 }

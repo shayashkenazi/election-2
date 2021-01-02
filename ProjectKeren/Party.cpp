@@ -15,8 +15,9 @@ Party::Party(const char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
     strcpy(this->PartyName, _PartyName);
 }
 
-Party::Party(ifstream& inFile, Citizen& _LeadCand)// file ctor
+Party::Party(ifstream& inFile, Citizen& _LeadCand) :LeadCand(&_LeadCand)// file ctor
 {
+   
     RepArrayPhysical = 0;
     partySerialNumber++;
     PartyId = partySerialNumber;
@@ -31,20 +32,16 @@ Party::~Party()
 {
     delete PartyName;
     delete [] repArray;//check if we need loop for delete all the array
-   /* if (ElectorsByCounty != nullptr)
-	   delete[] ElectorsByCounty;*/
+ 
 }
 
 Party::Party(const Party& other)
 {
     PartyName = new char[strlen(other.PartyName) + 1];
     strcpy(PartyName, other.PartyName);
-    PartyId = other.PartyId;//mispar sidori shel amiflaga
-
+    PartyId = other.PartyId;
     SumOfElectors = other.SumOfElectors;
-
     RepArrayPhysical = other.RepArrayPhysical;
-
     LeadCand = other.LeadCand;
     repArray = other.repArray;
     numOfCounties = other.numOfCounties;
@@ -123,10 +120,10 @@ void Party::save(ofstream& outFile) const
 {
     long LeadCandid = LeadCand->getId();// lead candidate id
     int lenOfName = strlen(PartyName);// length of party name
-    outFile.write((const char*)&LeadCandid, sizeof(long));//write lead cand id.
-    outFile.write((const char*)&lenOfName, sizeof(int));//length of party name
-    outFile.write((const char*)PartyName, sizeof(char) * lenOfName);
-    outFile.write((const char*)&numOfCounties, sizeof(int));// for rep array
+    outFile.write(rcastcc(&LeadCandid), sizeof(long));//write lead cand id.
+    outFile.write(rcastcc(&lenOfName), sizeof(int));//length of party name
+    outFile.write(rcastcc(PartyName), sizeof(char) * lenOfName);
+    outFile.write(rcastcc(&numOfCounties), sizeof(int));// for rep array
 
     for (int i = 0; i < numOfCounties; i++) // write rep array
     {
