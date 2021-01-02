@@ -18,7 +18,6 @@ class Party
 	    Party(const char* _PartyName, Citizen& _LeadCand);
         ~Party();
         Party(const Party& other);//copy ctor.
-        Party(istream& inFile);
         //setters//
 
         bool setPartyName(const char* _PartyName);

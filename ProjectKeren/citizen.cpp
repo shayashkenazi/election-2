@@ -1,9 +1,7 @@
-    
 
 #include "citizen.h"
 #include"County.h"
 #include <iostream>
-
 #pragma warning(disable : 4996)
 
 using namespace std;
@@ -20,6 +18,18 @@ Citizen::Citizen(const Citizen& other)
     county = other.county;
     yearOfBirth = other.yearOfBirth;
     isVoted = other.isVoted;
+}
+
+Citizen::Citizen(ifstream& inFile)
+{
+    int nameLen;
+    inFile.read(rcastc(&nameLen), sizeof(int));
+    name = new char[nameLen + 1];
+    inFile.read(rcastc(name), sizeof(char) * nameLen);
+    name[nameLen] = '\0';
+    inFile.read(rcastc(&id), sizeof(long));
+    inFile.read(rcastc(&yearOfBirth), sizeof(unsigned int));
+    inFile.read(rcastc(&isVoted), sizeof(bool));
 }
 
 

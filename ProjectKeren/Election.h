@@ -19,7 +19,7 @@ protected:
     
 public:
     Election();//default ctor.
-    virtual ~Election();
+    ~Election();
     Election(int _day, int _month, int _year);
     //setters//
     bool AddCounty(County& add);//add new county to CountyArr.
@@ -34,7 +34,6 @@ public:
     Citizen*  PtrCitizenById( long& id);
     void printCounties();
     void printDate();
-
     virtual void printCitizens()=0;
     void printParties();
     virtual void PrintResultByCounty()=0;

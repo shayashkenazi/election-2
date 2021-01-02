@@ -1,11 +1,6 @@
 #include "DividedCounty.h"
 #include"PartyArr.h"
 
-DividedCounty::DividedCounty(istream& inFile)
-{
-
-}
-
 bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
 {
     MostVotedParty(); // update the index of most voted party at the county

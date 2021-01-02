@@ -3,7 +3,6 @@
 #include <iostream>
 #pragma warning(disable : 4996)
 
-
 using namespace std;
 int County :: countySerialNumber = 0;
 County::County(const char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxPartyVotesIndex(0)
@@ -16,8 +15,7 @@ County::County(const char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), Ma
     voteArrayPhy = 2;
     VoteCountyArray = new int[voteArrayPhy];
     VoteCountyArray[0] = VoteCountyArray[1] = 0;
-    ElectorsByIdx = new int[voteArrayPhy];
-    restArrayVoters = new float[voteArrayPhy];
+ 
 }
 County::County()
 {
@@ -40,21 +38,39 @@ County::County(const County& other)
     numOfVotes = other.numOfVotes;
     MaxPartyVotesIndex = other.MaxPartyVotesIndex;
     
-	   VoteCountyArray = new int[voteArrayPhy];
+	VoteCountyArray = new int[voteArrayPhy];
 	
-	   for (int i = 0; i < voteArrayPhy; i++)
+	 for (int i = 0; i < voteArrayPhy; i++)//init voteArray
 	   {
 		  VoteCountyArray[i] = other.VoteCountyArray[i];  
 	   }
     
 }
+County::County(ifstream& inFile)//file ctor.
+{
+	int lenOfName;
+	inFile.read(rcastc(&lenOfName), sizeof(int));//read the len of county name
+	CountyName = new char[lenOfName + 1];
+	inFile.read(rcastc(CountyName), sizeof(char) * lenOfName);//
+	CountyName[lenOfName] = '\0';
+	inFile.read(rcastc(&NumOfRep), sizeof(int));//get num of Rep
+	voteArrayLogic = 0;
+	voteArrayPhy = 2;
+	VoteCountyArray = new int[voteArrayPhy];
+	VoteCountyArray[0] = VoteCountyArray[1] = 0;
+	ElectorsByIdx = new int[voteArrayPhy];
+	restArrayVoters = new float[voteArrayPhy];
+	countySerialNumber++;
+	countyId = countySerialNumber;//keep serial Number updated
+}
 County::~County()
 {
     delete[] CountyName;
     delete[]VoteCountyArray;
-    if(ElectorsByIdx!=nullptr)
-    delete[] ElectorsByIdx;
-    delete[]restArrayVoters;
+	if (ElectorsByIdx != nullptr) {
+		delete[] ElectorsByIdx;
+		delete[]restArrayVoters;
+	}
 }
 
 int County::FindMaxValueIdx()

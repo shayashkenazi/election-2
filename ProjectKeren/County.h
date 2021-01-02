@@ -27,7 +27,8 @@ public:
     County(const char* _CountyName, int _NumOfRep);
     County();
     County(const County& other);
-   virtual ~County();
+    County(ifstream& inFile);
+    ~County();
 
     //setters//
 
