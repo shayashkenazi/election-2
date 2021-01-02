@@ -95,7 +95,7 @@ const Party & Party::operator=(const Party & other)
 {
 	PartyName = new char[strlen(other.PartyName) + 1];
 	strcpy(PartyName, other.PartyName);
-	PartyId = other.PartyId;//mispar sidori shel amiflaga
+	PartyId = other.PartyId;
 	
 	SumOfElectors = other.SumOfElectors;
 	

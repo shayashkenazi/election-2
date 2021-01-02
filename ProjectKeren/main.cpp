@@ -8,33 +8,32 @@
 
 const int EXIT = 10;
 const int MAXSIZE_NAME = 20;
-void initElectionFromFile(ifstream& inFile, Election* elec) {
+void initElectionFromFile(ifstream& inFile, Election** elec) {
     int type;
     inFile.read(rcastc(&type), sizeof(int));
     int day, month, year, NumOfReps;
     inFile.read(rcastc(&day), sizeof(int));
     inFile.read(rcastc(&month), sizeof(int));
     inFile.read(rcastc(&year), sizeof(int));
+	County::resetCounter();// reset Counties static counter.
+	Party::resetCounter();// reset Party Counter.
     if (type == regularElection)
     {
-	   if (elec != nullptr)//delete existing election.
-		  delete elec;
-	   elec = new RegularElection(day, month, year);
+	   if (*elec != nullptr)//delete existing election.
+		  delete *elec;
+	   *elec = new RegularElection(day, month, year,inFile);
     }
     else
     {
-	   if (elec != nullptr)
-		  delete elec;
+	   if (*elec != nullptr)
+		  delete *elec;
 	   inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
-	   elec = new SimpleElection(day, month, year, NumOfReps);
+	   *elec = new SimpleElection(day, month, year, NumOfReps,inFile);
     }
-    County::resetCounter();
-    Party::resetCounter();
-    elec->LoadElecFromFile(inFile);
+
 }
 
 void electionMenu1(Election* elec) {
-
     int input = 0;
     system("cls");
     cout << "please choose one of the actions: (party and county indexes start from 1" << endl;
@@ -47,9 +46,9 @@ void electionMenu1(Election* elec) {
     cout << "7- to show parties" << endl;
     cout << "8- to vote" << endl;
     cout << "9- to show results" << endl;
-    cout << "10. exit" << endl;
-    cout << "11. save election" << endl;
-    cout << "12. load election" << endl;
+    cout << "10- exit" << endl;
+    cout << "11- save election" << endl;
+    cout << "12- load election" << endl;
 
     while (input != EXIT) {
 	   cout << "please choose an action (10 to exit): " << endl;
@@ -194,7 +193,7 @@ void electionMenu1(Election* elec) {
 			 cout << "error opening file" << endl;
 		  }
 		  else {
-			 initElectionFromFile(inFile, elec);
+			 initElectionFromFile(inFile, &elec);
 		  }
 	   }
     }
@@ -272,7 +271,7 @@ void InitElectionMenu()
 	   }
 	   else {
 		  Election* elec = nullptr;
-		  initElectionFromFile(inFile, elec);
+		  initElectionFromFile(inFile, &elec);
 		  electionMenu1(elec);
 	   }
 	   break;

@@ -184,7 +184,6 @@ void Election::PrintResultByParty()
 {
     int maxElectric = PartyArr.getPartyRef(0).getSumOfElectors(), max_idx = 0,sumVotes=0 ;
     cout << "***** RESULTS *****: " << endl;
-   
     for (int i = 0; i < PartyArr.size(); i++) {
 	   for (int j = 0; j < PartyArr.size(); j++)
 	   {
@@ -219,27 +218,13 @@ void Election::PrintElection()
 
 void Election::SetEligibleListFromFile(ifstream& inFile,int CountyIdx)
 {
-    int NumOfCitizens, nameLen;
-    unsigned int yearOfBirth;
-    long id;
-    char *name = nullptr;
-    bool isVote;
-
+	int NumOfCitizens;
+  
     inFile.read(rcastc(&NumOfCitizens), sizeof(int));//num of citizens in the county
     for (int i = 0; i < NumOfCitizens; i++)
     {
-	   inFile.read(rcastc(&nameLen), sizeof(int));
-	   name = new char[nameLen + 1];
-	   inFile.read(rcastc(name), sizeof(char) * nameLen);
-	   name[nameLen] = '\0';
-	   inFile.read(rcastc(&id), sizeof(long));
-	   inFile.read(rcastc(&yearOfBirth), sizeof(unsigned int));
-	   Citizen newCitizen(name, id, yearOfBirth);
-	   inFile.read(rcastc(&isVote), sizeof(bool));
-	   if (isVote)
-		  newCitizen.setVote(); //set vote if voted
+	   Citizen newCitizen(inFile);
 	   AddCitizen(newCitizen, CountyIdx);// add the citizen to the eligible citizen's list.
-	   delete[]name;
     }
 }
 
@@ -315,33 +300,25 @@ const Election& Election::operator=(const Election& other) {
 
 void Election::LoadElecFromFile(ifstream& inFile)
 {
-    
-    int NumOfCounties, type, lenOfName, numOfRep, * voteArray;
-    char* name = nullptr;
+	int NumOfCounties, type;
     inFile.read(rcastc(&NumOfCounties), sizeof(int));//number of counties
     for (int i = 0; i < NumOfCounties; i++)
     {
 	   inFile.read(rcastc(&type), sizeof(int));//read the type of county
-	   inFile.read(rcastc(&lenOfName), sizeof(int));//read the len of county name
-	   name = new char[lenOfName + 1];
-	   inFile.read(rcastc(name), sizeof(char) * lenOfName);//
-	   name[lenOfName] = '\0';
-	   inFile.read(rcastc(&numOfRep), sizeof(int));
-
 	   if (type == unifiedCounty)//check type of County
 	   {
-		  UnifiedCounty county(name, numOfRep);
-		  county.CreateVoteArrayFromFile(inFile);
+		  UnifiedCounty county(inFile);//use file ctor
+		  county.CreateVoteArrayFromFile(inFile);//set vote array from file
 		  AddCounty(county);
 	   }
 	   else// its divided County
 	   {
-		  DividedCounty county(name, numOfRep);
-		  county.CreateVoteArrayFromFile(inFile);
-		  AddCounty(county);
+		  DividedCounty county(inFile);//use file ctor
+		  county.CreateVoteArrayFromFile(inFile);//set vote array from file.
+		  AddCounty(county);//add county to CountyArr.
 	   }
 	   SetEligibleListFromFile(inFile, i + 1);//load citizen's list for specific county.
-	   delete[]name;// free allocated temp name
+	  
     }
     LoadPartiesFromFile(inFile);//load parties after loading counties and citizen's.
     inFile.close();

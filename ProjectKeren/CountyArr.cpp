@@ -28,17 +28,13 @@ bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new cou
     if (typeid(add) == typeid(DividedCounty))
     {
 	   counties[logic] = new DividedCounty(add);
-
     }
     else
     {
 	   counties[logic] = new UnifiedCounty(add);
     }
-
-	
 	counties[logic]->InitVoteArray(curNumOfParties);
 	logic++;
-	
     return true;
 }
 

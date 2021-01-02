@@ -21,6 +21,7 @@ private:
 public:
     Citizen(const char* _name, long _id, unsigned int _yearOfBirth) ;
     Citizen(const Citizen& other);//cpy ctor.
+    Citizen(ifstream& inFile);// file ctor
     ~Citizen();//dtor. delete name
 
     ///setters///
