@@ -40,7 +40,7 @@ void SimpleElection::PrintElection()
     PrintResultByCounty();
 }
 
-void SimpleElection::save(const char* fileName) const
+void SimpleElection::save(const string fileName) const
 {
     ofstream outFile(fileName, ios::binary | ios::trunc);
 

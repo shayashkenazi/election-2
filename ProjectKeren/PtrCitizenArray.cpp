@@ -59,8 +59,6 @@ std::ostream& operator<<(std::ostream& os, const PtrCitizenArray& listrep)
     {
 	   os  << *(listrep.citizens[i]) << endl;
     }
-
     return os;
-
 }
 

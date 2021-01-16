@@ -3,11 +3,8 @@
 #include"UnifiedCounty.h"
 #include"DividedCounty.h"
 #include"RegularElection.h"
-
 #pragma warning(disable : 4996)
 
-const int EXIT = 10;
-const int MAXSIZE_NAME = 20;
 void initElectionFromFile(ifstream& inFile, Election** elec) {
     int type;
     inFile.read(rcastc(&type), sizeof(int));
@@ -55,15 +52,15 @@ void electionMenu1(Election* elec) {
     int input = 0;
     system("cls");
     
-    while (input != EXIT) {
+    while (input != Exit) {
 	   printMenu();
 	   cout << "please choose an action (10 to exit): " << endl;
 	   cin >> input;
 
-	   if (input == AddCounty) // add province
+	   if (input == AddCounty) // add county
 	   {
 		  if (typeid(*elec) == typeid(RegularElection)) {
-			 char CountyName[MAXSIZE_NAME];
+			 string CountyName;
 			 int numOfRep, CountyType;
 			 cout << "Enter the name of the county :" << endl;
 			 cin >> CountyName;
@@ -92,7 +89,7 @@ void electionMenu1(Election* elec) {
 
 	   if (input == AddCitizen) // add citizen 
 	   {
-		  char CitizenName[MAXSIZE_NAME];
+		  string CitizenName;
 		  int  birthyear, countySerial;
 		  long id;
 		  cout << "Citizen name: " << endl;
@@ -113,7 +110,7 @@ void electionMenu1(Election* elec) {
 
 	   if (input == AddParty) // add party
 	   {
-		  char partyName[MAXSIZE_NAME];
+		   string partyName;
 		  long LeadCandId;
 		  cout << "Party name: " << endl;
 		  cin >> partyName;
@@ -127,7 +124,6 @@ void electionMenu1(Election* elec) {
 			 Party addParty(partyName, *ptrToLeadCand);
 			 elec->addParty(addParty);
 		  }
-
 	   }
 	   if (input == SetRepresentative) // add candidate
 	   {
@@ -190,7 +186,7 @@ void electionMenu1(Election* elec) {
 	   if (input == SaveElection)
 	   {
 		  cout << "choose a name for the new file: " << endl;
-		  char fileName[MAXSIZE_NAME];// get Input File name.
+		  string fileName;// get Input File name.
 		  cin >> fileName;
 		  elec->save(fileName);
 		  cout << fileName << " has created successfuly" << endl;
@@ -198,7 +194,7 @@ void electionMenu1(Election* elec) {
 	   if (input == LoadElection)
 	   {
 		  cout << "choose a name of the existing file: " << endl;
-		  char fileName[MAXSIZE_NAME];
+		  string fileName;
 		  cin >> fileName;
 		  ifstream inFile(fileName, ios::binary);
 		  if (!inFile) {
@@ -276,7 +272,7 @@ void InitElectionMenu()
 	   break;
     case LoadFromFile:
 	   cout << "enter file name: " << endl;
-	   char fileName[MAXSIZE_NAME];
+	   string fileName;
 	   cin >> fileName;
 	   ifstream inFile(fileName, ios::binary);
 	   if (!inFile) {
@@ -291,18 +287,11 @@ void InitElectionMenu()
 
 	   if (InitElection == ExitProcess)
 		  exit(0);
-  
-   
     }
 }
 int main() {
-
-
     cout << "----------------------------------------------" << endl;
     InitElectionMenu();
-
-
-
     cout << " ----- the Elections are OVER  :) ----- " << endl;
 }
 

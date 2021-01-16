@@ -111,11 +111,11 @@ void Election::printDate()
    
 void Election::printCitizens()
 {
-    cout << "Citizen List : " << endl;
+    cout << "Citizen's List : " << endl;
     
     for (int i = 0; i < logic; i++)
     {
-	   cout << "Citizens of county number : " << i+1 << endl;
+	   cout << "Citizens of county number : " << i+1 << "Are: "<<endl;
 	   eligibleCitizenList[i]->printList();
     }
 }

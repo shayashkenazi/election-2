@@ -6,7 +6,7 @@ private:
 
    public:
        //ctors//
-        UnifiedCounty(const char* _name, int& _numofreps) : County(_name, _numofreps) {}
+        UnifiedCounty(const string _name, int& _numofreps) : County(_name, _numofreps) {}
         UnifiedCounty(County& other) : County(other) {}
         UnifiedCounty(ifstream& inFile) : County(inFile) {}
 

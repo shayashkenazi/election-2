@@ -6,13 +6,12 @@ Party::Party()
 {   
     PartyId = partySerialNumber;
 }
-Party::Party(const char* _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
+Party::Party(const string _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
 {
     RepArrayPhysical = 0;
     partySerialNumber++;
     PartyId = partySerialNumber;
-    this->PartyName = new char[strlen(_PartyName) + 1];
-    strcpy(this->PartyName, _PartyName);
+    PartyName = _PartyName;
 }
 
 Party::Party(ifstream& inFile, Citizen& _LeadCand) :LeadCand(&_LeadCand)// file ctor
@@ -23,14 +22,13 @@ Party::Party(ifstream& inFile, Citizen& _LeadCand) :LeadCand(&_LeadCand)// file 
     PartyId = partySerialNumber;
     int lenOfName;
     inFile.read(rcastc(&lenOfName), sizeof(int));
-    PartyName = new char[lenOfName + 1];
-    inFile.read(rcastc(PartyName), sizeof(char) * lenOfName);
-    PartyName[lenOfName] = '\0';
+    PartyName.resize(lenOfName);
+    inFile.read(rcastc(&PartyName[0]), sizeof(char) * lenOfName);
+   
 }
 
 Party::~Party()
 {
-    delete PartyName;
     if(repArray  != nullptr)
 	    delete [] repArray;//check if we need loop for delete all the array
  
@@ -38,8 +36,7 @@ Party::~Party()
 
 Party::Party(const Party& other)
 {
-    PartyName = new char[strlen(other.PartyName) + 1];
-    strcpy(PartyName, other.PartyName);
+    PartyName = other.PartyName;
     PartyId = other.PartyId;
     SumOfElectors = other.SumOfElectors;
     RepArrayPhysical = other.RepArrayPhysical;
@@ -47,10 +44,9 @@ Party::Party(const Party& other)
     repArray = other.repArray;
 }
 
-bool Party::setPartyName(const char* _PartyName)
+bool Party::setPartyName(const string _PartyName)
 {
-    PartyName = new char[strlen(_PartyName) + 1];
-    strcpy(PartyName, _PartyName);
+    PartyName = _PartyName;
     return true;
 }
 bool Party :: addRep (Citizen* citizen,int& countyId) 
@@ -101,8 +97,7 @@ void Party::pritnRepByIdx(int CountOfRep,int CountyId)
 }
 const Party & Party::operator=(const Party & other)
 {
-	PartyName = new char[strlen(other.PartyName) + 1];
-	strcpy(PartyName, other.PartyName);
+    PartyName = other.PartyName;
 	PartyId = other.PartyId;
 	
 	SumOfElectors = other.SumOfElectors;
@@ -130,10 +125,10 @@ const Party & Party::operator=(const Party & other)
 void Party::save(ofstream& outFile) const
 {
     long LeadCandid = LeadCand->getId();// lead candidate id
-    int lenOfName = strlen(PartyName);// length of party name
+    int lenOfName = PartyName.size();// length of party name
     outFile.write(rcastcc(&LeadCandid), sizeof(long));//write lead cand id.
     outFile.write(rcastcc(&lenOfName), sizeof(int));//length of party name
-    outFile.write(rcastcc(PartyName), sizeof(char) * lenOfName);
+    outFile.write(rcastcc(&PartyName[0]), sizeof(char) * lenOfName);
     outFile.write(rcastcc(&RepArrayPhysical), sizeof(int));// for rep array
 
     for (int i = 0; i < RepArrayPhysical; i++) // write rep array

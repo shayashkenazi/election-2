@@ -15,7 +15,7 @@ public:
 
     virtual void printCitizens() override;
     virtual bool AddCitizen(Citizen& add, int& CountyNum) override;//add new citizen to specific county.
-    virtual void save(const char* fileName) const;//
+    virtual void save(const string fileName) const;//
 
 
 

@@ -8,7 +8,7 @@ class DividedCounty :    public County
 
     public:
             //ctors//
-        DividedCounty(const char* _name, int& _numofreps) : County(_name, _numofreps) {}
+        DividedCounty(const string _name, int& _numofreps) : County(_name, _numofreps) {}
         DividedCounty(County& add) : County(add) {}
         DividedCounty(ifstream & inFile) : County(inFile){}
         ~DividedCounty(){}

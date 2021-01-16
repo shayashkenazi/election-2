@@ -23,7 +23,7 @@ class SimpleElection :    public Election
         virtual void PrintResultByCounty()override ;
         virtual void PrintElection()  override;
 
-        virtual void save(const char* fileName) const override;
+        virtual void save(const string fileName) const override;
        
 };
 

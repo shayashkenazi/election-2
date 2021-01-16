@@ -12,7 +12,7 @@ using namespace std;
 class County
 {
 protected:
-    char* CountyName=nullptr;
+    string CountyName;
     int NumOfRep;//represenative
     CitizenArr eligibleCitizen;//eligible citiizen for spefific county
     static int countySerialNumber;
@@ -24,7 +24,7 @@ protected:
     int MaxPartyVotesIndex;
    
 public:
-    County(const char* _CountyName, int _NumOfRep);
+    County(const string _CountyName, int _NumOfRep);
     County();
     County(const County& other);
     County(ifstream& inFile);
@@ -47,7 +47,7 @@ public:
     
 
     //getters//
-    const char* getName() const { return CountyName; }
+    const string getName() const { return CountyName; }
     const int getNumOfRep() const { return NumOfRep; }
     int getCountyId() const { return countyId; }
     int getNumOfVotes() const { return numOfVotes; }

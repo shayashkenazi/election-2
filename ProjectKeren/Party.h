@@ -5,7 +5,7 @@
 class Party
 {
     private:
-        char* PartyName= nullptr;
+        string PartyName;
         static int partySerialNumber;
         int PartyId;
         int RepArrayPhysical = 0;
@@ -14,13 +14,13 @@ class Party
         PtrCitizenArray* repArray=nullptr;// array of represenatives. every cell represent County.  
     public:
         Party();
-	    Party(const char* _PartyName, Citizen& _LeadCand);
+	    Party(const string _PartyName, Citizen& _LeadCand);
         Party(ifstream& inFile, Citizen& _LeadCand);//file ctor
         ~Party();
         Party(const Party& other);//copy ctor.
         //setters//
 
-        bool setPartyName(const char* _PartyName);
+        bool setPartyName(const string _PartyName);
         bool setPartyId(const int& _PartyId) { PartyId = _PartyId; return true; }
         bool setLeadCand(Citizen& _LeadCand) { LeadCand = &_LeadCand; return true; }
         bool addRep(Citizen* citizen, int& countyId);// set citizen as a rep of the party to specific county.
@@ -28,7 +28,7 @@ class Party
         bool SetInitToZero() { SumOfElectors = -1; return true; }
         static void resetCounter() { partySerialNumber = 0; }
         //getters//
-        const char* getPartyName()const { return PartyName; }
+        const string getPartyName()const { return PartyName; }
         int getPartyId()const { return PartyId; }
         Citizen& getLeadCand()const { return *(LeadCand); }
         int getSumOfElectors()const { return SumOfElectors; }

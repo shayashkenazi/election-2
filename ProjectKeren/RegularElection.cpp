@@ -38,7 +38,7 @@ void RegularElection::PrintElection()
     PrintResultByCounty();
     PrintResultByParty();
 }
-void RegularElection::save(const char* fileName) const
+void RegularElection::save(const string fileName) const
 {
     ofstream outFile(fileName, ios::binary | ios::trunc);
 

@@ -12,11 +12,11 @@ bool DividedCounty::SetElectorsToParty(PartyArr& PartyArray)
     return true;
 }
   void DividedCounty::save(ofstream& outFile) const {
-	 int lenOfName = strlen(CountyName);
+	  int lenOfName = CountyName.size();
 	 int type = dividedCounty;
 	 outFile.write(rcastcc(&type), sizeof(int));
 	 outFile.write(rcastcc(&lenOfName), sizeof(int));
-	 outFile.write(rcastcc(CountyName), sizeof(char)* lenOfName);
+	 outFile.write(rcastcc(&CountyName[0]), sizeof(char)* lenOfName);
 	 outFile.write(rcastcc(&NumOfRep), sizeof(int) );
 	 outFile.write(rcastcc(&numOfVotes), sizeof(int));
 	 outFile.write(rcastcc(&voteArrayLogic), sizeof(int));

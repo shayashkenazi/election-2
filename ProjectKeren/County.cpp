@@ -5,12 +5,11 @@
 
 using namespace std;
 int County :: countySerialNumber = 0;
-County::County(const char* _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxPartyVotesIndex(0)
+County::County(const string _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxPartyVotesIndex(0)
 {
     countySerialNumber++;
     countyId = countySerialNumber;
-    CountyName = new char[strlen(_CountyName) + 1];
-    strcpy(CountyName, _CountyName);
+	CountyName = _CountyName;
     voteArrayLogic = 0;
     voteArrayPhy = 2;
     VoteCountyArray = new int[voteArrayPhy];
@@ -26,8 +25,7 @@ County::County()
 }
 County::County(const County& other)
 {
-    this->CountyName = new char[strlen(other.getName()) + 1];
-    strcpy(CountyName, other.CountyName);
+	CountyName = other.CountyName;
     NumOfRep = other.NumOfRep;
     countyId = other.countyId;
     eligibleCitizen = other.eligibleCitizen;
@@ -46,9 +44,8 @@ County::County(ifstream& inFile)//file ctor.
 {
 	int lenOfName;
 	inFile.read(rcastc(&lenOfName), sizeof(int));//read the len of county name
-	CountyName = new char[lenOfName + 1];
-	inFile.read(rcastc(CountyName), sizeof(char) * lenOfName);//
-	CountyName[lenOfName] = '\0';
+	CountyName.resize(lenOfName);
+	inFile.read(rcastc(&CountyName[0]), sizeof(char) * lenOfName);//load county name.
 	inFile.read(rcastc(&NumOfRep), sizeof(int));//get num of Rep
 	inFile.read(rcastc(&numOfVotes), sizeof(int));//get num of Rep
 
@@ -58,11 +55,9 @@ County::County(ifstream& inFile)//file ctor.
 	VoteCountyArray[0] = VoteCountyArray[1] = 0;
 	countySerialNumber++;
 	countyId = countySerialNumber;//keep serial Number updated
-
 }
 County::~County()
 {
-    delete[] CountyName;
     delete[]VoteCountyArray;
 	if (ElectorsByIdx != nullptr) {
 		delete[] ElectorsByIdx;
@@ -88,8 +83,7 @@ int County::FindMaxValueIdx()
 }
 
 const County& County::operator=(const County& other) {
-   this->CountyName = new char[strlen(other.getName()) + 1];
-    strcpy(CountyName, other.CountyName);
+	CountyName = other.CountyName;
     NumOfRep = other.NumOfRep;
 	countyId = other.countyId;
 	eligibleCitizen = other.eligibleCitizen;
