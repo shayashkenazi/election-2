@@ -31,7 +31,8 @@ Party::Party(ifstream& inFile, Citizen& _LeadCand) :LeadCand(&_LeadCand)// file 
 Party::~Party()
 {
     delete PartyName;
-    delete [] repArray;//check if we need loop for delete all the array
+    if(repArray  != nullptr)
+	    delete [] repArray;//check if we need loop for delete all the array
  
 }
 
@@ -77,7 +78,7 @@ void Party::printRep() const
 {
     for (int i = 0; i < RepArrayPhysical; i++)
     {
-	   cout << "the Reps of County number" << i << "  are  " << endl << repArray[i] << endl;
+	   cout << "the Reps of County number " << i+1 << "  are  " << endl << repArray[i] << endl;
     }
 
 }
@@ -109,7 +110,19 @@ const Party & Party::operator=(const Party & other)
 	RepArrayPhysical = other.RepArrayPhysical;
 	
 	LeadCand = other.LeadCand;
-	repArray = other.repArray;
+	
+	if (RepArrayPhysical > 0)
+	{
+	    repArray = new PtrCitizenArray[RepArrayPhysical];
+		   for (int i = 0; i < RepArrayPhysical; i++)
+		   {
+			  repArray[i] = other.repArray[i];
+		   }
+	}
+    else
+	repArray = nullptr;
+
+	
 	return *this;
 
 }

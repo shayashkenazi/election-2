@@ -15,8 +15,8 @@ PartyArr::~PartyArr()
 bool PartyArr::AddParty(Party& add)//check if its bool func
 {
     
-    parties[logic].setPartyName(add.getPartyName());
-    parties[logic].setLeadCand(add.getLeadCand());
+
+    parties[logic] = add;
 
     logic++;
     if (logic == physical - 1) {

@@ -50,6 +50,8 @@ County::County(ifstream& inFile)//file ctor.
 	inFile.read(rcastc(CountyName), sizeof(char) * lenOfName);//
 	CountyName[lenOfName] = '\0';
 	inFile.read(rcastc(&NumOfRep), sizeof(int));//get num of Rep
+	inFile.read(rcastc(&numOfVotes), sizeof(int));//get num of Rep
+
 	voteArrayLogic = 0;
 	voteArrayPhy = 2;
 	VoteCountyArray = new int[voteArrayPhy];

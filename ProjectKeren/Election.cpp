@@ -246,7 +246,9 @@ void Election::LoadPartiesFromFile(ifstream& inFile)
 		  for (int k = 0; k < RepLogic; k++)
 		  {
 			 inFile.read(rcastc(&RepId), sizeof(long));
-			 UpdateRepArray(RepId, j, i);
+			 int partyId = i + 1;
+			 int countyId = j + 1;
+			 UpdateRepArray(RepId, countyId, partyId);
 		  }
 	   }
     }
@@ -273,6 +275,7 @@ bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
 	   return false;
     }
     return PartyArr.getPartyRef(PartyId - 1).addRep(ptrToRep, CountyNum);
+
 }
 const Election& Election::operator=(const Election& other) {
 	day = other.day;

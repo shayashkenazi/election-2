@@ -197,7 +197,7 @@ void electionMenu1(Election* elec) {
 	   }
 	   if (input == LoadElection)
 	   {
-		  cout << "choose a name for the new file: " << endl;
+		  cout << "choose a name of the existing file: " << endl;
 		  char fileName[MAXSIZE_NAME];
 		  cin >> fileName;
 		  ifstream inFile(fileName, ios::binary);
