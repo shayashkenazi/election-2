@@ -103,10 +103,10 @@ void electionMenu1(Election* elec) {
 			 cin >> countySerial;
 		  }
 
-		  
 		  try {
 			  Citizen addCitizen(CitizenName, id, birthyear);
-			  elec->AddCitizen(addCitizen, countySerial); }
+			  elec->AddCitizen(addCitizen, countySerial);
+		  }
 		  catch (logic_error& error)
 		  {
 			  cout << error.what() << endl;

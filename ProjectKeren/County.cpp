@@ -144,10 +144,11 @@ void County::CreateVoteArrayFromFile(ifstream& inFile)
 {
 		int voteArraysize;
 	   inFile.read(rcastc(&voteArraysize), sizeof(int));
-	   VoteCountyArray.resize(voteArraysize);
+
 	   for (int i = 0; i < voteArraysize; i++)
 	   {
-		  VoteCountyArray[i] = 0;
+		   int zero = 0;
+		   VoteCountyArray.push_back(zero);
 	   }
 	  
 	   inFile.read(rcastc(&VoteCountyArray[0]), sizeof(int) * voteArraysize);

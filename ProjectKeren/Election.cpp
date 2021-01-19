@@ -25,11 +25,10 @@ bool Election::AddCounty(County& add)
 void Election::AddCitizen(Citizen& add,int& CountyNum)
 {
     //check if the citizen exist
-
-    if ((SearchId(add.getId()) == true)|| CountyNum > eligibleCitizenList.size() ||CountyNum < 1)
-    {
-	   return false;
-    }
+	if (SearchId(add.getId()) == true)
+		throw ExceptionCitizenAlreadyExists();
+	
+ 
 	/*if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
 	{
 		return false;
