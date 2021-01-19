@@ -33,6 +33,7 @@ Citizen::Citizen(ifstream& inFile)
 Citizen::~Citizen() { }
 
 Citizen& Citizen::operator=(const Citizen& add) {
+    name.clear();
     name = add.name;
 	id = add.id;
 	county = add.county;

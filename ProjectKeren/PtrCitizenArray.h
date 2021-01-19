@@ -6,18 +6,18 @@
 class PtrCitizenArray
 {
 private:
-    Citizen** citizens;
-    int logic;
-    int physical;
+   vector< Citizen*> citizens;
+
 public:
     PtrCitizenArray();
+    PtrCitizenArray(const PtrCitizenArray& other) { citizens = other.citizens; }
     ~PtrCitizenArray();
     //setters//
     bool addPtrToCitizen ( Citizen* add);//save existing citizen by his adress , as party's rep.
    
     //getters//
-    const int size() const { return logic; }//return logic size.
-    const int length() const { return physical; }// retuen physical size.
+    const int size() const { return citizens.size(); }//return logic size.
+    const int length() const { return citizens.size(); }// retuen physical size.
     Citizen& getCitizen(int idx) const { return *(citizens[idx]); }//get ref to specific citizen.
 
     //operators//

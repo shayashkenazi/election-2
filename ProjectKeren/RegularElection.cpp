@@ -3,7 +3,7 @@
 bool RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 {
     //check if the citizen exist
-    if ((SearchId(add.getId()) == true) || CountyNum > logic || CountyNum < 1)
+    if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
     {
 	   return false;
     }
@@ -14,7 +14,7 @@ bool RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 void RegularElection::printCitizens()
 {
     cout << "Citizen List : " << endl;
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < eligibleCitizenList.size(); i++)
     {
 	   cout << "Citizens of county number : " << i + 1 << endl;
 	   eligibleCitizenList[i]->printList();
@@ -51,7 +51,8 @@ void RegularElection::save(const string fileName) const
     outFile.write(rcastcc(&day), sizeof(int));//write date of election.
     outFile.write(rcastcc(&month), sizeof(int));
     outFile.write(rcastcc(&year), sizeof(int));
-    outFile.write(rcastcc(&logic), sizeof(int));/// write number of counties
+    int logicSize = eligibleCitizenList.size();
+    outFile.write(rcastcc(&logicSize), sizeof(int));/// write number of counties
     /*outFile.write((const char*)&physical, sizeof(int));*/
     
     CountyArr.save(outFile);//write counties

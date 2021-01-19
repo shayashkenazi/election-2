@@ -8,23 +8,21 @@ class DividedCounty;
 class CountyArr
 {
 private:
-    County** counties = nullptr;
-    int physical;
-    int logic;
+    vector <County*> counties;
 public:
     CountyArr();
+    CountyArr(const CountyArr& other);//copy ctor
     ~CountyArr();
     //setters//
     bool addCounty(County& add, const int& curNumOfParties);
     bool updateCountyVoteArray();
     //getters//
-    const int size() const { return logic; }
+    const int size() const { return counties.size(); }
     County* getCounty(int idx) { return counties[idx]; }// return ptr to specific county.
     void printCounties();// print counties by order.
 
     //operators//
     const CountyArr& operator=(const CountyArr& other);// operator "="
-
     void save(ofstream& outfile) const;
 
 };

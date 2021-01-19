@@ -6,13 +6,11 @@
 
 #define _CRT_SECURE_NO_WARNING
 
-
 class Election
 {
 protected:
     int day, month, year;
-    int logic, physical;
-    CitizenArr** eligibleCitizenList = nullptr;//points to the Counites eligible citizen's list.
+    vector <CitizenArr*> eligibleCitizenList ;//points to the Counites eligible citizen's list.
     //save them by the county's index.
     PartyArr PartyArr ; 
     CountyArr CountyArr ;
@@ -39,7 +37,7 @@ public:
     virtual void PrintResultByCounty()=0;
     void PrintListRep(County* county);
     void PrintResultByParty();
-   virtual void PrintElection() =0 ;
+    virtual void PrintElection() =0 ;
     void SetEligibleListFromFile(ifstream& inFile, int CountyIdx);
     void LoadPartiesFromFile(ifstream& inFile);
 

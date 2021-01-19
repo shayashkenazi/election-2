@@ -6,22 +6,20 @@
 class PartyArr
 {
 private:
-    Party* parties=nullptr;
-    int physical;
-    int logic;
+    vector<Party> parties;
 
 public:
     PartyArr();
     ~PartyArr();
-
+    PartyArr(const PartyArr& other) { parties = other.parties; }//copy ctor.
     //setters//
     bool AddParty(Party& add);//add new party to parties array.
     bool setLeadToParty(int& idParty, Citizen& Lead) { return parties[idParty].setLeadCand(Lead); }
   
     //getters//
     Party& getPartyRef(int idx) { return parties[idx]; }//return specific party.
-    const int size() const { return logic; }
-    const int length() const { return physical; }
+    const int size() const { return parties.size(); }
+    const int length() const { return parties.size(); }
     void printPartyByOrder();
     const Party& GetWinnerParty()const ;
 

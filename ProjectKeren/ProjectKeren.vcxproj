@@ -159,6 +159,7 @@
     <ClInclude Include="County.h" />
     <ClInclude Include="CountyArr.h" />
     <ClInclude Include="DividedCounty.h" />
+    <ClInclude Include="dynamicArray.h" />
     <ClInclude Include="Election.h" />
     <ClInclude Include="enum.h" />
     <ClInclude Include="Party.h" />

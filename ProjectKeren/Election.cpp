@@ -7,13 +7,12 @@ using namespace std;
 
 Election::Election() : day(-1),month(-1),year(-1)
 {
-    logic = 0;
-    physical = 2;
-    eligibleCitizenList = new CitizenArr*[physical];
+
 }
 Election::~Election()
 {
-    delete[] eligibleCitizenList;
+	for (auto s : eligibleCitizenList)
+		delete s;
 }
 
 
@@ -28,7 +27,7 @@ bool Election::AddCounty(County& add)
 bool Election::AddCitizen(Citizen& add,int& CountyNum)
 {
     //check if the citizen exist
-    if ((SearchId(add.getId()) == true)|| CountyNum > logic ||CountyNum < 1)
+    if ((SearchId(add.getId()) == true)|| CountyNum > eligibleCitizenList.size() ||CountyNum < 1)
     {
 	   return false;
     }
@@ -39,39 +38,25 @@ bool Election::AddCitizen(Citizen& add,int& CountyNum)
 
 Election::Election(int _day, int _month, int _year): day(_day), month(_month), year(_year)
 {
-    logic = 0;
-    physical = 2;
-    eligibleCitizenList = new CitizenArr*[physical];
+
 }
 
 bool Election::AddCitizenList(County& add)
 {
-    eligibleCitizenList[logic] = CountyArr.getCounty(add.getCountyId() - 1)->getCitizenList();
-   logic++;
-    if (logic == physical - 1) 
-    {
-	   physical *= 2;
-	   CitizenArr** tmp = new CitizenArr*[physical];
-	   for (int i = 0; i < logic; i++)
-		  tmp[i] = eligibleCitizenList[i];
-	   delete[] eligibleCitizenList;//check if all the pratim btoh arr is delete
-	   eligibleCitizenList = tmp;
-	}
-	   return true;
+	eligibleCitizenList.push_back( CountyArr.getCounty(add.getCountyId() - 1)->getCitizenList());
+	return true;
 }
 
 bool Election::addParty(Party& add)
 {
-   
-    if(CountyArr.getCounty(0)->getVoteArrayLogic() < add.getPartyId() )
-	   CountyArr.updateCountyVoteArray();//update the array party vote
+	CountyArr.updateCountyVoteArray();//update the array party vote
     return PartyArr.AddParty(add);
 }
 
 
 bool Election::SearchId(const long& id)
 {
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < eligibleCitizenList.size(); i++)
     {
 	   if (eligibleCitizenList[i]->SearchById(id) == true)
 	   {
@@ -84,7 +69,7 @@ bool Election::SearchId(const long& id)
 Citizen* Election::PtrCitizenById(long& id)
 {
     Citizen* ptrToCit=nullptr;
-	   for (int i = 0; i < logic;i++)
+	   for (int i = 0; i < eligibleCitizenList.size();i++)
 	   {
 		  ptrToCit = eligibleCitizenList[i]->PtrToCitizen(id);
 		  if (ptrToCit != nullptr)
@@ -113,7 +98,7 @@ void Election::printCitizens()
 {
     cout << "Citizen's List : " << endl;
     
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < eligibleCitizenList.size(); i++)
     {
 	   cout << "Citizens of county number : " << i+1 << "Are: "<<endl;
 	   eligibleCitizenList[i]->printList();
@@ -281,13 +266,7 @@ const Election& Election::operator=(const Election& other) {
 	day = other.day;
 	month = other.month;
 	year =other.year;
-	logic = other.logic;
-	physical = other.physical;
-	eligibleCitizenList = new CitizenArr * [physical];
-	for (int i = 0; i < logic; i++)
-	{
-		eligibleCitizenList[i] = other.eligibleCitizenList[i];
-	}
+	eligibleCitizenList = other.eligibleCitizenList;
 	CountyArr = other.CountyArr;
 	PartyArr = other.PartyArr;
 	return *this;

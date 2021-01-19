@@ -4,7 +4,7 @@ bool SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
 {
     CountyNum = 1;
     //check if the citizen exist
-    if ((SearchId(add.getId()) == true) || CountyNum > logic || CountyNum < 1)
+    if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
     {
 	   return false;
     }
@@ -55,7 +55,8 @@ void SimpleElection::save(const string fileName) const
     outFile.write(rcastcc(&month), sizeof(int));
     outFile.write(rcastcc(&year), sizeof(int));
     outFile.write(rcastcc(&NumOfRep), sizeof(int));
-    outFile.write(rcastcc(&logic), sizeof(int));//num of counties
+    int logicSize = eligibleCitizenList.size();
+    outFile.write(rcastcc(&logicSize), sizeof(int));//num of counties
    /* outFile.write((const char*)&physical, sizeof(int));*///physical size of countyArr
 
     CountyArr.save(outFile);//write counties to file

@@ -3,37 +3,29 @@
 
 CitizenArr::CitizenArr() //ctor
 {
-    citizens = new Citizen*[2];
-    logic = 0;
-    physical = 2;
+}
+
+CitizenArr::CitizenArr(const CitizenArr& other)
+{
+	for (auto citizen : other.citizens)
+		citizens.push_back(new Citizen(*citizen));//copy c'tor of survivor
 }
 
 CitizenArr::~CitizenArr()
 {
-    delete[] citizens;
+	for (auto citizen : citizens)
+		delete citizen;//copy c'tor of survivor
 }
 
 bool CitizenArr::addCitizen(Citizen& add)
 {
-   
-    if (logic == physical ) { //check if we need to resize the array.
-	   physical *= 2;
-	   Citizen** tmp = new Citizen*[physical];
-	   for (int i = 0; i < logic; i++) {
-		  tmp[i] = citizens[i];
-	   }
-	   delete[] citizens;
-	   citizens = tmp;
-    }
-    
-    citizens[logic] = new Citizen(add);
-    logic++; //update logic size.
+    citizens.push_back( new Citizen(add));
     return true;
 }
 
 bool CitizenArr::SearchById(const long& id) const //check if a citizen is aleardy exist by id.
 {
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < citizens.size(); i++)
     {
 	   if (citizens[i]->getId() == id)
 		  return true;
@@ -43,7 +35,7 @@ bool CitizenArr::SearchById(const long& id) const //check if a citizen is aleard
 
 Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return ptr to hem if exists.
 {
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < citizens.size(); i++)
 	   if (citizens[i]->getId() == id)
 		  return citizens[i];
     return nullptr;//if the citizen wasn't found.
@@ -51,30 +43,30 @@ Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return pt
 
 void CitizenArr::printList() const
 {
-    if (logic == 0) {
+    if (citizens.empty() == 1 ){
 	   cout << "This county don't have citizens " << endl;
 	   return;
     }
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < citizens.size(); i++)
 	   cout << *citizens[i] << endl;
 	   
 }
 
 const CitizenArr & CitizenArr::operator=(const CitizenArr & other)
 {
-	logic = other.logic;
-	physical = other.physical;
-	citizens = new Citizen*[physical];
-	for (int i = 0; i < logic; i++)
-	{
-		citizens[i] = other.citizens[i];
+	if (this != &other) {
+		for (auto citizen : citizens)
+			delete citizen;//copy c'tor of survivor
+		for (auto citizen : other.citizens)
+			citizens.push_back(new Citizen(*citizen));
 	}
+
 	return *this;
 }
 
 void CitizenArr::save(ofstream& outfile) const
 {
-    for (int i = 0; i < logic; i++)
+    for (int i = 0; i < citizens.size(); i++)
     {
 	   citizens[i]->save(outfile);
     }
@@ -82,7 +74,7 @@ void CitizenArr::save(ofstream& outfile) const
 
 const Citizen* CitizenArr::getCitizen(long id) const
 {
-    for (int i = 0; i < logic; i++) {
+    for (int i = 0; i < citizens.size(); i++) {
 	   if (citizens[i]->getId() == id)
 		  return citizens[i];//return ptr to the citizen if found.
     }

@@ -3,6 +3,7 @@
 #define _CRT_SECURE_NO_WARNING
 #include <iostream>
 #include<string>
+#include <vector>
 #include <fstream>
 #include"enum.h"
 #define rcastcc reinterpret_cast<const char*>

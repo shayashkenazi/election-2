@@ -7,23 +7,25 @@
 class CitizenArr
 {
 private:
-    Citizen** citizens=nullptr ;
-    int physical;
-    int logic;
+   vector<Citizen*> citizens;
 public:
+    //ctors//
     CitizenArr();
+    CitizenArr(const CitizenArr& other);
     ~CitizenArr();
+    const CitizenArr& operator=(const CitizenArr& other);
+    //setters//
     bool addCitizen(Citizen& add);
+    bool SearchById(const long& id) const;
+    void printList() const;
 
-    int size() const { return logic; }
-    int length() const { return physical; }
+	void save(ofstream& outfile) const;
+     //getters//
+    int size() const { return citizens.size(); }
+    int length() const { return citizens.size(); }
+    Citizen* PtrToCitizen(long& id);
     Citizen& getCitizenByInx(int idx) { return *citizens[idx]; }//return citizen by index
     const Citizen* getCitizen(long id) const;//search specific id and return referance 
-    bool SearchById(const long& id) const;
-    Citizen* PtrToCitizen(long& id);
-    void printList() const;
-	const CitizenArr & operator=(const CitizenArr& other);
-	 void save(ofstream& outfile) const;
 };
 
 

@@ -8,7 +8,7 @@ Party::Party()
 }
 Party::Party(const string _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
 {
-    RepArrayPhysical = 0;
+
     partySerialNumber++;
     PartyId = partySerialNumber;
     PartyName = _PartyName;
@@ -17,21 +17,16 @@ Party::Party(const string _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
 Party::Party(ifstream& inFile, Citizen& _LeadCand) :LeadCand(&_LeadCand)// file ctor
 {
    
-    RepArrayPhysical = 0;
     partySerialNumber++;
     PartyId = partySerialNumber;
     int lenOfName;
     inFile.read(rcastc(&lenOfName), sizeof(int));
     PartyName.resize(lenOfName);
     inFile.read(rcastc(&PartyName[0]), sizeof(char) * lenOfName);
-   
 }
 
 Party::~Party()
 {
-    if(repArray  != nullptr)
-	    delete [] repArray;//check if we need loop for delete all the array
- 
 }
 
 Party::Party(const Party& other)
@@ -39,7 +34,6 @@ Party::Party(const Party& other)
     PartyName = other.PartyName;
     PartyId = other.PartyId;
     SumOfElectors = other.SumOfElectors;
-    RepArrayPhysical = other.RepArrayPhysical;
     LeadCand = other.LeadCand;
     repArray = other.repArray;
 }
@@ -51,28 +45,18 @@ bool Party::setPartyName(const string _PartyName)
 }
 bool Party :: addRep (Citizen* citizen,int& countyId) 
 {
-    //int countyId;
-    //countyId =citizen->getCounty().getCountyId();
-    if (repArray == nullptr)
-    { 
-	   RepArrayPhysical = countyId;
-	   repArray = new PtrCitizenArray  [countyId];
-    }
-    if (countyId > RepArrayPhysical)
+
+   
+    if (countyId > repArray.size())
     {	   
-	   PtrCitizenArray* tmp = new PtrCitizenArray  [countyId];
-	   for (int i = 0; i < RepArrayPhysical; i++)
-		  tmp[i] = repArray[i];
-	   delete[] repArray;
-	   repArray = tmp;
+        repArray.resize(countyId);
     }
-    RepArrayPhysical = countyId;
     repArray[countyId-1].addPtrToCitizen(citizen);
     return true;
 }
 void Party::printRep() const
 {
-    for (int i = 0; i < RepArrayPhysical; i++)
+    for (int i = 0; i < repArray.size(); i++)
     {
 	   cout << "the Reps of County number " << i+1 << "  are  " << endl << repArray[i] << endl;
     }
@@ -80,7 +64,7 @@ void Party::printRep() const
 }
 void Party::pritnRepByIdx(int CountOfRep,int CountyId) 
 {
-    if (CountOfRep == 0 || repArray ==nullptr || repArray[CountyId - 1].size() == 0 )
+    if (CountOfRep == 0 || repArray.empty()==1 || repArray[CountyId - 1].size() == 0 )
     {
 	   cout << " the party doesnt have rep for this county" << endl;
 	   return;
@@ -97,26 +81,14 @@ void Party::pritnRepByIdx(int CountOfRep,int CountyId)
 }
 const Party & Party::operator=(const Party & other)
 {
+    PartyName.clear();
     PartyName = other.PartyName;
 	PartyId = other.PartyId;
 	
 	SumOfElectors = other.SumOfElectors;
 	
-	RepArrayPhysical = other.RepArrayPhysical;
-	
 	LeadCand = other.LeadCand;
-	
-	if (RepArrayPhysical > 0)
-	{
-	    repArray = new PtrCitizenArray[RepArrayPhysical];
-		   for (int i = 0; i < RepArrayPhysical; i++)
-		   {
-			  repArray[i] = other.repArray[i];
-		   }
-	}
-    else
-	repArray = nullptr;
-
+    repArray = other.repArray;
 	
 	return *this;
 
@@ -129,9 +101,10 @@ void Party::save(ofstream& outFile) const
     outFile.write(rcastcc(&LeadCandid), sizeof(long));//write lead cand id.
     outFile.write(rcastcc(&lenOfName), sizeof(int));//length of party name
     outFile.write(rcastcc(&PartyName[0]), sizeof(char) * lenOfName);
-    outFile.write(rcastcc(&RepArrayPhysical), sizeof(int));// for rep array
+    int repArrSize = repArray.size();
+    outFile.write(rcastcc(&repArrSize), sizeof(int));// for rep array
 
-    for (int i = 0; i < RepArrayPhysical; i++) // write rep array
+    for (int i = 0; i < repArrSize; i++) // write rep array
     {
 	   repArray[i].save(outFile);
     }

@@ -10,18 +10,9 @@ County::County(const string _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), M
     countySerialNumber++;
     countyId = countySerialNumber;
 	CountyName = _CountyName;
-    voteArrayLogic = 0;
-    voteArrayPhy = 2;
-    VoteCountyArray = new int[voteArrayPhy];
-    VoteCountyArray[0] = VoteCountyArray[1] = 0;
- 
 }
 County::County()
 { 
-    voteArrayLogic = 0;
-    voteArrayPhy = 2;
-    VoteCountyArray = new int[voteArrayPhy];
-    VoteCountyArray[0] = VoteCountyArray[1] = 0;
 }
 County::County(const County& other)
 {
@@ -29,16 +20,9 @@ County::County(const County& other)
     NumOfRep = other.NumOfRep;
     countyId = other.countyId;
     eligibleCitizen = other.eligibleCitizen;
-    voteArrayLogic = other.voteArrayLogic;
-    voteArrayPhy = other.voteArrayPhy;
     numOfVotes = other.numOfVotes;
     MaxPartyVotesIndex = other.MaxPartyVotesIndex;    
-    VoteCountyArray = new int[voteArrayPhy];	
-	 for (int i = 0; i < voteArrayPhy; i++)//init voteArray
-	   {
-		  VoteCountyArray[i] = other.VoteCountyArray[i];  
-	   }
-    
+	VoteCountyArray = other.VoteCountyArray;
 }
 County::County(ifstream& inFile)//file ctor.
 {
@@ -49,16 +33,12 @@ County::County(ifstream& inFile)//file ctor.
 	inFile.read(rcastc(&NumOfRep), sizeof(int));//get num of Rep
 	inFile.read(rcastc(&numOfVotes), sizeof(int));//get num of Rep
 
-	voteArrayLogic = 0;
-	voteArrayPhy = 2;
-	VoteCountyArray = new int[voteArrayPhy];
-	VoteCountyArray[0] = VoteCountyArray[1] = 0;
 	countySerialNumber++;
 	countyId = countySerialNumber;//keep serial Number updated
 }
 County::~County()
 {
-    delete[]VoteCountyArray;
+
 	if (ElectorsByIdx != nullptr) {
 		delete[] ElectorsByIdx;
 		delete[]restArrayVoters;
@@ -69,7 +49,7 @@ int County::FindMaxValueIdx()
 {
     float temp,max= restArrayVoters[0]-(float)ElectorsByIdx[0];
     int idx=0;
-    for (int i = 1; i < voteArrayLogic; i++)
+    for (int i = 1; i < VoteCountyArray.size(); i++)
     {
 	   temp = restArrayVoters[i]- (float)ElectorsByIdx[i];
 	   if (temp > max) {
@@ -83,47 +63,32 @@ int County::FindMaxValueIdx()
 }
 
 const County& County::operator=(const County& other) {
+	CountyName.clear();
 	CountyName = other.CountyName;
     NumOfRep = other.NumOfRep;
 	countyId = other.countyId;
 	eligibleCitizen = other.eligibleCitizen;
-	voteArrayLogic = other.voteArrayLogic;
-	voteArrayPhy = other.voteArrayPhy;
 	numOfVotes = other.numOfVotes;
 	MaxPartyVotesIndex = other.MaxPartyVotesIndex;
 	//percentvoter = other.percentvoter;
 	
-	    VoteCountyArray = new int[voteArrayPhy];	
-	    for (int i = 0; i < voteArrayLogic; i++)
-	    {
-		   VoteCountyArray[i] = other.VoteCountyArray[i];	
-	    }
+	VoteCountyArray = other.VoteCountyArray;
 	
 	return *this;
 }
 bool County::ResizeVoteArray()
 {    
-    voteArrayLogic++;
-    if (voteArrayLogic == voteArrayPhy )
-    {
-	   voteArrayPhy *= 2;
-	   int* tmp = new int[voteArrayPhy];
-	   for (int i = 0; i < voteArrayPhy; i++)//init the tmp array
-		  tmp[i] = 0;
-	   for (int i = 0; i < voteArrayLogic; i++)
-		  tmp[i] = VoteCountyArray[i];
-	   delete[] VoteCountyArray;
-	   VoteCountyArray = tmp;
-    }    
+	int zero = 0;
+	VoteCountyArray.insert_to_tail(zero);//new party was added - we resize voteCountyArray with 0.
     return true;
 }
 bool County::UpdateVoteArrayToRep()
 {
     float RepValue = (float)numOfVotes / NumOfRep;
     int sumRep=0,index;
-    ElectorsByIdx = new int[voteArrayLogic];
+    ElectorsByIdx = new int[VoteCountyArray.size()];
     UpdateRestArrayVoters();
-    for (int i = 0; i < voteArrayLogic; i++)
+    for (int i = 0; i < VoteCountyArray.size(); i++)
     {
 	   ElectorsByIdx[i] = (int)restArrayVoters[i];
 	   sumRep += ElectorsByIdx[i];
@@ -139,8 +104,8 @@ bool County::UpdateVoteArrayToRep()
 bool County::UpdateRestArrayVoters()
 {
     
-    restArrayVoters = new float[voteArrayLogic];
-    for (int i = 0; i < voteArrayLogic; i++)
+    restArrayVoters = new float[VoteCountyArray.size()];
+    for (int i = 0; i < VoteCountyArray.size(); i++)
     {
 	   if (numOfVotes == 0)
 		  restArrayVoters[i] = 0;
@@ -151,17 +116,9 @@ bool County::UpdateRestArrayVoters()
 }
 bool County::InitVoteArray(const int& CurNumOfParties)
 {
-     if (CurNumOfParties > voteArrayLogic)
+     if (CurNumOfParties > VoteCountyArray.size())
     {	 
-	   voteArrayLogic = CurNumOfParties;
-	   voteArrayPhy = CurNumOfParties * 2;
-	   int* tmp = new int[voteArrayPhy];
-	   for (int i = 0; i < voteArrayPhy; i++)//init the tmp array
-		  tmp[i] = 0;
-	   for (int i = 0; i < voteArrayLogic; i++)
-		  tmp[i] = VoteCountyArray[i];
-	   delete[] VoteCountyArray;
-	   VoteCountyArray = tmp;	   
+		 VoteCountyArray.resize(CurNumOfParties);
     }
 	return true;
 	
@@ -171,7 +128,7 @@ void County::MostVotedParty()
     int  indexP = 0;
     int maxVote = VoteCountyArray[0];
     int temp;
-    for (int i = 1; i < voteArrayLogic; i++)
+    for (int i = 1; i < VoteCountyArray.size(); i++)
     {
 	   temp = VoteCountyArray[i];
 	   if (temp > maxVote) {
@@ -185,21 +142,21 @@ void County::MostVotedParty()
 }
 void County::CreateVoteArrayFromFile(ifstream& inFile)
 {
-	   inFile.read(rcastc(&voteArrayLogic), sizeof(int));
-	   voteArrayPhy = voteArrayLogic * 2;
-	   VoteCountyArray = new int[voteArrayPhy];
-	   for (int i = 0; i < voteArrayPhy; i++)
+		int voteArraysize;
+	   inFile.read(rcastc(&voteArraysize), sizeof(int));
+	   VoteCountyArray.resize(voteArraysize);
+	   for (int i = 0; i < voteArraysize; i++)
 	   {
 		  VoteCountyArray[i] = 0;
 	   }
 	  
-	   inFile.read(rcastc(VoteCountyArray), sizeof(int) * voteArrayLogic);
+	   inFile.read(rcastc(&VoteCountyArray[0]), sizeof(int) * voteArraysize);
 	   
 }
 ostream& operator<<(ostream& os, const County& county) {
 
     os <<
-	   "County Type: " <<  typeid(county).name() + 6 << endl <<
+	   "County Type: " <<county.getCountyType()<< endl << //get county is virtual
 	   "County Name: " << county.getName() << endl <<
 	   "CountyID: " << county.getCountyId() << endl <<
 	   "number of reps : " << county.getNumOfRep() << endl;

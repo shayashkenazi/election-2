@@ -5,7 +5,7 @@
 #define _CRT_SECURE_NO_WARNING
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
-
+#include "dynamicArray.h"
 class PartyArr;
 
 using namespace std;
@@ -17,8 +17,8 @@ protected:
     CitizenArr eligibleCitizen;//eligible citiizen for spefific county
     static int countySerialNumber;
     int countyId;
-    int voteArrayLogic=0, voteArrayPhy=2, numOfVotes = 0;
-    int* VoteCountyArray = nullptr; //how much votes per party
+    int   numOfVotes = 0;
+    DynamicArray<int> VoteCountyArray ; //how much votes per party
     int* ElectorsByIdx = nullptr;
     float* restArrayVoters = nullptr;
     int MaxPartyVotesIndex;
@@ -26,7 +26,7 @@ protected:
 public:
     County(const string _CountyName, int _NumOfRep);
     County();
-    County(const County& other);
+    County(const County& other);//copy ctor
     County(ifstream& inFile);
     virtual  ~County();
 
@@ -52,7 +52,7 @@ public:
     int getCountyId() const { return countyId; }
     int getNumOfVotes() const { return numOfVotes; }
     int getNumOfElectors(int& idx)const { return ElectorsByIdx[idx]; }
-    const int getVoteArrayLogic() const { return voteArrayLogic; }
+    const int getVoteArrayLogic() const { return VoteCountyArray.size(); }
 
     int getVoteByIdx(int& idx)const { return VoteCountyArray[idx]; }
     int getMaxPartyVotesIndex() { return MaxPartyVotesIndex; }
@@ -60,7 +60,7 @@ public:
     int FindMaxValueIdx();
     CitizenArr* getCitizenList() { return &eligibleCitizen; }//return eligible citizen list to election's voters list.
     bool InitVoteArray(const int& CurNumOfParties);// update new county by the num of parties.
-
+    virtual const string getCountyType() const = 0;
     //operators//
     friend std::ostream& operator<<(std::ostream& os, const County& county); //cout op
     const County& operator=(const County& other);// oprator "="

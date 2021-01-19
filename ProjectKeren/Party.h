@@ -8,10 +8,9 @@ class Party
         string PartyName;
         static int partySerialNumber;
         int PartyId;
-        int RepArrayPhysical = 0;
         int SumOfElectors=0;//update only if party won all the electors 
         Citizen* LeadCand=nullptr;//candidate id of the lead candidate        
-        PtrCitizenArray* repArray=nullptr;// array of represenatives. every cell represent County.  
+        vector <PtrCitizenArray> repArray;// array of represenatives. every cell represent County.  
     public:
         Party();
 	    Party(const string _PartyName, Citizen& _LeadCand);

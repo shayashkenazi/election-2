@@ -12,8 +12,10 @@ private:
 
         //dtor//
         ~UnifiedCounty(){}
+
         virtual bool SetElectorsToParty(PartyArr& PartyArray) override;    
         virtual void PrintRepByCounty(PartyArr& PartyArray) override;
         virtual void save(ofstream& outFile) const override;
+        virtual const string getCountyType()const { return string("Unified County"); }
 };
 
