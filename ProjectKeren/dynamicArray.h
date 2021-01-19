@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
+
+////    dynamic Array from stl lecture    ///
 using namespace std;
 template <class T>
 class DynamicArray
 {
 public:
-	DynamicArray(int size = 10) : _logicalSize(0), _physicalSize(size), _arr(new T[size]) {}
+	DynamicArray(int size = 4) : _logicalSize(0), _physicalSize(size), _arr(new T[size]) {}
 
 	DynamicArray(const DynamicArray& other) : _arr(nullptr) {
 		*this = other;
@@ -246,7 +248,7 @@ public:
 	}
 
 	iterator erase(const iterator& iter) {
-		iterator iter1 = iter;
+	/*	iterator iter1 = iter;
 		iterator res = iter1;
 		iterator p1 = iter1++;
 
@@ -258,12 +260,12 @@ public:
 		}
 
 		_logicalSize--;
-		return res;
+		return res;*/
 	}
 
 	iterator erase(const iterator& first, const iterator& last) {
 
-		iterator first1 = first;
+	/*	iterator first1 = first;
 		iterator p1 = first;
 		int pullback = 1;
 
@@ -284,6 +286,7 @@ public:
 
 		_logicalSize -= pullback;
 		return res;
+	*/
 	}
 
 	iterator begin() {
@@ -325,11 +328,11 @@ public:
 		_arr = temp;
 	}
 
-	void insert_to_tail(T& new_tail) {
+	void push_back(T& add) {
 		if (_physicalSize == _logicalSize)
 			resize();
 
-		_arr[_logicalSize++] = new_tail;
+		_arr[_logicalSize++] = add;
 	}
 
 	void resize() {
