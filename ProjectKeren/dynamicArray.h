@@ -6,6 +6,11 @@ using namespace std;
 template <class T>
 class DynamicArray
 {
+private:
+
+	T* _arr;
+	int _logicalSize;
+	int _physicalSize;
 public:
 	DynamicArray(int size = 4) : _logicalSize(0), _physicalSize(size), _arr(new T[size]) {}
 
@@ -36,7 +41,7 @@ public:
 	int      capacity() const { return _physicalSize; }
 	bool     empty()    const { return _logicalSize == 0; }
 	void     clear() { _logicalSize = 0; }
-	const T& back()    const { return _arr[_logicalSize-1]; }
+	const T& back()    const { return _arr[_logicalSize - 1]; }
 	/*  ITERATORS */
 
 	class iterator
@@ -110,7 +115,7 @@ public:
 		const_iterator(const DynamicArray& arr, int i) : _da(&arr), _i(i) {}
 		const_iterator(const iterator& other) : _da(other._da), _i(other._i) {}
 		const_iterator(const const_iterator& other) : _da(other._da), _i(other._i) {}
-	
+
 
 		const const_iterator& operator=(const iterator& other) {
 			_da = other._da;
@@ -270,8 +275,8 @@ public:
 		int count = 1;
 
 		while (cur != last) {
-		    cur++;
-		    count++;
+			cur++;
+			count++;
 		}
 
 		iterator iter = ++cur;
@@ -285,7 +290,7 @@ public:
 		}
 
 		_logicalSize -= count;
-		return res;	
+		return res;
 	}
 
 	iterator begin() {
@@ -351,9 +356,4 @@ public:
 		_arr = temp;
 	}
 
-private:
-
-	T* _arr;
-	int _logicalSize;
-	int _physicalSize;
 };

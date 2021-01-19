@@ -22,13 +22,17 @@ bool Election::AddCounty(County& add)
     return AddCitizenList(add);    
 }
 
-bool Election::AddCitizen(Citizen& add,int& CountyNum)
+void Election::AddCitizen(Citizen& add,int& CountyNum)
 {
     //check if the citizen exist
-    if ((SearchId(add.getId()) == true)|| CountyNum > eligibleCitizenList.size() ||CountyNum < 1)
-    {
-	   return false;
-    }
+	if (SearchId(add.getId()) == true)
+		throw ExceptionCitizenAlreadyExists();
+	
+ 
+	/*if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
+	{
+		return false;
+	}*/
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum-1)->AddCitizen(add);//check if we need to do -1
 	return true;

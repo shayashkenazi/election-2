@@ -103,9 +103,15 @@ void electionMenu1(Election* elec) {
 			 cin >> countySerial;
 		  }
 
-		  Citizen addCitizen(CitizenName, id, birthyear);
-		  if (elec->AddCitizen(addCitizen, countySerial) == false)
-			 cout << "a wrong citizen input " << endl;
+		  try {
+			  Citizen addCitizen(CitizenName, id, birthyear);
+			  elec->AddCitizen(addCitizen, countySerial);
+		  }
+		  catch (logic_error& error)
+		  {
+			  cout << error.what() << endl;
+		  }
+
 	   }
 
 	   if (input == AddParty) // add party
