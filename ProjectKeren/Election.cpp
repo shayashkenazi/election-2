@@ -11,8 +11,6 @@ Election::Election() : day(-1),month(-1),year(-1)
 }
 Election::~Election()
 {
-	for (auto s : eligibleCitizenList)
-		delete s;
 }
 
 
@@ -24,13 +22,18 @@ bool Election::AddCounty(County& add)
     return AddCitizenList(add);    
 }
 
-bool Election::AddCitizen(Citizen& add,int& CountyNum)
+void Election::AddCitizen(Citizen& add,int& CountyNum)
 {
     //check if the citizen exist
+
     if ((SearchId(add.getId()) == true)|| CountyNum > eligibleCitizenList.size() ||CountyNum < 1)
     {
 	   return false;
     }
+	/*if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
+	{
+		return false;
+	}*/
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum-1)->AddCitizen(add);//check if we need to do -1
 	return true;
@@ -43,7 +46,8 @@ Election::Election(int _day, int _month, int _year): day(_day), month(_month), y
 
 bool Election::AddCitizenList(County& add)
 {
-	eligibleCitizenList.push_back( CountyArr.getCounty(add.getCountyId() - 1)->getCitizenList());
+	CitizenArr* toAdd =CountyArr.getCounty(add.getCountyId() - 1)->getCitizenList();
+	eligibleCitizenList.push_back(toAdd);
 	return true;
 }
 

@@ -5,7 +5,7 @@
 #define _CRT_SECURE_NO_WARNING
 #define rcastcc reinterpret_cast<const char*>
 #define rcastc reinterpret_cast<char*>
-#include "dynamicArray.h"
+
 class PartyArr;
 
 using namespace std;

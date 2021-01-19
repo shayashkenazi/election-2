@@ -9,18 +9,20 @@ CountyArr::CountyArr()
 CountyArr::~CountyArr()
 {
 	for (auto county : counties)
-		delete county;//copy c'tor of survivor
+		delete county;
 }
 
 bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new county to counties array of election.
 {
     if (typeid(add) == typeid(DividedCounty))
     {
-	   counties.push_back( new DividedCounty(add));
+		County* divCounty = new DividedCounty(add);
+	   counties.push_back(divCounty);
     }
     else
     {
-	   counties.push_back( new UnifiedCounty(add));
+		County* uniCounty = new UnifiedCounty(add);
+	   counties.push_back( uniCounty);
     }
 	counties.back()->InitVoteArray(curNumOfParties);
     return true;
@@ -28,10 +30,14 @@ bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new cou
 
 CountyArr::CountyArr(const CountyArr& other)
 {
+	County* newCounty;
 	for (auto county : other.counties)
 	{
-		county->getCountyType().compare("Divided County") == 0 ? counties.push_back(new DividedCounty(*county))
-			: counties.push_back(new UnifiedCounty(*county));
+		if (county->getCountyType().compare("Divided County") == 0)
+			newCounty = new DividedCounty(*county);
+		else
+			newCounty = new UnifiedCounty(*county);
+		counties.push_back(newCounty);
 	}
 }
 void CountyArr::printCounties()
@@ -52,16 +58,20 @@ bool CountyArr::updateCountyVoteArray()
     return true;
 }
 const CountyArr& CountyArr::operator=(const CountyArr& other)
-{
+{	
+	County* newCounty;
+
 	if (this != &other) {
 		for (auto county : counties)
-			delete county;//copy c'tor of survivor
-		for (auto county : other.counties)
+			delete county;
+		for (auto county : counties)
 		{
-			county->getCountyType().compare("Divided County") == 0 ? counties.push_back(new DividedCounty(*county)) 
-				: counties.push_back(new UnifiedCounty(*county));
+			if (county->getCountyType().compare("Divided County") == 0)
+				newCounty = new DividedCounty(*county);
+			else
+				newCounty = new UnifiedCounty(*county);
+			counties.push_back(newCounty);
 		}
-		
 	}
 
 	return *this;
@@ -69,7 +79,6 @@ const CountyArr& CountyArr::operator=(const CountyArr& other)
 
 void CountyArr::save(ofstream& outFile) const
 {  
-    //outFile.write((const char*)&logic, sizeof(int)); // write number of counties
     for (int i = 0; i < counties.size(); i++)
     {
 	   counties[i]->save(outFile); //write all the counties.

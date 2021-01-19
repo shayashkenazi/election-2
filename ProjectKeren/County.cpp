@@ -79,7 +79,7 @@ const County& County::operator=(const County& other) {
 bool County::ResizeVoteArray()
 {    
 	int zero = 0;
-	VoteCountyArray.insert_to_tail(zero);//new party was added - we resize voteCountyArray with 0.
+	VoteCountyArray.push_back(zero);//new party was added - we resize voteCountyArray with 0.
     return true;
 }
 bool County::UpdateVoteArrayToRep()

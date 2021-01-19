@@ -7,7 +7,7 @@
 class CitizenArr
 {
 private:
-   vector<Citizen*> citizens;
+    DynamicArray<Citizen*> citizens;
 public:
     //ctors//
     CitizenArr();

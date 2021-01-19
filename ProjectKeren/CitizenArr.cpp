@@ -7,19 +7,22 @@ CitizenArr::CitizenArr() //ctor
 
 CitizenArr::CitizenArr(const CitizenArr& other)
 {
+	Citizen* newcit;
 	for (auto citizen : other.citizens)
-		citizens.push_back(new Citizen(*citizen));//copy c'tor of survivor
+		 newcit = new Citizen(*citizen);
+		citizens.push_back(newcit);
 }
 
 CitizenArr::~CitizenArr()
 {
 	for (auto citizen : citizens)
-		delete citizen;//copy c'tor of survivor
+		delete citizen;
 }
 
 bool CitizenArr::addCitizen(Citizen& add)
 {
-    citizens.push_back( new Citizen(add));
+	Citizen* newcitizen = new Citizen(add);
+    citizens.push_back( newcitizen);
     return true;
 }
 
@@ -54,11 +57,14 @@ void CitizenArr::printList() const
 
 const CitizenArr & CitizenArr::operator=(const CitizenArr & other)
 {
+	Citizen* toAdd;
 	if (this != &other) {
 		for (auto citizen : citizens)
-			delete citizen;//copy c'tor of survivor
-		for (auto citizen : other.citizens)
-			citizens.push_back(new Citizen(*citizen));
+			delete citizen;
+		for (auto citizen : other.citizens) {
+			toAdd = new Citizen(*citizen);
+			citizens.push_back(toAdd);
+		}
 	}
 
 	return *this;
