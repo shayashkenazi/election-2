@@ -50,8 +50,8 @@ void printMenu()
 
 void electionMenu1(Election* elec) {
     int input = 0;
-    system("cls");
-    
+    //system("cls");
+
     while (input != Exit) {
 	   printMenu();
 	   cout << "please choose an action (10 to exit): " << endl;
@@ -104,19 +104,19 @@ void electionMenu1(Election* elec) {
 		  }
 
 		  try {
-			  Citizen addCitizen(CitizenName, id, birthyear);
-			  elec->AddCitizen(addCitizen, countySerial);
+			 Citizen addCitizen(CitizenName, id, birthyear);
+			 elec->AddCitizen(addCitizen, countySerial);
 		  }
 		  catch (logic_error& error)
 		  {
-			  cout << error.what() << endl;
+			 cout << error.what() << endl;
 		  }
 
 	   }
 
 	   if (input == AddParty) // add party
 	   {
-		   string partyName;
+		  string partyName;
 		  long LeadCandId;
 		  cout << "Party name: " << endl;
 		  cin >> partyName;
@@ -169,7 +169,7 @@ void electionMenu1(Election* elec) {
 	   }
 	   if (input == SetVote)
 	   {
-		   system("cls");
+		  system("cls");
 		  int  partySerial;
 		  long id;
 		  cout << "Voter ID : " << endl;
@@ -185,7 +185,7 @@ void electionMenu1(Election* elec) {
 	   }
 	   if (input == Exit)
 	   {
-		   if (elec!=nullptr)
+		  if (elec != nullptr)
 			 delete elec;
 		  exit(0);
 	   }
@@ -197,43 +197,43 @@ void electionMenu1(Election* elec) {
 		  elec->save(fileName);
 		  cout << fileName << " has created successfuly" << endl;
 	   }
+
 	   if (input == LoadElection)
 	   {
 		  cout << "choose a name of the existing file: " << endl;
 		  string fileName;
 		  cin >> fileName;
 		  ifstream inFile(fileName, ios::binary);
-		  if (!inFile) {
-			 cout << "error opening file" << endl;
-		  }
-		  else {
+		  try {
+			 if (!inFile) {
+				throw ExceptionOpenFile();
+			 }
 			 initElectionFromFile(inFile, &elec);
 		  }
+		  catch (logic_error& error)
+		  {
+			 cout << error.what() << endl;
+		  }
+		 
 		  inFile.close();//close file.
 	   }
     }
 }
+    
+
 
 void getdate(int& d, int& m, int& y)
 {
     int stop = 0;
     cout << "welcome to Elections system! please enter the Elections Date: " << endl;
 
-    while (!stop) {
+  
 	   cout << "select date" << endl;
 	   cout << "choose year: ", cin >> y;
 	   cout << "choose month: ", cin >> m;
-	   if (m < 1 || m > 12) {
-		  cout << "invalid month. please select month between 1-12" << endl << endl;
-		  continue;
-	   }
 	   cout << "choose day: ", cin >> d;
-	   if (d < 1 || 31 < d) {
-		  cout << "invalid day. please select day between 1-31" << endl << endl;
-		  continue;
-	   }
-	   stop = 1;
-    }
+
+    
 }
 void SelectElection(int& d, int& m, int& y)
 {
@@ -251,13 +251,27 @@ void SelectElection(int& d, int& m, int& y)
 	   else
 		  break;
     }
+
     if (InitElec == regularElection) {
-	   elec = new RegularElection(d, m, y);
+	   try {
+		  elec = new RegularElection(d, m, y);
+	   }
+	   catch (logic_error& error)
+	   {
+		  cout << error.what() << endl;
+	   }
     }
     else if (InitElec == simpleElection) {
 	   int reps;
 	   cout << "Enter number of representatives: ", cin >> reps, cout << endl;
-	   elec = new SimpleElection(d, m, y, reps);
+	   try
+	   {
+		  elec = new SimpleElection(d, m, y, reps);
+	   }
+	   catch (logic_error& error)
+	   {
+		  cout << error.what() << endl;
+	   }
     }
     electionMenu1(elec);
 

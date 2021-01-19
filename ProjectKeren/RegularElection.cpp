@@ -1,15 +1,17 @@
 #include "RegularElection.h"
 
-bool RegularElection::AddCitizen(Citizen& add, int& CountyNum)
+void RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 {
     //check if the citizen exist
-    if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
+    if (SearchId(add.getId()) == true)
+	   throw ExceptionCitizenAlreadyExists();
+    if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)
     {
-	   return false;
+	   throw  ExceptionWrongCountyNum();
     }
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum - 1)->AddCitizen(add);//check if we need to do -1
-    return true;
+   
 }
 void RegularElection::printCitizens()
 {
