@@ -12,7 +12,7 @@ public:
 
     virtual void PrintResultByCounty() override;
     virtual void PrintElection()  override;
-
+    virtual void AddCounty(County& add);
     virtual void printCitizens() override;
     virtual void AddCitizen(Citizen& add, int& CountyNum) override;//add new citizen to specific county.
     virtual void save(const string fileName) const;//

@@ -6,9 +6,10 @@ Party::Party()
 {   
     PartyId = partySerialNumber;
 }
-Party::Party(const string _PartyName, Citizen& _LeadCand) :LeadCand(&_LeadCand)
+Party::Party(const string _PartyName, Citizen* _LeadCand) :LeadCand(_LeadCand)
 {
-
+    if (_LeadCand == nullptr)
+        throw WrongIdException();
     partySerialNumber++;
     PartyId = partySerialNumber;
     PartyName = _PartyName;

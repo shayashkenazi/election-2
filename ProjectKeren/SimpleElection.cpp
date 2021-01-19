@@ -1,14 +1,19 @@
 #include "SimpleElection.h"
 
+void SimpleElection::AddCounty(County& add)
+{
+    throw NoCountyInSimpleElectionException();
+}
+
 void SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
 {
     CountyNum = 1;
     //check if the citizen exist
     if (SearchId(add.getId()) == true)
-	   throw ExceptionCitizenAlreadyExists();
+	   throw CitizenAlreadyExistsException();
     if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)
     {
-	   throw  ExceptionWrongCountyNum();
+	   throw  WrongCountyNumException();
     }
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum - 1)->AddCitizen(add);//check if we need to do -1
@@ -46,9 +51,8 @@ void SimpleElection::save(const string fileName) const
 {
     ofstream outFile(fileName, ios::binary | ios::trunc);
 
-    if (!outFile) {
-	   cout << "error outfile" << endl;
-	   return;
+    if (!outFile.good()) {
+        throw OpenFileException();
     }
 
     int type = simpleElection;

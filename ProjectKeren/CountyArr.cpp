@@ -12,7 +12,7 @@ CountyArr::~CountyArr()
 		delete county;
 }
 
-bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new county to counties array of election.
+void CountyArr::addCounty( County& add,const int& curNumOfParties)// add new county to counties array of election.
 {
     if (typeid(add) == typeid(DividedCounty))
     {
@@ -25,7 +25,7 @@ bool CountyArr::addCounty( County& add,const int& curNumOfParties)// add new cou
 	   counties.push_back( uniCounty);
     }
 	counties.back()->InitVoteArray(curNumOfParties);
-    return true;
+    
 }
 
 CountyArr::CountyArr(const CountyArr& other)

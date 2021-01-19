@@ -7,7 +7,7 @@
 using namespace std;
 Citizen::Citizen (const string _name, long  _id, unsigned int _yearOfBirth) : yearOfBirth(_yearOfBirth), id(_id),county(nullptr) {
     if (_id < 100000000 || id>999999999)
-        throw ExceptionWrongId();
+        throw WrongIdException();
     this->name = _name;
 }
 

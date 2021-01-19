@@ -13,7 +13,7 @@ class Party
         DynamicArray <PtrCitizenArray> repArray;// array of represenatives. every cell represent County.  
     public:
         Party();
-	    Party(const string _PartyName, Citizen& _LeadCand);
+	    Party(const string _PartyName, Citizen* _LeadCand);
         Party(ifstream& inFile, Citizen& _LeadCand);//file ctor
         ~Party();
         Party(const Party& other);//copy ctor.

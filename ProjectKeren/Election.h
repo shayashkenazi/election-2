@@ -20,12 +20,12 @@ public:
     virtual  ~Election();
     Election(int _day, int _month, int _year);
     //setters//
-    bool AddCounty(County& add);//add new county to CountyArr.
+    virtual void AddCounty(County& add);//add new county to CountyArr.
     bool AddCitizenList(County& add);//if we added new County we link his citizen's list to the main citizen list.
-    bool addVote(long& id, int PartyId);//get id of citizen and party serial num. set citizen to vote for this party.
+    void addVote(long& id, int PartyId);//get id of citizen and party serial num. set citizen to vote for this party.
     virtual void AddCitizen(Citizen& add, int& CountyNum)=0;//add new citizen to specific county.
     bool addParty(Party& add);//add new party to Party Arr.
-    bool UpdateRepArray(long& id, int& CountyNum, int& PartyId);//set specific citizen as rep of an existing party.
+    void UpdateRepArray(long& id, int& CountyNum, int& PartyId);//set specific citizen as rep of an existing party.
     bool SearchId(const long& id);
 
     //getters//

@@ -7,6 +7,8 @@ using namespace std;
 int County :: countySerialNumber = 0;
 County::County(const string _CountyName, int _NumOfRep) : NumOfRep(_NumOfRep), MaxPartyVotesIndex(0)
 {
+	if (_NumOfRep < 0)
+		throw NumOfRepInvalidException();
     countySerialNumber++;
     countyId = countySerialNumber;
 	CountyName = _CountyName;
@@ -70,7 +72,6 @@ const County& County::operator=(const County& other) {
 	eligibleCitizen = other.eligibleCitizen;
 	numOfVotes = other.numOfVotes;
 	MaxPartyVotesIndex = other.MaxPartyVotesIndex;
-	//percentvoter = other.percentvoter;
 	
 	VoteCountyArray = other.VoteCountyArray;
 	
@@ -103,7 +104,6 @@ bool County::UpdateVoteArrayToRep()
 }
 bool County::UpdateRestArrayVoters()
 {
-    
     restArrayVoters = new float[VoteCountyArray.size()];
     for (int i = 0; i < VoteCountyArray.size(); i++)
     {
@@ -136,13 +136,12 @@ void County::MostVotedParty()
 		  indexP = i;
 	   }
     }
-
     setMaxPartyVotesIndex(indexP);//set index in county MaxPartyVotesIndex    
     UpdateVoteArrayToRep();        
 }
 void County::CreateVoteArrayFromFile(ifstream& inFile)
 {
-		int voteArraysize;
+	int voteArraysize;
 	   inFile.read(rcastc(&voteArraysize), sizeof(int));
 
 	   for (int i = 0; i < voteArraysize; i++)
@@ -150,9 +149,7 @@ void County::CreateVoteArrayFromFile(ifstream& inFile)
 		   int zero = 0;
 		   VoteCountyArray.push_back(zero);
 	   }
-	  
 	   inFile.read(rcastc(&VoteCountyArray[0]), sizeof(int) * voteArraysize);
-	   
 }
 ostream& operator<<(ostream& os, const County& county) {
 

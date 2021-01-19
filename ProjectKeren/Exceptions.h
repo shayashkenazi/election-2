@@ -1,40 +1,68 @@
 #pragma once
 #include <stdexcept>
 
-class ExceptionCitizenAlreadyExists : public std::logic_error
+class CitizenAlreadyExistsException : public std::logic_error
 {
 public:
-	ExceptionCitizenAlreadyExists() :logic_error("this citizen's id already exist.") {}
+	CitizenAlreadyExistsException() :logic_error("this citizen's id already exist.") {}
 };
 
-class ExceptionWrongCountyNum : public std::logic_error
+class WrongCountyNumException : public std::logic_error
 {
 public:
-	ExceptionWrongCountyNum() :logic_error("citizen's county num is invalid. ") {}
+	WrongCountyNumException() :logic_error("citizen's county num is invalid. ") {}
 };
-class ExceptionWrongId : public std::logic_error
+class WrongIdException : public std::logic_error
 {
 public:
-	ExceptionWrongId() :logic_error("citizen's id is invalid. ") {}
+	WrongIdException() :logic_error("citizen's id is invalid. ") {}
 };
-class ExceptionwrnogYearDate : public std::logic_error
+class WrongYearDateException : public std::logic_error
 {
 public:
-    ExceptionwrnogYearDate() :logic_error("invalid year.please select year bigger then 0") {}
+    WrongYearDateException() :logic_error("invalid year.please select year bigger then 0") {}
 };
-class ExceptionwrnogMonthDate : public std::logic_error
+class WrongMonthDateException : public std::logic_error
 {
 public:
-    ExceptionwrnogMonthDate() :logic_error("invalid month. please select month between 1-12") {}
+    WrongMonthDateException() :logic_error("invalid month. please select month between 1-12") {}
 };
-class ExceptionwrnogDayDate : public std::logic_error
+class WrongDayDateException : public std::logic_error
 {
 public:
-    ExceptionwrnogDayDate() :logic_error("invalid day. please select day between the specific days of month") {}
+    WrongDayDateException() :logic_error("invalid day. please select day between the specific days of month") {}
 };
-class ExceptionOpenFile : public std::logic_error
+class OpenFileException : public std::logic_error
 {
 public:
-    ExceptionOpenFile() :logic_error("error opening file") {}
+    OpenFileException() :logic_error("error opening file") {}
+};
+
+class WrongPartyIndexException : public std::logic_error
+{
+public:
+    WrongPartyIndexException() :logic_error("invalid party index entered.") {}
+};
+
+class CitizenAleardyVotedException : public std::logic_error
+{
+public:
+    CitizenAleardyVotedException() :logic_error("citizen is aleardy voted.") {}
+};
+
+class LeadCandAsRepException : public std::logic_error
+{
+public:
+    LeadCandAsRepException() :logic_error("lead candidate can't be a represenative.") {}
+};
+class NumOfRepInvalidException : public std::logic_error
+{
+public:
+    NumOfRepInvalidException() :logic_error("num of represenative's is invalid.") {}
+};
+class NoCountyInSimpleElectionException : public std::logic_error
+{
+public:
+    NoCountyInSimpleElectionException() :logic_error("its not possible to add County At simple election.") {}
 };
 

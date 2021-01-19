@@ -6,6 +6,8 @@
 #pragma warning(disable : 4996)
 
 void initElectionFromFile(ifstream& inFile, Election** elec) {
+	if (!inFile.good())
+		throw OpenFileException();
     int type;
     inFile.read(rcastc(&type), sizeof(int));
     int day, month, year, NumOfReps;
@@ -18,14 +20,28 @@ void initElectionFromFile(ifstream& inFile, Election** elec) {
     {
 	   if (*elec != nullptr)//delete existing election.
 		  delete *elec;
-	   *elec = new RegularElection(day, month, year,inFile);
+	   try {
+		   *elec = new RegularElection(day, month, year, inFile);
+	   }
+	   catch (bad_alloc& msg)
+	   {
+		   cout << msg.what() << endl;
+		   exit(0);
+	   }
     }
     else
     {
 	   if (*elec != nullptr)
 		  delete *elec;
 	   inFile.read(rcastc(&NumOfReps), sizeof(int));// to init election we need num of reps
-	   *elec = new SimpleElection(day, month, year, NumOfReps,inFile);
+	   try {
+		   *elec = new SimpleElection(day, month, year, NumOfReps, inFile);
+	   }
+	   catch (bad_alloc& msg)
+	   {
+		   cout << msg.what() << endl;
+		   exit(0);
+	   }
     }
 
 }
@@ -59,32 +75,31 @@ void electionMenu1(Election* elec) {
 
 	   if (input == AddCounty) // add county
 	   {
-		  if (typeid(*elec) == typeid(RegularElection)) {
+		  
 			 string CountyName;
 			 int numOfRep, CountyType;
 			 cout << "Enter the name of the county :" << endl;
 			 cin >> CountyName;
 			 cout << "Enter number of reps: " << endl;
 			 cin >> numOfRep;
-			 if (numOfRep < 0) {
-				cout << "wrong input" << endl;
-				continue;
-			 }
 			 cout << "Enter 1 for unified County or 2 for Divided County: " << endl;
 			 cin >> CountyType;
-			 if (CountyType == 1) {
-				UnifiedCounty county(CountyName, numOfRep);
-				elec->AddCounty(county);
+			 try {
+				 if (CountyType == 1) {
+					 UnifiedCounty county(CountyName, numOfRep);
+					 elec->AddCounty(county);
+				 }
+				 else if (CountyType == 2) {
+					 DividedCounty county(CountyName, numOfRep);
+					 elec->AddCounty(county);
+				 }
+				 else //user not entered 1 or 2.
+					 cout << "wrong input" << endl;
 			 }
-			 else if (CountyType == 2) {
-				DividedCounty county(CountyName, numOfRep);
-				elec->AddCounty(county);
+			 catch (logic_error& error)
+			 {
+				 cout << error.what() << endl;
 			 }
-			 else //user not entered 1 or 2.
-				cout << "wrong input" << endl;
-		  }
-		  else
-			 cout << "This is simple election, hence its not possible to add County." << endl;
 	   }
 
 	   if (input == AddCitizen) // add citizen 
@@ -102,7 +117,6 @@ void electionMenu1(Election* elec) {
 			 cout << "County serial number: " << endl;
 			 cin >> countySerial;
 		  }
-
 		  try {
 			 Citizen addCitizen(CitizenName, id, birthyear);
 			 elec->AddCitizen(addCitizen, countySerial);
@@ -111,7 +125,6 @@ void electionMenu1(Election* elec) {
 		  {
 			 cout << error.what() << endl;
 		  }
-
 	   }
 
 	   if (input == AddParty) // add party
@@ -123,13 +136,14 @@ void electionMenu1(Election* elec) {
 		  cout << "President candidate ID: " << endl;
 		  cin >> LeadCandId;
 		  Citizen* ptrToLeadCand = elec->PtrCitizenById(LeadCandId);
-		  if (ptrToLeadCand == nullptr)
-			 cout << "the lead cand id is not exist" << endl;
-		  else
-		  {
-			 Party addParty(partyName, *ptrToLeadCand);
+		 try{
+			 Party addParty(partyName, ptrToLeadCand);
 			 elec->addParty(addParty);
 		  }
+		 catch (logic_error& error)
+		 {
+			 cout << error.what() << endl;
+		 }
 	   }
 	   if (input == SetRepresentative) // add candidate
 	   {
@@ -145,8 +159,12 @@ void electionMenu1(Election* elec) {
 		  }
 		  else //simple election only one county.
 			 CountySerial = 1;
-		  if (!elec->UpdateRepArray(id, CountySerial, partySerial))
-			 cout << "you entered invalid details" << endl;
+		  try { (elec->UpdateRepArray(id, CountySerial, partySerial)); }
+		  catch (logic_error& error)
+		  {
+			  cout << error.what() << endl;
+		  }
+			
 	   }
 
 	   if (input == DisplayCounties) {// show all Counties	 
@@ -176,7 +194,11 @@ void electionMenu1(Election* elec) {
 		  cin >> id;
 		  cout << "Party Serial: " << endl;
 		  cin >> partySerial;
-		  elec->addVote(id, partySerial);
+		  try{ elec->addVote(id, partySerial); }
+		  catch (logic_error& error)
+		  {
+			  cout << error.what() << endl;
+		  }
 	   }
 	   if (input == DisplayElectionResult)
 	   {
@@ -193,9 +215,15 @@ void electionMenu1(Election* elec) {
 	   {
 		  cout << "choose a name for the new file: " << endl;
 		  string fileName;// get Input File name.
-		  cin >> fileName;
-		  elec->save(fileName);
-		  cout << fileName << " has created successfuly" << endl;
+		  cin >> fileName; 
+		  try {
+			  elec->save(fileName);
+			  cout << fileName << " has created successfuly" << endl;
+		  }
+		  catch (logic_error& error)
+		  {
+			  cout << error.what() << endl;
+		  }
 	   }
 
 	   if (input == LoadElection)
@@ -205,9 +233,6 @@ void electionMenu1(Election* elec) {
 		  cin >> fileName;
 		  ifstream inFile(fileName, ios::binary);
 		  try {
-			 if (!inFile) {
-				throw ExceptionOpenFile();
-			 }
 			 initElectionFromFile(inFile, &elec);
 		  }
 		  catch (logic_error& error)
@@ -231,9 +256,7 @@ void getdate(int& d, int& m, int& y)
 	   cout << "select date" << endl;
 	   cout << "choose year: ", cin >> y;
 	   cout << "choose month: ", cin >> m;
-	   cout << "choose day: ", cin >> d;
-
-    
+	   cout << "choose day: ", cin >> d;  
 }
 void SelectElection(int& d, int& m, int& y)
 {
@@ -253,25 +276,13 @@ void SelectElection(int& d, int& m, int& y)
     }
 
     if (InitElec == regularElection) {
-	   try {
-		  elec = new RegularElection(d, m, y);
-	   }
-	   catch (logic_error& error)
-	   {
-		  cout << error.what() << endl;
-	   }
+	  
+		  elec = new RegularElection(d, m, y);  
     }
     else if (InitElec == simpleElection) {
 	   int reps;
 	   cout << "Enter number of representatives: ", cin >> reps, cout << endl;
-	   try
-	   {
-		  elec = new SimpleElection(d, m, y, reps);
-	   }
-	   catch (logic_error& error)
-	   {
-		  cout << error.what() << endl;
-	   }
+	   elec = new SimpleElection(d, m, y, reps);
     }
     electionMenu1(elec);
 
@@ -288,7 +299,13 @@ void InitElectionMenu()
     switch (InitElection) {
     case CreateNewElection:
 	   getdate(day, month, year);
-	   SelectElection(day, month, year);
+	   try {
+		   SelectElection(day, month, year);
+	   }
+	   catch (logic_error& error)
+	   {
+		   cout << error.what() << endl;
+	   }
 	   break;
     case LoadFromFile:
 	   cout << "enter file name: " << endl;

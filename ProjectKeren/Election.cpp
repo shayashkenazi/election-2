@@ -14,29 +14,20 @@ Election::~Election()
 }
 
 
-bool Election::AddCounty(County& add)
+void Election::AddCounty(County& add)
 {
-    if (CountyArr.addCounty(add,PartyArr.size()) == false)
-	   return false;
-    
-    return AddCitizenList(add);    
+  
 }
 
 void Election::AddCitizen(Citizen& add,int& CountyNum)
 {
     //check if the citizen exist
 	if (SearchId(add.getId()) == true)
-		throw ExceptionCitizenAlreadyExists();
+		throw CitizenAlreadyExistsException();
 	if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)
-	    throw  ExceptionWrongCountyNum();
-
- 
-	/*if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
-	{
-		return false;
-	}*/
+	    throw  WrongCountyNumException();
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
-    CountyArr.getCounty(CountyNum-1)->AddCitizen(add);//check if we need to do -1
+    CountyArr.getCounty(CountyNum-1)->AddCitizen(add);
 	
 }
 
@@ -44,23 +35,23 @@ Election::Election(int _day, int _month, int _year): day(_day), month(_month), y
 {
     if (_year < 1)
     {
-	   throw ExceptionwrnogYearDate();
+	   throw WrongYearDateException();
     }
     if (_month < 1 || _month > 12) {
-	   throw ExceptionwrnogMonthDate();
+	   throw WrongMonthDateException();
     }
    
     if (_month == February && (_month < 0 || _day> 28))
     {
-	   throw ExceptionwrnogDayDate();
+	   throw WrongDayDateException();
     }
     if ((_month == January || _month == March || _month == May || _month == July || _month == August || _month == October || _month == December) && (_month > 31 || _month < 0))
     {
-	   throw ExceptionwrnogDayDate();
+	   throw WrongDayDateException();
     }
     if ((_month == April || _month == June || _month == September || _month == November) && (_month > 30 || _month < 0))
     {
-	   throw ExceptionwrnogDayDate();
+	   throw WrongDayDateException();
     }
 }
 
@@ -99,7 +90,6 @@ Citizen* Election::PtrCitizenById(long& id)
 		  if (ptrToCit != nullptr)
 			 return ptrToCit;
 	   }
-	 
 	   return ptrToCit;
 }
 
@@ -135,28 +125,24 @@ void Election::printParties()
     PartyArr.printPartyByOrder();
 }
 
-bool Election::addVote(long& id, int PartyId)
+void Election::addVote(long& id, int PartyId)
 {
     if (PartyArr.size() < PartyId )
     {
-	   cout << "the party does not exist" << endl;
-	   return false;
+		throw WrongPartyIndexException();
     }
     Citizen* ptrToVoter = PtrCitizenById(id);
     if (ptrToVoter == nullptr)
     {
-	   cout << "the citizen does not exist" << endl;
-	   return false;
+		throw WrongIdException();
     }
     if ((ptrToVoter)->setVote() == false)
     {
-	   cout << "the citizen is already voted" << endl;
-	   return false;
+		throw CitizenAleardyVotedException();
     }
-    //CountyArr.updateCountyVoteArray();
     
     ptrToVoter->getCounty().UpdateVoteArray(PartyId);
-    return true;	   
+   
 }
 
 
@@ -263,27 +249,19 @@ void Election::LoadPartiesFromFile(ifstream& inFile)
     }
 }
 
-bool Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
+void Election:: UpdateRepArray(long& id, int& CountyNum, int& PartyId)
 {
-    if (PartyArr.size() < PartyId || CountyArr.size() < CountyNum)
-    {
-	   cout << "wrong county ID or party NUM " << endl;
-
-	   return false;
-    }
-    if (PartyArr.getPartyRef(PartyId - 1).getLeadCand().getId() == id)
-    {
-	   cout << "the Lead Candidate can NOT be A represent in a specific county" << endl;
-	   return false;
-    }
-    
+	if (PartyArr.size() < PartyId)
+		throw WrongPartyIndexException();
+	if (CountyArr.size() < CountyNum)
+		throw WrongCountyNumException();
+	if (PartyArr.getPartyRef(PartyId - 1).getLeadCand().getId() == id)
+		throw LeadCandAsRepException();
+ 
     Citizen* ptrToRep = PtrCitizenById(id);
-    if (ptrToRep == nullptr)
-    {
-	   cout << "citizen NOT found " << endl;
-	   return false;
-    }
-    return PartyArr.getPartyRef(PartyId - 1).addRep(ptrToRep, CountyNum);
+	if (ptrToRep == nullptr)
+		throw WrongIdException();
+   PartyArr.getPartyRef(PartyId - 1).addRep(ptrToRep, CountyNum);
 
 }
 const Election& Election::operator=(const Election& other) {

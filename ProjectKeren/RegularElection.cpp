@@ -4,10 +4,10 @@ void RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 {
     //check if the citizen exist
     if (SearchId(add.getId()) == true)
-	   throw ExceptionCitizenAlreadyExists();
+	   throw CitizenAlreadyExistsException();
     if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)
     {
-	   throw  ExceptionWrongCountyNum();
+	   throw  WrongCountyNumException();
     }
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum - 1)->AddCitizen(add);//check if we need to do -1
@@ -40,13 +40,18 @@ void RegularElection::PrintElection()
     PrintResultByCounty();
     PrintResultByParty();
 }
+void RegularElection::AddCounty(County& add)
+{
+    CountyArr.addCounty(add, PartyArr.size());
+      
+     AddCitizenList(add);
+}
 void RegularElection::save(const string fileName) const
 {
     ofstream outFile(fileName, ios::binary | ios::trunc);
 
-    if (!outFile) {
-	   cout << "error outfile" << endl;
-	   return;
+    if (!outFile.good()) {
+        throw OpenFileException();
     }
     int type = regularElection;
     outFile.write(rcastcc(&type), sizeof(int) );//type of current election
@@ -55,7 +60,6 @@ void RegularElection::save(const string fileName) const
     outFile.write(rcastcc(&year), sizeof(int));
     int logicSize = eligibleCitizenList.size();
     outFile.write(rcastcc(&logicSize), sizeof(int));/// write number of counties
-    /*outFile.write((const char*)&physical, sizeof(int));*/
     
     CountyArr.save(outFile);//write counties
     PartyArr.save(outFile);//write parties to file.

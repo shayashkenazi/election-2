@@ -14,7 +14,7 @@ public:
     CountyArr(const CountyArr& other);//copy ctor
     ~CountyArr();
     //setters//
-    bool addCounty(County& add, const int& curNumOfParties);
+    void addCounty(County& add, const int& curNumOfParties);
     bool updateCountyVoteArray();
     //getters//
     const int size() const { return counties.size(); }
