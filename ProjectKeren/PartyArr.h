@@ -6,7 +6,7 @@
 class PartyArr
 {
 private:
-    vector<Party> parties;
+    DynamicArray<Party> parties;
 
 public:
     PartyArr();

@@ -36,7 +36,7 @@ public:
 	int      capacity() const { return _physicalSize; }
 	bool     empty()    const { return _logicalSize == 0; }
 	void     clear() { _logicalSize = 0; }
-
+	const T& back()    const { return _arr[_logicalSize-1]; }
 	/*  ITERATORS */
 
 	class iterator
@@ -110,7 +110,7 @@ public:
 		const_iterator(const DynamicArray& arr, int i) : _da(&arr), _i(i) {}
 		const_iterator(const iterator& other) : _da(other._da), _i(other._i) {}
 		const_iterator(const const_iterator& other) : _da(other._da), _i(other._i) {}
-		friend class const_iterator;
+	
 
 		const const_iterator& operator=(const iterator& other) {
 			_da = other._da;
@@ -248,45 +248,44 @@ public:
 	}
 
 	iterator erase(const iterator& iter) {
-	/*	iterator iter1 = iter;
-		iterator res = iter1;
-		iterator p1 = iter1++;
-
-		while (iter1 != end())
+		iterator cur = iter;
+		iterator res = cur;
+		iterator pointer = cur++;
+		iterator end = end();
+		while (cur != end)
 		{
-			*p1 = *iter1;
-			iter1++;
-			p1++;
+			*pointer = *cur;
+			cur++;
+			pointer++;
 		}
 
 		_logicalSize--;
-		return res;*/
+		return res;
 	}
 
 	iterator erase(const iterator& first, const iterator& last) {
 
-	/*	iterator first1 = first;
-		iterator p1 = first;
-		int pullback = 1;
+		iterator cur = first;
+		iterator pointer = first;
+		int count = 1;
 
-		while (first1 != last) {
-			first1++;
-			pullback++;
+		while (cur != last) {
+		    cur++;
+		    count++;
 		}
 
-		iterator iter = ++first1;
+		iterator iter = ++cur;
 		iterator res = iter;
-
-		while (iter != end())
+		iterator end = end();
+		while (iter != end)
 		{
-			*p1 = *iter;
+			*pointer = *iter;
 			iter++;
-			p1++;
+			pointer++;
 		}
 
-		_logicalSize -= pullback;
-		return res;
-	*/
+		_logicalSize -= count;
+		return res;	
 	}
 
 	iterator begin() {
@@ -295,6 +294,13 @@ public:
 	iterator end() {
 		return iterator(*this, _logicalSize);
 	}
+	const_iterator begin() const {
+		return const_iterator(*this, 0);
+	}
+	const_iterator end() const {
+		return const_iterator(*this, _logicalSize);
+	}
+
 
 	const_iterator cbegin() const {
 		return const_iterator(*this, 0);

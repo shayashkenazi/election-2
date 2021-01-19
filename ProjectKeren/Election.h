@@ -10,7 +10,7 @@ class Election
 {
 protected:
     int day, month, year;
-    vector <CitizenArr*> eligibleCitizenList ;//points to the Counites eligible citizen's list.
+    DynamicArray <CitizenArr*> eligibleCitizenList ;//points to the Counites eligible citizen's list.
     //save them by the county's index.
     PartyArr PartyArr ; 
     CountyArr CountyArr ;

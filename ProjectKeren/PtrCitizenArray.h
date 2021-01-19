@@ -6,7 +6,7 @@
 class PtrCitizenArray
 {
 private:
-   vector< Citizen*> citizens;
+    DynamicArray< Citizen*> citizens;
 
 public:
     PtrCitizenArray();

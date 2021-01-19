@@ -8,7 +8,7 @@ class DividedCounty;
 class CountyArr
 {
 private:
-    vector <County*> counties;
+    DynamicArray <County*> counties;
 public:
     CountyArr();
     CountyArr(const CountyArr& other);//copy ctor

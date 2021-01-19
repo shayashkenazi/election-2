@@ -79,7 +79,7 @@ const County& County::operator=(const County& other) {
 bool County::ResizeVoteArray()
 {    
 	int zero = 0;
-	VoteCountyArray.insert_to_tail(zero);//new party was added - we resize voteCountyArray with 0.
+	VoteCountyArray.push_back(zero);//new party was added - we resize voteCountyArray with 0.
     return true;
 }
 bool County::UpdateVoteArrayToRep()
@@ -143,11 +143,15 @@ void County::MostVotedParty()
 void County::CreateVoteArrayFromFile(ifstream& inFile)
 {
 		int voteArraysize;
+
 	   inFile.read(rcastc(&voteArraysize), sizeof(int));
-	   VoteCountyArray.resize(voteArraysize);
+
+	 //  VoteCountyArray.resize(voteArraysize);
+
 	   for (int i = 0; i < voteArraysize; i++)
 	   {
-		  VoteCountyArray[i] = 0;
+		  int zero = 0;
+		  VoteCountyArray.push_back(zero);
 	   }
 	  
 	   inFile.read(rcastc(&VoteCountyArray[0]), sizeof(int) * voteArraysize);
