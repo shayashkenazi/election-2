@@ -41,10 +41,6 @@ County::County(ifstream& inFile)//file ctor.
 County::~County()
 {
 
-	if (ElectorsByIdx != nullptr) {
-		delete[] ElectorsByIdx;
-		delete[]restArrayVoters;
-	}
 }
 
 int County::FindMaxValueIdx()
@@ -87,7 +83,7 @@ bool County::UpdateVoteArrayToRep()
 {
     float RepValue = (float)numOfVotes / NumOfRep;
     int sumRep=0,index;
-    ElectorsByIdx = new int[VoteCountyArray.size()];
+    ElectorsByIdx.resize(VoteCountyArray.size());
     UpdateRestArrayVoters();
     for (int i = 0; i < VoteCountyArray.size(); i++)
     {
@@ -104,7 +100,7 @@ bool County::UpdateVoteArrayToRep()
 }
 bool County::UpdateRestArrayVoters()
 {
-    restArrayVoters = new float[VoteCountyArray.size()];
+    restArrayVoters.resize(VoteCountyArray.size());
     for (int i = 0; i < VoteCountyArray.size(); i++)
     {
 	   if (numOfVotes == 0)

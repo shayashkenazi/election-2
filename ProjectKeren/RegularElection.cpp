@@ -15,11 +15,22 @@ void RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 }
 void RegularElection::printCitizens()
 {
+  
+    if (eligibleCitizenList.size() == 0)
+	   throw NoCitizensException();
     cout << "Citizen List : " << endl;
+  
+    
     for (int i = 0; i < eligibleCitizenList.size(); i++)
     {
 	   cout << "Citizens of county number : " << i + 1 << endl;
-	   eligibleCitizenList[i]->printList();
+	   try {
+		  eligibleCitizenList[i]->printList();
+	   }
+	   catch (logic_error& error)
+	   {
+		  cout << error.what() << endl;
+	   }
     }
 }
 void RegularElection::PrintResultByCounty()
@@ -31,8 +42,14 @@ void RegularElection::PrintResultByCounty()
 	   cout << "County number :" << i + 1 << endl
 		  << "have  number of Representatives  : " << numOfRepByCounty << endl;
 	   CountyArr.getCounty(i)->SetElectorsToParty(PartyArr);
-	   CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
-    }
+	   try {
+		  CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
+	   }
+	   catch (logic_error& error)
+	   {
+		  cout << error.what() << endl;
+	   }
+	}
 }
 void RegularElection::PrintElection()
 {

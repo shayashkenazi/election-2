@@ -65,4 +65,48 @@ class NoCountyInSimpleElectionException : public std::logic_error
 public:
     NoCountyInSimpleElectionException() :logic_error("its not possible to add County At simple election.") {}
 };
+class NoVotesException : public std::logic_error
+{
+public:
+    NoVotesException() :logic_error("no one has voted hence its not possible to print" ) {}
+};
+class ShowResultException : public std::logic_error
+{
+public:
+    ShowResultException() :logic_error("invalid election input hence its not possible to calculate the result") {}
+};
+class NoCountiesException : public std::logic_error
+{
+public:
+    NoCountiesException() :logic_error("there isn't counties to show.") {}
+};
+
+class NoPartiesException : public std::logic_error
+{
+public:
+    NoPartiesException() :logic_error("there isn't parties to show.") {}
+};
+class NoCitizensException : public std::logic_error
+{
+public:
+    NoCitizensException() :logic_error("there isn't citizen's to show.") {}
+};
+class noCountiesSimpleElectionException : public std::logic_error
+{
+public:
+    noCountiesSimpleElectionException() :logic_error("there isn't counties in Simple Election to.") {}
+};
+class EmptyCountyException : public std::logic_error
+{
+public:
+    EmptyCountyException() :logic_error("there isn't citizen's to show in this county.") {}
+};
+
+
+
+
+
+
+
+
 

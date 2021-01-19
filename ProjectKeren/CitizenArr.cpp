@@ -7,10 +7,19 @@ CitizenArr::CitizenArr() //ctor
 
 CitizenArr::CitizenArr(const CitizenArr& other)
 {
-	Citizen* newcit;
-	for (auto citizen : other.citizens)
-		 newcit = new Citizen(*citizen);
+    Citizen* newcit;
+  try{
+	 for (auto citizen : other.citizens)
+	 {
+		newcit = new Citizen(*citizen);
 		citizens.push_back(newcit);
+	 }
+    }
+    catch (bad_alloc& msg)
+    {
+	    cout << msg.what() << endl;
+	   exit(1);
+    }
 }
 
 CitizenArr::~CitizenArr()
@@ -21,8 +30,16 @@ CitizenArr::~CitizenArr()
 
 bool CitizenArr::addCitizen(Citizen& add)
 {
-	Citizen* newcitizen = new Citizen(add);
-    citizens.push_back( newcitizen);
+    Citizen* newcitizen;
+    try {
+	    newcitizen = new Citizen(add);
+    }
+    catch (bad_alloc& msg)
+	{
+	    cout << msg.what() << endl;
+	    exit(1);
+	}
+	citizens.push_back( newcitizen);
     return true;
 }
 
@@ -46,10 +63,11 @@ Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return pt
 
 void CitizenArr::printList() const
 {
+   
     if (citizens.empty() == 1 ){
-	   cout << "This county don't have citizens " << endl;
-	   return;
+	   throw EmptyCountyException();
     }
+
     for (int i = 0; i < citizens.size(); i++)
 	   cout << *citizens[i] << endl;
 	   
@@ -58,15 +76,21 @@ void CitizenArr::printList() const
 const CitizenArr & CitizenArr::operator=(const CitizenArr & other)
 {
 	Citizen* toAdd;
-	if (this != &other) {
-		for (auto citizen : citizens)
-			delete citizen;
-		for (auto citizen : other.citizens) {
-			toAdd = new Citizen(*citizen);
-			citizens.push_back(toAdd);
-		}
+	try {
+	    if (this != &other) {
+		   for (auto citizen : citizens)
+			  delete citizen;
+		   for (auto citizen : other.citizens) {
+			  toAdd = new Citizen(*citizen);
+			  citizens.push_back(toAdd);
+		   }
+	    }
 	}
-
+	catch (bad_alloc& msg)
+	{
+	    cout << msg.what() << endl;
+	    exit(1);
+	}
 	return *this;
 }
 

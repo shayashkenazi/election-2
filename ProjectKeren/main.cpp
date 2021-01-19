@@ -169,21 +169,36 @@ void electionMenu1(Election* elec) {
 
 	   if (input == DisplayCounties) {// show all Counties	 
 		  system("cls");
-		  if (typeid(*elec) == typeid(RegularElection))
+		  try {
 			 elec->printCounties();
-		  else
-			 cout << "this is simple election, hence no counties" << endl;
+		  }
+		  catch (logic_error& error)
+		  {
+			 cout << error.what() << endl;
+		  }
 	   }
 
 	   if (input == DisplayCitizens) // show citizen
 	   {
 		  system("cls");
-		  elec->printCitizens();
+		  try {
+			 elec->printCitizens();
+		  }
+		  catch (logic_error& error)
+		  {
+			 cout << error.what() << endl;
+		  }
 	   }
 	   if (input == DisplayParties) // show parties  // error candidates list
 	   {
 		  system("cls");
-		  elec->printParties();
+		  try {
+			 elec->printParties();
+		  }
+		  catch (logic_error& error)
+		  {
+			 cout << error.what() << endl;
+		  }
 	   }
 	   if (input == SetVote)
 	   {
@@ -194,16 +209,24 @@ void electionMenu1(Election* elec) {
 		  cin >> id;
 		  cout << "Party Serial: " << endl;
 		  cin >> partySerial;
-		  try{ elec->addVote(id, partySerial); }
+		  try{ 
+			 elec->addVote(id, partySerial); 
+		  }
 		  catch (logic_error& error)
 		  {
 			  cout << error.what() << endl;
 		  }
 	   }
 	   if (input == DisplayElectionResult)
-	   {
-		  system("cls");
-		  elec->PrintElection();
+	   {		  
+		 system("cls");
+		 try {
+			elec->PrintElection();
+		 }
+		 catch (logic_error& error)
+		 {
+			cout << error.what() << endl;
+		 }
 	   }
 	   if (input == Exit)
 	   {
@@ -274,16 +297,26 @@ void SelectElection(int& d, int& m, int& y)
 	   else
 		  break;
     }
-
-    if (InitElec == regularElection) {
-	  
-		  elec = new RegularElection(d, m, y);  
+    try {
+	   if (InitElec == regularElection) {
+		  elec = new RegularElection(d, m, y);
+	   }
+	   else if (InitElec == simpleElection) {
+		  int reps;
+		  cout << "Enter number of representatives: ", cin >> reps, cout << endl;
+		  elec = new SimpleElection(d, m, y, reps);
+	   }
     }
-    else if (InitElec == simpleElection) {
-	   int reps;
-	   cout << "Enter number of representatives: ", cin >> reps, cout << endl;
-	   elec = new SimpleElection(d, m, y, reps);
+    catch (bad_alloc& msg)
+    {
+	   cout << msg.what() << endl;
+	   exit(1);
     }
+    catch (logic_error& error)
+    {
+	   cout << error.what() << endl;
+    }
+    
     electionMenu1(elec);
 
 }

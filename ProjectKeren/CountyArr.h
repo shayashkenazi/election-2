@@ -17,6 +17,7 @@ public:
     void addCounty(County& add, const int& curNumOfParties);
     bool updateCountyVoteArray();
     //getters//
+    int getTotalNumOfVotes();
     const int size() const { return counties.size(); }
     County* getCounty(int idx) { return counties[idx]; }// return ptr to specific county.
     void printCounties();// print counties by order.

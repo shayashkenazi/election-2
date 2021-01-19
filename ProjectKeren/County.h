@@ -19,8 +19,8 @@ protected:
     int countyId;
     int   numOfVotes = 0;
     DynamicArray<int> VoteCountyArray ; //how much votes per party
-    int* ElectorsByIdx = nullptr;
-    float* restArrayVoters = nullptr;
+    DynamicArray<int> ElectorsByIdx ;
+    DynamicArray<float> restArrayVoters;
     int MaxPartyVotesIndex;
    
 public:

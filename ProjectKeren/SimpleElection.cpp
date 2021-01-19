@@ -5,6 +5,18 @@ void SimpleElection::AddCounty(County& add)
     throw NoCountyInSimpleElectionException();
 }
 
+SimpleElection ::SimpleElection(int& day, int& month, int& year, int& numOfreps) : Election(day, month, year)
+{
+    if (NumOfRep < 0)
+        throw NumOfRepInvalidException();
+    NumOfRep = numOfreps;
+    string name = "divCounty";
+    County* newcounty = new DividedCounty(name, numOfreps);
+    CountyArr.addCounty(*newcounty, PartyArr.size());
+    AddCitizenList(*newcounty);
+    delete newcounty;
+}
+
 void SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
 {
     CountyNum = 1;
@@ -23,9 +35,13 @@ void SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
 
 void SimpleElection::printCitizens()
 {
+    if (eligibleCitizenList[0]->size() == 0)
+	   throw NoCitizensException();
     
 	   cout << "Citizen List : " << endl;
 	   eligibleCitizenList[0]->printList();
+
+   
 }
 
 void SimpleElection::PrintResultByCounty()
@@ -34,9 +50,10 @@ void SimpleElection::PrintResultByCounty()
     for (int i = 0; i < CountyArr.size(); i++)
     {
 	   numOfRepByCounty = CountyArr.getCounty(i)->getNumOfRep();
-	   cout << "the state  have "<< numOfRepByCounty <<" Representatives"<< endl;
+	   cout << "the state  have " << numOfRepByCounty << " Representatives" << endl;
 	   CountyArr.getCounty(i)->SetElectorsToParty(PartyArr);
 	   CountyArr.getCounty(i)->PrintRepByCounty(PartyArr);
+
     }
 	
 }

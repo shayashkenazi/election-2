@@ -121,6 +121,8 @@ void Election::printCitizens()
  
 void Election::printParties()
 {
+    if (PartyArr.size() == 0)
+	   throw NoPartiesException();
     cout << "Parties List" << endl;
     PartyArr.printPartyByOrder();
 }
@@ -205,9 +207,18 @@ void Election::PrintResultByParty()
 }
 void Election::PrintElection()
 {
+    if (CountyArr.size() == 0 || PartyArr.size() == 0)
+	   throw ShowResultException();
+    
+    if (CountyArr.getTotalNumOfVotes() == 0)
+	   throw NoVotesException();
+    
+
+
     printDate();
-    PrintResultByCounty();
-    PrintResultByParty();
+    
+	   PrintResultByCounty();
+	   PrintResultByParty();
 
 }
 

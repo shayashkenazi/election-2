@@ -11,9 +11,10 @@ bool UnifiedCounty::SetElectorsToParty(PartyArr& PartyArray)
 }
 
 void UnifiedCounty::PrintRepByCounty(PartyArr& PartyArray)
-{
-    cout << "the lead candidate of party is: " << endl << PartyArray.getPartyRef(MaxPartyVotesIndex).getLeadCand() << endl
-	   << "the party got  " << getNumOfVotes() /(float)eligibleCitizen.size() * 100 << "%" << " of the votes " <<endl;
+{   
+	    
+	   cout << "the lead candidate of party is: " << endl << PartyArray.getPartyRef(MaxPartyVotesIndex).getLeadCand() << endl
+		  << "the party got  " << getNumOfVotes() / (float)eligibleCitizen.size() * 100 << "%" << " of the votes " << endl;    
     int countLoopRep;
     if (getNumOfVotes() == 0) {
 	   cout << "no one has voted in this county " << endl;
