@@ -27,7 +27,9 @@ void Election::AddCitizen(Citizen& add,int& CountyNum)
     //check if the citizen exist
 	if (SearchId(add.getId()) == true)
 		throw ExceptionCitizenAlreadyExists();
-	
+	if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)
+	    throw  ExceptionWrongCountyNum();
+
  
 	/*if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
 	{
@@ -35,12 +37,31 @@ void Election::AddCitizen(Citizen& add,int& CountyNum)
 	}*/
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum-1)->AddCitizen(add);//check if we need to do -1
-	return true;
+	
 }
 
 Election::Election(int _day, int _month, int _year): day(_day), month(_month), year(_year)
 {
-
+    if (_year < 1)
+    {
+	   throw ExceptionwrnogYearDate();
+    }
+    if (_month < 1 || _month > 12) {
+	   throw ExceptionwrnogMonthDate();
+    }
+   
+    if (_month == February && (_month < 0 || _day> 28))
+    {
+	   throw ExceptionwrnogDayDate();
+    }
+    if ((_month == January || _month == March || _month == May || _month == July || _month == August || _month == October || _month == December) && (_month > 31 || _month < 0))
+    {
+	   throw ExceptionwrnogDayDate();
+    }
+    if ((_month == April || _month == June || _month == September || _month == November) && (_month > 30 || _month < 0))
+    {
+	   throw ExceptionwrnogDayDate();
+    }
 }
 
 bool Election::AddCitizenList(County& add)

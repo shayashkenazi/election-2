@@ -1,17 +1,19 @@
 #include "SimpleElection.h"
 
-bool SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
+void SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
 {
     CountyNum = 1;
     //check if the citizen exist
-    if ((SearchId(add.getId()) == true) || CountyNum > eligibleCitizenList.size() || CountyNum < 1)
+    if (SearchId(add.getId()) == true)
+	   throw ExceptionCitizenAlreadyExists();
+    if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)
     {
-	   return false;
+	   throw  ExceptionWrongCountyNum();
     }
     add.setCounty(CountyArr.getCounty(CountyNum - 1));
     CountyArr.getCounty(CountyNum - 1)->AddCitizen(add);//check if we need to do -1
    
-    return true;
+   
 }
 
 void SimpleElection::printCitizens()
