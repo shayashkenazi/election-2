@@ -209,17 +209,12 @@ void Election::PrintElection()
 {
     if (CountyArr.size() == 0 || PartyArr.size() == 0)
 	   throw ShowResultException();
-    
+ 
     if (CountyArr.getTotalNumOfVotes() == 0)
 	   throw NoVotesException();
-    
-
-
-    printDate();
-    
-	   PrintResultByCounty();
-	   PrintResultByParty();
-
+    printDate(); 
+    PrintResultByCounty();
+    PrintResultByParty();
 }
 
 void Election::SetEligibleListFromFile(ifstream& inFile,int CountyIdx)

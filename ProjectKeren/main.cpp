@@ -287,7 +287,8 @@ void SelectElection(int& d, int& m, int& y)
     cout << "choose election type: " << endl;
     cout << "1. regular election" << endl;
     cout << "2. simple election" << endl;
-    int InitElec;
+    int InitElec , reps;
+    bool isInputValid = false;
     while (true) {
 	   cin >> InitElec;
 	   if (InitElec < 1 || InitElec >2) {
@@ -297,26 +298,51 @@ void SelectElection(int& d, int& m, int& y)
 	   else
 		  break;
     }
-    try {
-	   if (InitElec == regularElection) {
-		  elec = new RegularElection(d, m, y);
+
+    while (!isInputValid) {
+
+	   if (InitElec == regularElection)
+	   {
+		  try {
+			 elec = new RegularElection(d, m, y);
+			 isInputValid = true;
+		  }
+		
+		  catch (bad_alloc& msg)
+		  {
+			 cout << msg.what() << endl;
+			 exit(1);
+		  }
+		  catch (logic_error& error)
+		  {
+			 cout << error.what() << endl;
+			 getdate(d, m, y);
+		  }
 	   }
-	   else if (InitElec == simpleElection) {
-		  int reps;
-		  cout << "Enter number of representatives: ", cin >> reps, cout << endl;
-		  elec = new SimpleElection(d, m, y, reps);
+	   else if (InitElec == simpleElection)
+	   {
+		  try
+		  {			 
+			 cout << "Enter number of representatives: ", cin >> reps, cout << endl;
+			 elec = new SimpleElection(d, m, y, reps);
+			 isInputValid = true;
+		  }
+		  catch (bad_alloc& msg)
+		  {
+			 cout << msg.what() << endl;
+			 exit(1);
+		  }
+		  catch (logic_error& error)
+		  {
+			 cout << error.what() << endl;
+			 if(strcmp(error.what(), "num of represenative's is invalid.")==0)
+				cout << "Enter number of representatives: ", cin >> reps, cout << endl;
+			 else
+				getdate(d, m, y);
+		  }
 	   }
     }
-    catch (bad_alloc& msg)
-    {
-	   cout << msg.what() << endl;
-	   exit(1);
-    }
-    catch (logic_error& error)
-    {
-	   cout << error.what() << endl;
-    }
-    
+	      
     electionMenu1(elec);
 
 }
@@ -324,6 +350,7 @@ void InitElectionMenu()
 {
     int day, month, year;
     int InitElection;
+    bool isInputValid;
     cout << "Choose from the following:" << endl;
     cout << "1. create new election round" << endl;
     cout << "2. load an existing eleciton file" << endl;
@@ -332,26 +359,23 @@ void InitElectionMenu()
     switch (InitElection) {
     case CreateNewElection:
 	   getdate(day, month, year);
-	   try {
-		   SelectElection(day, month, year);
-	   }
-	   catch (logic_error& error)
-	   {
-		   cout << error.what() << endl;
-	   }
+	   SelectElection(day, month, year);
+
 	   break;
     case LoadFromFile:
 	   cout << "enter file name: " << endl;
 	   string fileName;
 	   cin >> fileName;
 	   ifstream inFile(fileName, ios::binary);
-	   if (!inFile) {
-		  cout << "error opening file" << endl;
-	   }
-	   else {
+	   try
+	   {
 		  Election* elec = nullptr;
 		  initElectionFromFile(inFile, &elec);
 		  electionMenu1(elec);
+	   }
+	   catch (logic_error& error)
+	   {
+		  cout << error.what() << endl;		  
 	   }
 	   break;
 
