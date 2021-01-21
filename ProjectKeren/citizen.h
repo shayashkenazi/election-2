@@ -64,19 +64,36 @@ public:
         return this->id == id;
     }
 };
-template<class T,class K>//pattern algoritem for binary search in stl::vector.
-T* binarySearchPtr(vector <T *> arr, int l, int r, const K& value)
+template<class T,class K>//pattern algoritem for binary search in stl data structures.
+T binarySearchPtr(T leftItr, T rightItr, T endItr,const K& value)
 {
-    if (r >= l) {
-        int mid = l + (r - l) / 2;
+    if (rightItr >= leftItr) {
+        T mid = leftItr + (rightItr - leftItr) / 2;
 
-        if (*arr[mid] == value)
-            return arr[mid];
+        if (**mid == value)
+            return mid;
    
-        if (*arr[mid] > value)
-            return binarySearchPtr(arr, l, mid - 1, value);
+        if (**mid > value)
+            return binarySearchPtr(leftItr, mid - 1, endItr,value);
 
-        return binarySearchPtr(arr, mid + 1, r, value);
+        return binarySearchPtr( mid + 1, rightItr, endItr, value);
     }
-    return nullptr;
+    return endItr;
 }
+template<class T, class K>//pattern algoritem for binary search in stl data structures.
+T binarySearch(T leftItr, T rightItr, T endItr, const K& value)
+{
+    if (rightItr >= leftItr) {
+        T mid = leftItr + (rightItr - leftItr) / 2;
+
+        if (*mid == value)
+            return mid;
+
+        if (*mid > value)
+            return binarySearchPtr(leftItr, mid - 1, endItr, value);
+
+        return binarySearchPtr(mid + 1, rightItr, endItr, value);
+    }
+    return endItr;
+}
+

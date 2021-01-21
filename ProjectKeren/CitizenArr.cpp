@@ -48,11 +48,11 @@ bool CitizenArr::addCitizen(Citizen& add)
 
 bool CitizenArr::SearchById(const long& id) const //check if a citizen is aleardy exist by id.
 {
-	int left = 0;
-	int size = citizens.size()-1;
-	if (size == 0)//no citizen's hence the id dosen't exits.
+	if (citizens.begin() == citizens.end())//citizens array is empty.
 		return false;
-	if (binarySearchPtr<Citizen, long>(citizens, left, size, id) != nullptr)//binary search in vector of ptr array.
+	auto itrleft = citizens.begin();
+	auto itrEnd = citizens.end();
+	if (binarySearchPtr(itrleft, itrEnd-1, itrEnd, id) != citizens.end())//binary search in vector of ptr array. using pattern algorithm
 		return true;
 	return false;
 }
