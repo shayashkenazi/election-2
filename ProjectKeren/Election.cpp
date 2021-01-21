@@ -22,6 +22,8 @@ void Election::AddCounty(County& add)
 void Election::AddCitizen(Citizen& add,int& CountyNum)
 {
     //check if the citizen exist
+    if (year - add.getyearOfBirth() < 18)
+	   throw  InvalidYearOfBirthException();
 	if (SearchId(add.getId()) == true)
 		throw CitizenAlreadyExistsException();
 	if (CountyNum > eligibleCitizenList.size() || CountyNum < 1)

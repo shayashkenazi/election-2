@@ -101,7 +101,11 @@ class EmptyCountyException : public std::logic_error
 public:
     EmptyCountyException() :logic_error("there isn't citizen's to show in this county.") {}
 };
-
+class InvalidYearOfBirthException : public std::logic_error
+{
+public:
+    InvalidYearOfBirthException() :logic_error("the citizen is less than 18 years old.") {}
+};
 
 
 

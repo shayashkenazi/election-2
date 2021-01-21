@@ -2,6 +2,9 @@
 
 void RegularElection::AddCitizen(Citizen& add, int& CountyNum)
 {
+    //check if the citizen is less than 18 years old
+    if ((year - (int)add.getyearOfBirth()) < 18)
+	   throw  InvalidYearOfBirthException();
     //check if the citizen exist
     if (SearchId(add.getId()) == true)
 	   throw CitizenAlreadyExistsException();
@@ -14,13 +17,11 @@ void RegularElection::AddCitizen(Citizen& add, int& CountyNum)
    
 }
 void RegularElection::printCitizens()
-{
-  
+{  
     if (eligibleCitizenList.size() == 0)
 	   throw NoCitizensException();
     cout << "Citizen List : " << endl;
-  
-    
+     
     for (int i = 0; i < eligibleCitizenList.size(); i++)
     {
 	   cout << "Citizens of county number : " << i + 1 << endl;

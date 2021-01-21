@@ -20,6 +20,9 @@ SimpleElection ::SimpleElection(int& day, int& month, int& year, int& numOfreps)
 void SimpleElection::AddCitizen(Citizen& add,int& CountyNum )
 {
     CountyNum = 1;
+    //check if the citizen is less than 18 years old
+    if (year - add.getyearOfBirth() < 18)
+	   throw  InvalidYearOfBirthException();
     //check if the citizen exist
     if (SearchId(add.getId()) == true)
 	   throw CitizenAlreadyExistsException();
