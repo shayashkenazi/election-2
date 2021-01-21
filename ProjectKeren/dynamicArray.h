@@ -342,7 +342,6 @@ public:
 	void push_back(T& add) {
 		if (_physicalSize == _logicalSize)
 			resize();
-
 		_arr[_logicalSize++] = add;
 	}
 

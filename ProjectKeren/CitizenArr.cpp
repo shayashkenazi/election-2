@@ -39,18 +39,22 @@ bool CitizenArr::addCitizen(Citizen& add)
 	    cout << msg.what() << endl;
 	    exit(1);
 	}
-	citizens.push_back( newcitizen);
+	auto itr = std::lower_bound(citizens.begin(), citizens.end(), newcitizen, CitizenPtrComp());
+	//using our own comp to insert citizens ordered by their id's
+	citizens.insert(itr, newcitizen);
     return true;
 }
 
+
 bool CitizenArr::SearchById(const long& id) const //check if a citizen is aleardy exist by id.
 {
-    for (int i = 0; i < citizens.size(); i++)
-    {
-	   if (citizens[i]->getId() == id)
-		  return true;
-    }
-    return false;
+	int left = 0;
+	int size = citizens.size()-1;
+	if (size == 0)//no citizen's hence the id dosen't exits.
+		return false;
+	if (binarySearchPtr<Citizen, long>(citizens, left, size, id) != nullptr)//binary search in vector of ptr array.
+		return true;
+	return false;
 }
 
 Citizen* CitizenArr::PtrToCitizen(long& id)// search citizen by id and return ptr to hem if exists.

@@ -5,6 +5,8 @@
 #include<string>
 #include "dynamicArray.h"
 #include <fstream>
+#include <algorithm>
+#include <vector>
 #include"enum.h"
 #include "Exceptions.h"
 #define rcastcc reinterpret_cast<const char*>
@@ -43,5 +45,38 @@ public:
     Citizen& operator=(const Citizen& add); //operator =
     friend std::ostream& operator<<(std::ostream& os, const Citizen& citizen);//print op
     void save(ofstream& outfile) const;
-
+    bool operator < (const Citizen& citizen) {
+        return this->id < citizen.id;
+    }
+    bool operator> (const Citizen& citizen) {
+        return this->id > citizen.id;
+    }
+    bool operator== (const Citizen& citizen) {
+        return this->id == citizen.id;
+    }
+    bool operator < (const long& id) {
+        return this->id < id;
+    }
+    bool operator> (const long& id) {
+        return this->id > id;
+    }
+    bool operator== (const long& id) {
+        return this->id == id;
+    }
 };
+template<class T,class K>//pattern algoritem for binary search in stl::vector.
+T* binarySearchPtr(vector <T *> arr, int l, int r, const K& value)
+{
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+
+        if (*arr[mid] == value)
+            return arr[mid];
+   
+        if (*arr[mid] > value)
+            return binarySearchPtr(arr, l, mid - 1, value);
+
+        return binarySearchPtr(arr, mid + 1, r, value);
+    }
+    return nullptr;
+}
